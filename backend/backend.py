@@ -41,10 +41,42 @@ def get_analysis():
 
 # Get Team Data
 
-
+@app.route("/teams/", methods =['GET', 'POST'])
+def get_teams():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("select * from Teams, CurrentEventTeams where Teams.team=CurrentEventTeams.Team;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 # Get Matches Data
+@app.route("/matches/", methods =['GET', 'POST'])
+def get_matches():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("select * from Matches, Events where Matches.EventID=Events.EventID and Events.CurrentEvent=1;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
+@app.route("/final24/", methods =['GET', 'POST'])
+def get_final24():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("select * from Final24;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 if __name__=="__main__":
     app.run()

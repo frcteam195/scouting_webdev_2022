@@ -40,10 +40,50 @@ def get_analysis():
     return response
 
 # Get Team Data
-
+@app.route("/teams/", methods =['GET', 'POST'])
+def get_teams():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT t.* "
+                "FROM Teams t, CurrentEventTeams c "
+                "WHERE t.team = c.team;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 
 # Get Matches Data
+@app.route("/matches/", methods =['GET', 'POST'])
+def get_matches():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT m.MatchNo, m.RedTeam1, m.RedTeam2, m.RedTeam3, m.BlueTeam1, m.BlueTeam2, m.BlueTeam3 "
+                "FROM Matches m, Events e "
+                "WHERE e.EventID = m.EventID "
+                "AND e.CurrentEvent = 1;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+
+# Get Matches Data
+@app.route("/final24/", methods =['GET', 'POST'])
+def get_final24():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * from Final24;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 
 if __name__=="__main__":

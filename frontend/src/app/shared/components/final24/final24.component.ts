@@ -21,13 +21,12 @@ export class Final24Component implements OnInit {
    {"SortOrder": 24, "Team": " "}, {"SortOrder": 25, "Team": " "}];
 
 
-  constructor() { }
 
-  //apiFinal24List: Observable<Final24[]>;
-  //
-  //constructor(private apiService: ApiService) {
-  //  this.apiFinal24List = this.apiService.getFinal24();
-  //}
+  apiFinal24List: Final24[] = [];
+
+  constructor(private apiService: ApiService) {
+    this.apiService.getFinal24().subscribe((final24) => (this.apiFinal24List = final24));
+  }
 
   ngOnInit(): void {
   }

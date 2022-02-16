@@ -7,6 +7,8 @@ import { DefaultComponent } from './default.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
+import { ApiService } from '../../services/api.service';
 
 
 
@@ -22,6 +24,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     RouterModule,
     FlexLayoutModule,
     SharedModule
+  ],
+  providers: [
+    HttpClientModule,
+    ApiService
   ]
 })
 export class DefaultModule { }

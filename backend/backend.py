@@ -1,10 +1,12 @@
 
 from flask import Flask, request, json
 from flask_mysqldb import MySQL
+from flask_cors import CORS
 import MySQLdb.cursors
 import re
 
 app=Flask(__name__)
+CORS(app)
 
 app.secret_key = 'secret key'
  

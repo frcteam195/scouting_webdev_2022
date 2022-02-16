@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -73,12 +73,15 @@ export interface CEA {
 })
 export class ApiService {
 
+  private apiUrl = 'http://192.168.1.195';
+
   constructor(private http: HttpClient) { }
 
-  getFinal24(): Observable<any> {
-    return this.http.get<any>("http://192.168.1.195/final24");
+  getFinal24(): Observable<Final24[]> {
+    return this.http.get<Final24[]>(this.apiUrl+'/final24');
   }
+
   getAnalysis(): Observable<CEA[]> {
-    return this.http.get<CEA[]>("http://192.168.1.195/analysis");
+    return this.http.get<CEA[]>(this.apiUrl+'/analysis');
   }
 }

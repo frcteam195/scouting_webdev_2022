@@ -12,14 +12,12 @@ export class AnalysisComponent implements OnInit {
 
   Analysis: CEA[] = CeaJson;
 
-  constructor() { }
 
+  apiAnalysis: CEA[] = [];
 
-  //apiAnalysis: Observable<CEA[]>;
-  //
-  //constructor(private apiService: ApiService) {
-  //  this.apiAnalysis = this.apiService.getAnalysis();
-  //}
+  constructor(private apiService: ApiService) {
+    this.apiService.getAnalysis().subscribe((analysis) => (this.apiAnalysis = analysis));
+  }
 
 
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService, CEA } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-match',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MatchComponent implements OnInit {
 
-  constructor() { }
+  apiAnalysis: CEA[] = [];
+
+  constructor(private apiService: ApiService) {
+    this.apiService.getAnalysis().subscribe((analysis) => (this.apiAnalysis = analysis));
+  }
 
   ngOnInit(): void {
   }

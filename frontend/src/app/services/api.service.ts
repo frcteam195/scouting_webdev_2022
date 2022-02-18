@@ -73,7 +73,7 @@ export interface CEA {
 })
 export class ApiService {
 
-  private apiUrl = 'http://192.168.1.195';
+  private apiUrl = 'http://192.168.1.195:23450';
 
   constructor(private http: HttpClient) { }
 

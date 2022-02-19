@@ -41,6 +41,21 @@ def get_analysis():
     )
     return response
 
+    
+@app.route("/teams/", methods =['GET', 'POST'])
+def get_teams():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT t.TeamName "
+"FROM Teams t, CurrentEventTeams c "
+"WHERE t.team = c.team;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
 # Get Team Data
 @app.route("/teams/", methods =['GET', 'POST'])
 def get_teams():

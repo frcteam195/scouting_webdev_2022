@@ -128,7 +128,8 @@ export interface Matches {
 })
 export class ApiService {
 
-  private apiUrl = 'http://192.168.1.195:23450';
+  //private apiUrl = 'http://192.168.1.195:23450';
+  private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
 
   constructor(private http: HttpClient) { }
 

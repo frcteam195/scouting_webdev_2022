@@ -67,13 +67,68 @@ export interface CEA {
   Percent: Number;
 }
 
+export interface Matches {
+  BlueTeam1: String;
+  BlueTeam2: String;
+  BlueTeam3: String;
+  MatchNo: Number;
+  RedTeam1: String;
+  RedTeam2: String;
+  RedTeam3: String;
+}
+  export interface Teams {
+  AutoHuman: Number;
+  AutoPickUp: Number;
+  AutoScoredHigh: Number;
+  AutoScoredLow: Number;
+  AutoStartPosID: Number;
+  AutoSummary: String;
+  CanClimb: Number;
+  ClimbHeightID: Number;
+  ClimbPosition: Number;
+  ClimbStrategy: String;
+  ClimbTime: Number;
+  DriveTypeID: Number;
+  GearRatio: String;
+  HasAuto: Number;
+  IntakeType: Number;
+  LanguageID: Number;
+  MaxBallCapacity: Number;
+  MotorTypeID: Number;
+  MoveBonus: Number;
+  NumDriveMotors: Number;
+  NumGearSpeed: Number;
+  NumWheels: Number;
+  Pneumatics: Number;
+  Preload: Number;
+  RobotHeight: Number;
+  RobotLength: Number;
+  RobotWeight: Number;
+  RobotWidth: Number;
+  Speed: Number;
+  Team: Number;
+  TeamCity: String;
+  TeamCountry: String;
+  TeamLocation: String;
+  TeamName: String;
+  TeamStateProv: String;
+  TeleBallsScoredHigh: Number;
+  TeleBallsScoredLow: Number
+  TeleDefense: Number;
+  TeleDefenseEvade: Number;
+  TeleDefenseStrat: String;
+  TeleShootWhileDrive: String;
+  TeleSortCargo: Number;
+  TeleStrategy: String;
+  WheelTypeID: Number;
+  }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private apiUrl = 'http://192.168.1.195';
+  private apiUrl = 'http://192.168.1.195:23450';
 
   constructor(private http: HttpClient) { }
 
@@ -83,5 +138,13 @@ export class ApiService {
 
   getAnalysis(): Observable<CEA[]> {
     return this.http.get<CEA[]>(this.apiUrl+'/analysis');
+  }
+
+  getTeams(): Observable<Teams[]> {
+    return this.http.get<Teams[]>(this.apiUrl+'/teams');
+  }
+
+  getMatches(): Observable<Matches[]> {
+    return this.http.get<Matches[]>(this.apiUrl+'/matches');
   }
 }

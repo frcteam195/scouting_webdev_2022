@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, CEA } from 'src/app/services/api.service';
+import CeaJson from '../../cea.json'
 
 @Component({
-  selector: 'app-match',
-  templateUrl: './match.component.html',
-  styleUrls: ['./match.component.scss']
+  selector: 'app-analysis-table',
+  templateUrl: './analysis-table.component.html',
+  styleUrls: ['./analysis-table.component.scss']
 })
-export class MatchComponent implements OnInit {
+export class AnalysisTableComponent implements OnInit {
 
   apiAnalysis: CEA[] = [];
 

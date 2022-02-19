@@ -11,7 +11,7 @@ export class MatchComponent implements OnInit {
   apiAnalysis: CEA[] = [];
 
   constructor(private apiService: ApiService) {
-    this.apiService.getAnalysis().subscribe((analysis) => (this.apiAnalysis = analysis));
+    this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
   }
 
   ngOnInit(): void {

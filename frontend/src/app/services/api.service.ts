@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-
+import {Injectable} from '@angular/core';
+import {Observable, ReplaySubject} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 
 export interface Final24 {
@@ -76,7 +75,8 @@ export interface Matches {
   RedTeam2: String;
   RedTeam3: String;
 }
-  export interface Teams {
+
+export interface Teams {
   AutoHuman: Number;
   AutoPickUp: Number;
   AutoScoredHigh: Number;
@@ -121,31 +121,67 @@ export interface Matches {
   TeleSortCargo: Number;
   TeleStrategy: String;
   WheelTypeID: Number;
-  }
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
+  public Final24Replay: ReplaySubject<Final24[]>;
+  public CEAReplay: ReplaySubject<CEA[]>;
+
   //private apiUrl = 'http://192.168.1.195:23450';
   private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.Final24Replay = new ReplaySubject(1);
+    this.CEAReplay = new ReplaySubject(1);
 
-  getFinal24(): Observable<Final24[]> {
-    return this.http.get<Final24[]>(this.apiUrl+'/final24');
+    // Automatically load the data once when the application starts
+    this.loadData();
   }
 
-  getAnalysis(): Observable<CEA[]> {
-    return this.http.get<CEA[]>(this.apiUrl+'/analysis');
+  // This loads the data on service initialization, and then makes the data
+  //  available as a ReplaySubject.
+  loadData(): void {
+
+    // First try to load a fresh copy of the data from the API
+    this.http.get<Final24[]>(this.apiUrl + '/final24').subscribe(response => {
+      // Store the response in the ReplaySubject, which components can use to access the data
+      this.Final24Replay.next(response as Final24[]);
+      // Might as well store it while we have it
+      localStorage.setItem('Final24', JSON.stringify(response));
+    }, () => {
+      try {
+        // Send the cached data
+        this.Final24Replay.next(JSON.parse(localStorage.getItem('Final24')!) as Final24[]);
+      } catch (err) {
+        console.error('Could not load Teams data from server or cache!');
+      }
+    });
+
+    // First try to load a fresh copy of the data from the API
+    this.http.get<CEA[]>(this.apiUrl + '/matches').subscribe(response => {
+      // Store the response in the ReplaySubject, which components can use to access the data
+      this.CEAReplay.next(response as CEA[]);
+      // Might as well store it while we have it
+      localStorage.setItem('CEA', JSON.stringify(response));
+    }, () => {
+      try {
+        // Send the cached data
+        this.CEAReplay.next(JSON.parse(localStorage.getItem('CEA')!) as CEA[]);
+      } catch (err) {
+        console.error('Could not load Matches data from server or cache!');
+      }
+    });
   }
 
   getTeams(): Observable<Teams[]> {
-    return this.http.get<Teams[]>(this.apiUrl+'/teams');
+    return this.http.get<Teams[]>(this.apiUrl + '/teams');
   }
 
   getMatches(): Observable<Matches[]> {
-    return this.http.get<Matches[]>(this.apiUrl+'/matches');
+    return this.http.get<Matches[]>(this.apiUrl + '/matches');
   }
 }

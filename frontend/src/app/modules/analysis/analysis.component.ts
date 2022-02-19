@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, CEA } from '../../services/api.service';
-import { Observable } from 'rxjs';
 import CeaJson from '../../cea.json';
 
 @Component({
@@ -16,7 +15,7 @@ export class AnalysisComponent implements OnInit {
   apiAnalysis: CEA[] = [];
 
   constructor(private apiService: ApiService) {
-    this.apiService.getAnalysis().subscribe((analysis) => (this.apiAnalysis = analysis));
+    this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
   }
 
 

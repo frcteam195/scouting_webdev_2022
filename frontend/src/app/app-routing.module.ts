@@ -19,14 +19,14 @@ const routes: Routes = [{
   }, {
       path: 'match',
       component: MatchComponent    
+  },{
+    path: 'analysis',
+    component: AnalysisComponent
   }]
 }, {
   path: '',
   component: TeampickComponent,
-  children: [{
-    path: 'analysis',
-    component: AnalysisComponent
-  }]
+  children: []
 }];
 
 @NgModule({

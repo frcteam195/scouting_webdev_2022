@@ -1,92 +1,43 @@
 <div>
-    <table border="0">
+    <table border="1">
         <tr>
             <td>
-                <table border="1" class="cea_table">
+                <table border="0">
                     <tr>
-                        <th>Team</th>
-                        <th>Q1</th>
-                        <th>Q2</th>
-                        <th>Q3</th>
-                        <th>Q4</th>
-                        <th>Q5</th>
-                        <th>Q6</th>
-                        <th>Q7</th>
-                        <th>Q8</th>
-                        <th>Q9</th>
-                        <th>Q10</th>
-                        <th>Q11</th>
-                        <th>Q12</th>
-                        <th>A</th>
-                        <th>M</th>
-                        <th>R</th>
-                        <th>S</th>
-                    </tr>
-                    <tr *ngFor="let a of apiAnalysis">
-                        <td align="center">{{ a.Team }}</td>
-                        <td align="center" class="bg{{ a?.Match1Format }}">{{ a.Match1Display }}</td>
-                        <td align="center" class="bg{{ a?.Match2Format }}">{{ a.Match2Display }}</td>
-                        <td align="center" class="bg{{ a?.Match3Format }}">{{ a.Match3Display }}</td>
-                        <td align="center" class="bg{{ a?.Match4Format }}">{{ a.Match4Display }}</td>
-                        <td align="center" class="bg{{ a?.Match5Format }}">{{ a.Match5Display }}</td>
-                        <td align="center" class="bg{{ a?.Match6Format }}">{{ a.Match6Display }}</td>
-                        <td align="center" class="bg{{ a?.Match7Format }}">{{ a.Match7Display }}</td>
-                        <td align="center" class="bg{{ a?.Match8Format }}">{{ a.Match8Display }}</td>
-                        <td align="center" class="bg{{ a?.Match9Format }}">{{ a.Match9Display }}</td>
-                        <td align="center" class="bg{{ a?.Match10Format }}">{{ a.Match10Display }}</td>
-                        <td align="center" class="bg{{ a?.Match11Format }}">{{ a.Match11Display }}</td>
-                        <td align="center" class="bg{{ a?.Match12Format }}">{{ a.Match12Display }}</td>
-                        <td align="center" class="bg{{ a?.Summary1Format }}">{{ a.Summary1Display }}</td>
-                        <td align="center" class="bg{{ a?.Summary2Format }}">{{ a.Summary2Display }}</td>
-                        <td align="center" class="bg{{ a?.Summary3Format }}">{{ a.Summary3Display }}</td>
-                        <td align="center" class="bg{{ a?.Summary4Format }}">{{ a.Summary4Display }}</td>
+                        <td align="right">
+                            <div align="center">Final</div>
+                            <form *ngFor="let c of apiFinal24List">
+                                {{ c.SortOrder }} <input type="text" size="3" value="{{ c.Team }}">
+                            </form>
+                        </td>
+                        <td valign="top" align="center">
+                            Pick
+                            <form>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                                <input type="text" size="3"><br>
+                            </form>
+                        </td>
                     </tr>
                 </table>
+            </td>
+            <td>
+                <app-team-table [analysisTypeID]="1"></app-team-table>
             </td>
             <td width="20">
                 &nbsp;
             </td>
             <td>
-                <table border="1" class="cea_table">
-                    <tr>
-                        <th>Team</th>
-                        <th>Q1</th>
-                        <th>Q2</th>
-                        <th>Q3</th>
-                        <th>Q4</th>
-                        <th>Q5</th>
-                        <th>Q6</th>
-                        <th>Q7</th>
-                        <th>Q8</th>
-                        <th>Q9</th>
-                        <th>Q10</th>
-                        <th>Q11</th>
-                        <th>Q12</th>
-                        <th>A</th>
-                        <th>M</th>
-                        <th>R</th>
-                        <th>S</th>
-                    </tr>
-                    <tr *ngFor="let a of Analysis">
-                        <td align="center">{{ a.Team }}</td>
-                        <td align="center" class="bg{{ a?.Match1Format }}">{{ a.Match1Display }}</td>
-                        <td align="center" class="bg{{ a?.Match2Format }}">{{ a.Match2Display }}</td>
-                        <td align="center" class="bg{{ a?.Match3Format }}">{{ a.Match3Display }}</td>
-                        <td align="center" class="bg{{ a?.Match4Format }}">{{ a.Match4Display }}</td>
-                        <td align="center" class="bg{{ a?.Match5Format }}">{{ a.Match5Display }}</td>
-                        <td align="center" class="bg{{ a?.Match6Format }}">{{ a.Match6Display }}</td>
-                        <td align="center" class="bg{{ a?.Match7Format }}">{{ a.Match7Display }}</td>
-                        <td align="center" class="bg{{ a?.Match8Format }}">{{ a.Match8Display }}</td>
-                        <td align="center" class="bg{{ a?.Match9Format }}">{{ a.Match9Display }}</td>
-                        <td align="center" class="bg{{ a?.Match10Format }}">{{ a.Match10Display }}</td>
-                        <td align="center" class="bg{{ a?.Match11Format }}">{{ a.Match11Display }}</td>
-                        <td align="center" class="bg{{ a?.Match12Format }}">{{ a.Match12Display }}</td>
-                        <td align="center" class="bg{{ a?.Summary1Format }}">{{ a.Summary1Display }}</td>
-                        <td align="center" class="bg{{ a?.Summary2Format }}">{{ a.Summary2Display }}</td>
-                        <td align="center" class="bg{{ a?.Summary3Format }}">{{ a.Summary3Display }}</td>
-                        <td align="center" class="bg{{ a?.Summary4Format }}">{{ a.Summary4Display }}</td>
-                    </tr>
-                </table>
+                <app-team-table [analysisTypeID]="10"></app-team-table>
             </td>
         </tr>
     </table>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService, CEA } from '../../services/api.service';
+import { ApiService, CEA, Final24 } from '../../services/api.service';
 import CeaJson from '../../cea.json';
 
 @Component({
@@ -9,15 +9,17 @@ import CeaJson from '../../cea.json';
 })
 export class AnalysisComponent implements OnInit {
 
-  Analysis: CEA[] = CeaJson;
+  //Analysis: CEA[] = CeaJson;
 
 
-  apiAnalysis: CEA[] = [];
+  //apiAnalysis: CEA[] = [];
+  apiFinal24List: Final24[] = [];  
 
   constructor(private apiService: ApiService) {
-    this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
-  }
+    //this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
 
+    this.apiService.Final24Replay.subscribe((final24) => (this.apiFinal24List = final24));
+  }
 
 
   ngOnInit(): void {

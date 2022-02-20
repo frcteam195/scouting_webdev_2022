@@ -131,8 +131,8 @@ export class ApiService {
   public Final24Replay: ReplaySubject<Final24[]>;
   public CEAReplay: ReplaySubject<CEA[]>;
 
-  //private apiUrl = 'http://192.168.1.195:23450';
-  private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
+  private apiUrl = 'http://192.168.1.195:23450';
+  //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
 
   constructor(private http: HttpClient) {
     this.Final24Replay = new ReplaySubject(1);
@@ -162,7 +162,7 @@ export class ApiService {
     });
 
     // First try to load a fresh copy of the data from the API
-    this.http.get<CEA[]>(this.apiUrl + '/matches').subscribe(response => {
+    this.http.get<CEA[]>(this.apiUrl + '/analysis').subscribe(response => {
       // Store the response in the ReplaySubject, which components can use to access the data
       this.CEAReplay.next(response as CEA[]);
       // Might as well store it while we have it

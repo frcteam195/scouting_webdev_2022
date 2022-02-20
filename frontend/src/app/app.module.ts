@@ -12,9 +12,7 @@ import { TeamTableComponent } from './modules/team-table/team-table.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AnalysisTableComponent,
-    TeamTableComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

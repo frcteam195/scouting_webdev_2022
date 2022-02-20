@@ -13,8 +13,7 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    TeampickComponent,
-    AnalysisComponent
+    TeampickComponent
   ],
   imports: [
     CommonModule,

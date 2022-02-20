@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ApiService, Final24 } from '../../../services/api.service';
 
 @Component({
@@ -8,7 +7,7 @@ import { ApiService, Final24 } from '../../../services/api.service';
   styleUrls: ['./final24.component.scss']
 })
 export class Final24Component implements OnInit {
-  
+
   title = 'Pick List';
   final24List: Final24[]=[{"SortOrder": 1, "Team": "195"}, {"SortOrder": 2, "Team": "230"},
    {"SortOrder": 3, "Team": "181"}, {"SortOrder": 4, "Team": " "}, {"SortOrder": 5, "Team": " "},
@@ -25,7 +24,7 @@ export class Final24Component implements OnInit {
   apiFinal24List: Final24[] = [];
 
   constructor(private apiService: ApiService) {
-    this.apiService.getFinal24().subscribe((final24) => (this.apiFinal24List = final24));
+    this.apiService.Final24Replay.subscribe((final24) => (this.apiFinal24List = final24));
   }
 
   ngOnInit(): void {

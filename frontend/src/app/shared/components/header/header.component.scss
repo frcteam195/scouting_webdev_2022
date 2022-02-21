@@ -1,8 +1,7 @@
 header {
-    padding: 20px;
     background-color: darkorchid;
     color: white;
-
+    font-family: Verdana, sans-serif;
 }
 a:link,
 a:visited {
@@ -13,3 +12,20 @@ a:hover {
     color: yellow;
     text-decoration: none;
 }
+button {
+    border: none;
+    color: white;
+    background-color: darkorchid;
+    padding: 20px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 2px 1px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Verdana, sans-serif;
+  }
+  button:hover {
+      background-color: purple;
+  }

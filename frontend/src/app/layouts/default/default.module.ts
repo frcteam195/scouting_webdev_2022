@@ -12,6 +12,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from '../../services/api.service';
 import { AnalysisComponent } from 'src/app/modules/analysis/analysis.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -29,7 +30,8 @@ import { AnalysisComponent } from 'src/app/modules/analysis/analysis.component';
     CommonModule,
     RouterModule,
     FlexLayoutModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   providers: [
     HttpClientModule,

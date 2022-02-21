@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RobotComponent implements OnInit {
 
-  constructor() { }
+
+  analysisGroup: number = 2;
+  selectedTeam: string ;
+
+  constructor() {
+    this.selectedTeam="";
+   }
 
   ngOnInit(): void {
   }

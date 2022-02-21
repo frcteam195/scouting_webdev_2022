@@ -1,6 +1,19 @@
 <div>
     <table border="1">
         <tr>
+            <td>&nbsp;</td>
+            <td colspan="3"> 
+                <div >
+                <button (click)="changeDisplay(1)">Auto</button>
+                <button (click)="changeDisplay(2)">Low|High</button>
+                <button (click)="changeDisplay(3)">Cargo|Score</button>
+                <button (click)="changeDisplay(4)">Cargo|Climb</button>
+                <input type="hidden" [(ngModel)]='analysis1'>
+                <input type="hidden" [(ngModel)]='analysis2'>
+                </div>
+            </td>
+        </tr>
+        <tr>
             <td>
                 <table border="0">
                     <tr>
@@ -31,13 +44,13 @@
                 </table>
             </td>
             <td>
-                <app-team-table [analysisTypeID]="1"></app-team-table>
+                <app-team-table [analysisTypeID]=analysis1 [teamList]=apiFinal24List></app-team-table>
             </td>
             <td width="20">
                 &nbsp;
             </td>
             <td>
-                <app-team-table [analysisTypeID]="10"></app-team-table>
+                <app-team-table [analysisTypeID]=analysis2 [teamList]=apiFinal24List></app-team-table>
             </td>
         </tr>
     </table>

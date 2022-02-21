@@ -1,5 +1,6 @@
 <div>
     <table border="1" class="cea_table">
+        <tr><th colspan="17">{{ title }}</th></tr>
         <tr>
             <th>Team</th>
             <th>Q1</th>
@@ -19,7 +20,7 @@
             <th>R</th>
             <th>S</th>
         </tr>
-        <tr *ngFor="let a of apiAnalysis">
+        <tr *ngFor="let a of apiAnalysis_filter">
             <td align="center">{{ a.Team }}</td>
             <td align="center" class="bg{{ a?.Match1Format }}">{{ a.Match1Display }}</td>
             <td align="center" class="bg{{ a?.Match2Format }}">{{ a.Match2Display }}</td>

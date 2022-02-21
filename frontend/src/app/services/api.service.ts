@@ -11,7 +11,7 @@ export interface Final24 {
 export interface CEA {
   Team: String;
   AnalysisType: String;
-  AnalysisTypeID: Number;
+  AnalysisTypeID: number;
   EventID: Number;
   Match1Display: String;
   Match1Format: Number;

@@ -100,3 +100,4 @@ wsgi-api/.idea
 .idea
 frontend/package-lock.json
 frontend/package-lock.json
+frontend/src/app/services/api.service.ts

@@ -1,3 +1,15 @@
-<p>robot works!</p>
+<input class="setTeam" type="text" id="teamSelect" name="teamSelect" list="productName"/>
+    <datalist id="productName">
+        <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
+    </datalist>
+    <button type="button" onclick="getTeam('195');">update</button>
+
+    <script>
+        function getTeam(){
+        var team = robot.component.html.getElementById("teamSelect").value;
+        console.log(team)
+    }
+    </script>
+
 <app-analysis-table  [analysisGroup]=1 [selectedTeam]="'195'"></app-analysis-table>
 <app-analysis-table  [analysisGroup]=2 [selectedTeam]="'195'"></app-analysis-table>

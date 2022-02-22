@@ -131,6 +131,8 @@ export class ApiService {
   public Final24Replay: ReplaySubject<Final24[]>;
   public CEAReplay: ReplaySubject<CEA[]>;
   public MatchReplay: ReplaySubject<Matches[]>;
+  public TeamsReplay: ReplaySubject<Teams[]>;
+
 
   private apiUrl = 'http://192.168.1.195:23450';
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
@@ -139,6 +141,7 @@ export class ApiService {
     this.Final24Replay = new ReplaySubject(1);
     this.CEAReplay = new ReplaySubject(1);
     this.MatchReplay = new ReplaySubject(1);
+    this.TeamsReplay = new ReplaySubject(1);
 
     // Automatically load the data once when the application starts
     this.loadData();
@@ -159,7 +162,7 @@ export class ApiService {
         // Send the cached data
         this.Final24Replay.next(JSON.parse(localStorage.getItem('Final24')!) as Final24[]);
       } catch (err) {
-        console.error('Could not load Teams data from server or cache!');
+        console.error('Could not load Final24 data from server or cache!');
       }
     });
 
@@ -174,11 +177,12 @@ export class ApiService {
         // Send the cached data
         this.CEAReplay.next(JSON.parse(localStorage.getItem('CEA')!) as CEA[]);
       } catch (err) {
-        console.error('Could not load Matches data from server or cache!');
+        console.error('Could not load Analysis data from server or cache!');
       }
     });
+
     // First try to load a fresh copy of the data from the API
-    this.http.get<Matches[]>(this.apiUrl + '/analysis').subscribe(response => {
+    this.http.get<Matches[]>(this.apiUrl + '/matches').subscribe(response => {
       // Store the response in the ReplaySubject, which components can use to access the data
       this.MatchReplay.next(response as Matches[]);
       // Might as well store it while we have it
@@ -192,13 +196,21 @@ export class ApiService {
       }
     });
 
+    // First try to load a fresh copy of the data from the API
+    this.http.get<Teams[]>(this.apiUrl + '/teams').subscribe(response => {
+      // Store the response in the ReplaySubject, which components can use to access the data
+      this.TeamsReplay.next(response as Teams[]);
+      // Might as well store it while we have it
+      localStorage.setItem('Teams', JSON.stringify(response));
+    }, () => {
+      try {
+        // Send the cached data
+        this.TeamsReplay.next(JSON.parse(localStorage.getItem('Teams')!) as Teams[]);
+      } catch (err) {
+        console.error('Could not load Teams data from server or cache!');
+      }
+    });
   }
 
-  getTeams(): Observable<Teams[]> {
-    return this.http.get<Teams[]>(this.apiUrl + '/teams');
-  }
 
-  getMatches(): Observable<Matches[]> {
-    return this.http.get<Matches[]>(this.apiUrl + '/matches');
-  }
 }

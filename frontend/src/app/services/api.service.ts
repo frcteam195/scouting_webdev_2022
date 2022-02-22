@@ -130,6 +130,7 @@ export class ApiService {
 
   public Final24Replay: ReplaySubject<Final24[]>;
   public CEAReplay: ReplaySubject<CEA[]>;
+  public MatchReplay: ReplaySubject<Matches[]>;
 
   private apiUrl = 'http://192.168.1.195:23450';
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
@@ -137,6 +138,7 @@ export class ApiService {
   constructor(private http: HttpClient) {
     this.Final24Replay = new ReplaySubject(1);
     this.CEAReplay = new ReplaySubject(1);
+    this.MatchReplay = new ReplaySubject(1);
 
     // Automatically load the data once when the application starts
     this.loadData();
@@ -175,6 +177,21 @@ export class ApiService {
         console.error('Could not load Matches data from server or cache!');
       }
     });
+    // First try to load a fresh copy of the data from the API
+    this.http.get<Matches[]>(this.apiUrl + '/analysis').subscribe(response => {
+      // Store the response in the ReplaySubject, which components can use to access the data
+      this.MatchReplay.next(response as Matches[]);
+      // Might as well store it while we have it
+      localStorage.setItem('Matches', JSON.stringify(response));
+    }, () => {
+      try {
+        // Send the cached data
+        this.MatchReplay.next(JSON.parse(localStorage.getItem('Matches')!) as Matches[]);
+      } catch (err) {
+        console.error('Could not load Matches data from server or cache!');
+      }
+    });
+
   }
 
   getTeams(): Observable<Teams[]> {

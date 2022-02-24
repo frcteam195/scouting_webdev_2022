@@ -7,7 +7,13 @@
                 <button (click)="changeDisplay(1)">Auto</button>
                 <button (click)="changeDisplay(2)">Low|High</button>
                 <button (click)="changeDisplay(3)">Cargo|Score</button>
-                <button (click)="changeDisplay(4)">Cargo|Climb</button>
+                <button (click)="changeDisplay(4)">Tele|Climb</button>
+                <button (click)="changeDisplay(5)">GPickup|DAgainst</button>
+                <button (click)="changeDisplay(6)">Launch|Sort</button>
+                <button (click)="changeDisplay(7)">Shoot Drive|T Pickup</button>
+                <button (click)="changeDisplay(8)">Played D|Lost Comm</button>
+                <button (click)="changeDisplay(9)">SubBroke|BrokeDown</button>
+                <button (click)="changeDisplay(10)">TeleScore|Videos</button>
                 <input type="hidden" [(ngModel)]='analysis1'>
                 <input type="hidden" [(ngModel)]='analysis2'>
                 </div>
@@ -19,9 +25,19 @@
                     <tr>
                         <td align="right">
                             <div align="center">Final</div>
+                            <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
                             <form *ngFor="let c of apiFinal24List">
                                 {{ c.SortOrder }} <input type="text" size="3" value="{{ c.Team }}">
                             </form>
+
+<!--                             <div formArrayName="times">
+                                <span *ngFor="let c of apiFinal24List;let i=index">
+                                    {{ c.SortOrder }}
+                                      <input type="text" class="form-control" [formControlName]="i" 
+                                           placeholder="team" size="3" value="{{ c.Team }}">  <br>
+                                </span>
+                            </div> -->
+
                         </td>
                         <td valign="top" align="center">
                             Pick
@@ -40,18 +56,31 @@
                                 <input type="text" size="3"><br>
                             </form>
                         </td>
+                        <td>
+                            <button (click)="changeSort(sortType)">{{ sortType == 1 ? 'Team Sort' : 'Amt Sort' }}</button>
+                            <!-- <input type="hidden" [(ngModel)]='sortType'> -->
+                            <br>
+                            <button (click)="changeView(viewType)">{{ viewType == 1 ? 'Graph View' : 'Table View' }}</button>
+                        </td>
                     </tr>
                 </table>
             </td>
             <td>
-                <app-team-table [analysisTypeID]=analysis1 [teamList]=apiFinal24List></app-team-table>
+                <app-team-table [analysisTypeID]=analysis1 [teamList]=apiFinal24List [sort]=sortType></app-team-table>
             </td>
             <td width="20">
                 &nbsp;
             </td>
-            <td>
-                <app-team-table [analysisTypeID]=analysis2 [teamList]=apiFinal24List></app-team-table>
+             <td>
+                <div [hidden]="tableShow">
+                    <app-team-table [analysisTypeID]=analysis2 [teamList]=apiFinal24List [sort]=sortType></app-team-table>
+                </div>
+                <div [hidden]="graphShow">
+                    <app-team-graph [analysisTypeID]=analysis1 [teamList]=apiFinal24List></app-team-graph>
+                </div>
             </td>
+
+
         </tr>
     </table>
 </div>

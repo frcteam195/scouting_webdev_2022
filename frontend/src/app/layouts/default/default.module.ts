@@ -1,3 +1,4 @@
+import { TeamGraphComponent } from './../../modules/team-graph/team-graph.component';
 import { TeamTableComponent } from './../../modules/team-table/team-table.component';
 import { AnalysisTableComponent } from './../../modules/analysis-table/analysis-table.component';
 import { SharedModule } from './../../shared/shared.module';
@@ -12,9 +13,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from '../../services/api.service';
 import { AnalysisComponent } from 'src/app/modules/analysis/analysis.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PlotlyModule } from 'angular-plotly.js';
+import * as PlotlyJS from 'plotly.js-dist-min';
 
-
+PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   declarations: [
@@ -24,14 +27,17 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     AnalysisComponent,
     AnalysisTableComponent,
-    TeamTableComponent
+    TeamTableComponent,
+    TeamGraphComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     FlexLayoutModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    PlotlyModule
   ],
   providers: [
     HttpClientModule,

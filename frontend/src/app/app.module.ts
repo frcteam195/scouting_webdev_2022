@@ -6,8 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AnalysisTableComponent } from './modules/analysis-table/analysis-table.component';
-import { TeamTableComponent } from './modules/team-table/team-table.component';
 
 
 @NgModule({

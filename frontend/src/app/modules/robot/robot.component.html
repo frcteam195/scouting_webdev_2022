@@ -1,15 +1,28 @@
-<input class="setTeam" type="text" id="teamSelect" name="teamSelect" list="productName"/>
-    <datalist id="productName">
-        <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
-    </datalist>
-    <button type="button" onclick="getTeam('195');">update</button>
+<table>
+    <tr>
+        <td>
+            <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName"/>
+            <datalist id="productName">
+                <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
+            </datalist>
+            <button type="button" (click)="setTeam(teamSelect.value)">Update</button>
+        </td>
+        <td>
+            <div *ngFor="let x of apiTeamsList">
+                <div *ngIf="x.Team + '' == teamSelect.value + ''"><b>Team Name:</b> {{ x.TeamName }}</div>
+            </div>
+        </td>
+        <td>
+            <div *ngFor="let x of apiTeamsList">
+                <div *ngIf="x.Team + '' == teamSelect.value + ''"><b>Team Location:</b> {{ x.TeamCity }}, {{ x.TeamStateProv }}</div>
+            </div>
+        </td>
+    </tr>
 
-    <script>
-        function getTeam(){
-        var team = robot.component.html.getElementById("teamSelect").value;
-        console.log(team)
-    }
-    </script>
+    <tr>
+        <app-analysis-table  [analysisGroup]=1 [selectedTeam]="teamSelect.value"></app-analysis-table>
+        <app-analysis-table  [analysisGroup]=2 [selectedTeam]="teamSelect.value"></app-analysis-table> 
+    </tr>
+</table>
 
-<app-analysis-table  [analysisGroup]=1 [selectedTeam]="'195'"></app-analysis-table>
-<app-analysis-table  [analysisGroup]=2 [selectedTeam]="'195'"></app-analysis-table>
+

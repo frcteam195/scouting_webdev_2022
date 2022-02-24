@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService, Teams } from 'src/app/services/api.service';
 
 @Component({
@@ -10,7 +10,7 @@ export class RobotComponent implements OnInit {
 
 
   analysisGroup: number = 2;
-  selectedTeam: string = "1";
+
 
   //apiAnalysis: CEA[] = [];
   apiTeamsList: Teams[] = [];  
@@ -20,8 +20,13 @@ export class RobotComponent implements OnInit {
     this.apiService.TeamsReplay.subscribe((Teams) => (this.apiTeamsList = Teams));
   }
 
-  
+  setTeam(team: string) {
+    console.log(team)
+  }
+
   ngOnInit(): void {
   }
 
+  
+    
 }

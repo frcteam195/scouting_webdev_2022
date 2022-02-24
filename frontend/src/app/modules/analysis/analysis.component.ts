@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, CEA, Final24 } from '../../services/api.service';
 import CeaJson from '../../cea.json';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-analysis',
@@ -9,11 +10,17 @@ import CeaJson from '../../cea.json';
 })
 export class AnalysisComponent implements OnInit {
 
+  //public myForm: FormGroup; // our form model
+  
   //Analysis: CEA[] = CeaJson;
   analysisTypeID: number;
   analysis1: number = 10;
   analysis2: number = 11;
   type: number = 1;
+  sortType: number = 1;
+  viewType: number = 1;
+  graphShow = true;
+  tableShow = false;  //show table view by default
 
   //apiAnalysis: CEA[] = [];
   apiFinal24List: Final24[] = [];  
@@ -22,8 +29,14 @@ export class AnalysisComponent implements OnInit {
     //this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
     this.apiService.Final24Replay.subscribe((final24) => (this.apiFinal24List = final24));
     this.analysisTypeID = 1;
-  }
 
+/*     this.myForm = fb.group({
+      SortOrder: fb.control('initial value', Validators.required),
+      Team: fb.control('initial value', Validators.required)
+    });
+ */
+  }
+  // Deteremine the Analysis Types to send to the team-table component
   changeDisplay(type: number) {
     console.log("Display Type: " + type)
     if (type == 1) {
@@ -36,8 +49,26 @@ export class AnalysisComponent implements OnInit {
       this.analysis1 = 60;
       this.analysis2 = 61; 
     } else if (type == 4) {
-      this.analysis1 = 60;
+      this.analysis1 = 22;
       this.analysis2 = 30; 
+    } else if (type == 5) {
+      this.analysis1 = 40;
+      this.analysis2 = 41; 
+    } else if (type == 6) {
+      this.analysis1 = 42;
+      this.analysis2 = 43; 
+    } else if (type == 7) {
+      this.analysis1 = 44;
+      this.analysis2 = 45; 
+    } else if (type == 8) {
+      this.analysis1 = 46;
+      this.analysis2 = 47; 
+    } else if (type == 9) {
+      this.analysis1 = 48;
+      this.analysis2 = 49; 
+    } else if (type == 10) {
+      this.analysis1 = 62;
+      this.analysis2 = 70; 
     } else {
        this.analysis1 = 10;
        this.analysis2 = 11;
@@ -46,8 +77,50 @@ export class AnalysisComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  changeSort(type: number) {
+    
+    console.log("Sort Type: " + type)
+    if (type == 1) {
+      this.sortType = 2;
+    } else {
+      this.sortType = 1;
+    }
+  }
 
+  changeView(view: number) {
+    
+    console.log("View Type: " + view)
+    if (view == 1) {
+      this.viewType = 2;
+    } else {
+      this.viewType = 1;
+    }
+    this.graphShow = !this.graphShow;
+    this.tableShow = !this.tableShow;
+
+    console.log("Graph: " + this.graphShow + " Table: " + this.tableShow);
+  }
+  
+
+  listRecipients() {
+    console.log("Hello!");
+  }
+
+  save() {
+    // call API to save customer
+    console.log("Hello!");
+  }
+
+  onChanges(): void {
+    
+    console.log("Change IDentified");
+  }
+  
+
+  ngOnInit(): void  {
+    // we will initialize our form here
+/*     this.myForm.reset({SortOrder: 'new value'});
+    this.myForm.reset({Team: 'new value'}); */
   }
 
 }

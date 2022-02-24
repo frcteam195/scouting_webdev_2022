@@ -12,6 +12,7 @@ export class TeamTableComponent implements OnInit {
 
   @Input() teamList: Final24[];
   @Input() analysisTypeID: Number | undefined;
+  @Input() sort: Number;
 
 
   apiAnalysis: CEA[] = [];
@@ -23,6 +24,7 @@ export class TeamTableComponent implements OnInit {
     this.apiAnalysis = [];
     this.title = "Title";
     this.teamList = [];
+    this.sort = 1;
 
     // Update the filter whenever the inputting data changes
     this.apiService.CEAReplay.subscribe(analysis => {
@@ -46,30 +48,18 @@ export class TeamTableComponent implements OnInit {
     console.log("Analysis Passed to Component: " + this.analysisTypeID);
 
     if (this.apiAnalysis) {
-      // Filter 1
-/*       this.apiAnalysis_filter = this.apiAnalysis.filter(res => {
-        return res.AnalysisTypeID == this.analysisTypeID
-      }); */
+
       this.apiAnalysis_filter = [];
-      // Filter 2
-/*       for (const cea of this.apiAnalysis){
-        console.log("Analysis Types: [" + cea.AnalysisTypeID + "],[" + this.analysisTypeID + "]")
-        if (cea.AnalysisTypeID == this.analysisTypeID) {
-          console.log("Match: " + this.apiAnalysis_filter.length);
-          this.apiAnalysis_filter.push(cea);
-          
-        }
-      } */
-      // New Filter
+
       let rcount = 0;
       for (const cea of this.apiAnalysis){
         if (cea.AnalysisTypeID == this.analysisTypeID) {
           rcount = 0;   // set count to 0
           for (const team of this.teamList) {
-            console.log("cea.Team: [" + cea.Team + "] Team: [" + team.Team + "]");
+            //console.log("cea.Team: [" + cea.Team + "] Team: [" + team.Team + "]");
             if (cea.Team == team.Team) {
               rcount=rcount+1;// increament count
-              console.log("Match");
+              //console.log("Match");
               //team.Team = "";
               break;
             }
@@ -79,17 +69,21 @@ export class TeamTableComponent implements OnInit {
             this.apiAnalysis_filter.push(cea);
           }
         }
-      } 
-
+      }
+      // Sort Logic
+      if (this.sort == 1)  {
+        this.apiAnalysis_filter.sort((a, b) => b.Summary1Value - a.Summary1Value);
+      } else {
+        //this.apiAnalysis_filter.sort((a, b) => (a.Team > b.Team) ? 1 : -1);
+        this.apiAnalysis_filter.sort((a, b) => Number(a.Team) -Number(b.Team));
+      }
+    
       this.title = this.apiAnalysis_filter[0].AnalysisType;
 
     } else {
       this.apiAnalysis_filter = [];
     }
 
-    for (let t of this.teamList) {
-      console.log("team: " + t.Team);
-  }
   }
 
 }

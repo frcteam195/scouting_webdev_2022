@@ -34,7 +34,7 @@ export class AnalysisTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("Team Passed to Component: " + this.selectedTeam);
+    //console.log("ngOnInit: Team Passed to Component: " + this.selectedTeam);
     //this.regenerateFilter();
   }
 
@@ -44,7 +44,7 @@ export class AnalysisTableComponent implements OnInit {
 
 
   regenerateFilter() {
-    console.log("Analysis Passed to Component: " + this.selectedTeam);
+    //console.log("regenerateFilter: Analysis Passed to Component: " + this.selectedTeam);
 
     if (this.apiAnalysis) {
 
@@ -52,24 +52,22 @@ export class AnalysisTableComponent implements OnInit {
       let analysisTypes = [];
 
       if (this.analysisGroup == 1) {
-        analysisTypes = [10,11,20,21,22,30];
+        analysisTypes = [1,10,11,20,21,22,30];
       } else {
-        analysisTypes = [41,42,43];
+        analysisTypes = [40,41,42,43,44,45,46,47,48,49];
       }
+
+      //console.log("Analysis Count: [" + analysisTypes.length + "]");
 
       // Filter
       let rcount = 0;
       for (const cea of this.apiAnalysis){
         if (cea.Team == this.selectedTeam) {
-          //for (const type of analysisTypes) {
-            //console.log("cea.Team: [" + cea.Team + "] Team: [" + team.Team + "]");
-            if (analysisTypes.includes(cea.AnalysisTypeID)) {
-              this.apiAnalysis_filter.push(cea);
-            }
-          //}
+          if (analysisTypes.includes(cea.AnalysisTypeID)) {
+            this.apiAnalysis_filter.push(cea);
+          }
          }
        } 
-
     } else {
       this.apiAnalysis_filter = [];
     }

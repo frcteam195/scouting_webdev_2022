@@ -11,6 +11,7 @@ export class AnalysisTableComponent implements OnInit {
 
   @Input() selectedTeam: string;
   @Input() analysisGroup: number;
+  @Input() color: number;
 
 
   apiAnalysis: CEA[] = [];
@@ -24,6 +25,7 @@ export class AnalysisTableComponent implements OnInit {
     this.title = "Title";
     this.selectedTeam = "";
     this.analysisGroup = 0;
+    this.color = 1;
 
     // Update the filter whenever the inputting data changes
     this.apiService.CEAReplay.subscribe(analysis => {

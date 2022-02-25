@@ -16,6 +16,7 @@ import { AnalysisComponent } from 'src/app/modules/analysis/analysis.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PlotlyModule } from 'angular-plotly.js';
 import * as PlotlyJS from 'plotly.js-dist-min';
+import { AnalysisGraphComponent } from 'src/app/modules/analysis-graph/analysis-graph.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -28,7 +29,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     AnalysisComponent,
     AnalysisTableComponent,
     TeamTableComponent,
-    TeamGraphComponent
+    TeamGraphComponent,
+    AnalysisGraphComponent
   ],
   imports: [
     CommonModule,

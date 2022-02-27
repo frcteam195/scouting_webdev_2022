@@ -134,8 +134,9 @@ export class ApiService {
   public TeamsReplay: ReplaySubject<Teams[]>;
 
 
-  private apiUrl = 'http://192.168.1.195:23450';
-  //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
+  //private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
+  //private apiUrl = 'http://10.0.0.195:23450';     // Mark's House
+  private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
 
   constructor(private http: HttpClient) {
     this.Final24Replay = new ReplaySubject(1);

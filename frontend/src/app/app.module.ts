@@ -1,5 +1,4 @@
 import { HttpClientModule } from '@angular/common/http';
-import { TeampickModule } from './layouts/teampick/teampick.module';
 import { DefaultModule } from './layouts/default/default.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,7 +15,6 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     DefaultModule,
-    TeampickModule,
     HttpClientModule
   ],
   providers: [],

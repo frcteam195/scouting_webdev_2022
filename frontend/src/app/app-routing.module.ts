@@ -1,5 +1,4 @@
 import { AnalysisComponent } from './modules/analysis/analysis.component';
-import { TeampickComponent } from './layouts/teampick/teampick.component';
 import { HomeComponent } from './modules/home/home.component';
 import { MatchComponent } from './modules/match/match.component';
 import { RobotComponent } from './modules/robot/robot.component';
@@ -23,10 +22,6 @@ const routes: Routes = [{
     path: 'analysis',
     component: AnalysisComponent
   }]
-}, {
-  path: '',
-  component: TeampickComponent,
-  children: []
 }];
 
 @NgModule({

@@ -43,6 +43,11 @@ export class TeamTableComponent implements OnInit {
     this.regenerateFilter();
   }
 
+  localSort(type: number) {
+    console.log("Local Sort Type: " + type)
+    this.sort = type;
+    this.regenerateFilter();
+  }
 
   regenerateFilter() {
     console.log("Analysis Passed to Component: " + this.analysisTypeID);

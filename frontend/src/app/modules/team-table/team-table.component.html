@@ -2,7 +2,7 @@
     <table border="1" class="cea_table">
         <tr><th colspan="17">{{ title }}</th></tr>
         <tr>
-            <th>Team</th>
+            <th><div [ngClass]="{'sorted': this.sort==2}"><a (click)="localSort(2)">Team</a></div></th>
             <th>Q1</th>
             <th>Q2</th>
             <th>Q3</th>
@@ -16,7 +16,7 @@
             <th>Q11</th>
             <th>Q12</th>
             <th>A</th>
-            <th>M</th>
+            <th><div [ngClass]="{'sorted': this.sort==1}"><a (click)="localSort(1)">M</a></div></th>
             <th>R</th>
             <th>S</th>
         </tr>

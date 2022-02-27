@@ -17,6 +17,7 @@ export class AnalysisTableComponent implements OnInit {
   apiAnalysis: CEA[] = [];
   apiAnalysis_filter: CEA[] = [];
   title: String;
+  titleShow = true;
 
 
   constructor(private apiService: ApiService) {
@@ -25,7 +26,7 @@ export class AnalysisTableComponent implements OnInit {
     this.title = "Title";
     this.selectedTeam = "";
     this.analysisGroup = 0;
-    this.color = 1;
+    this.color = 0;
 
     // Update the filter whenever the inputting data changes
     this.apiService.CEAReplay.subscribe(analysis => {
@@ -57,6 +58,10 @@ export class AnalysisTableComponent implements OnInit {
         analysisTypes = [1,10,11,20,21,22,30];
       } else {
         analysisTypes = [40,41,42,43,44,45,46,47,48,49];
+      }
+
+      if (this.color > 0) {
+        this.titleShow = false;
       }
 
       //console.log("Analysis Count: [" + analysisTypes.length + "]");

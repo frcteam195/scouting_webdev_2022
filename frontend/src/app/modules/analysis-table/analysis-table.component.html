@@ -1,8 +1,13 @@
 <div>
     <table border="1" class="cea_table">
+        <div [hidden]="titleShow">
         <tr>
-            <td colspan="17" align="center" class="bg2" color="white">{{selectedTeam}}</td>
-        </tr><tr>
+            <div [ngClass]="{'titleR': color == 1, 'titleB' : color == 2 }">
+            <td>{{selectedTeam}}</td>
+            </div>
+        </tr>
+        </div>
+        <tr>
             <th>Type</th>
             <th>Q1</th>
             <th>Q2</th>

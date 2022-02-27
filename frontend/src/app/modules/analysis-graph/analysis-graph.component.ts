@@ -62,7 +62,6 @@ export class AnalysisGraphComponent implements OnInit {
     if (this.apiAnalysis) {
 
       this.apiAnalysis_filter = [];
-
       let xValueList = [1];
       for (const cea of this.apiAnalysis)
       {
@@ -73,11 +72,8 @@ export class AnalysisGraphComponent implements OnInit {
 
           yValueList.push(cea.Summary2Value);
           
-
           this.analysisType = cea.AnalysisType;
 
-          console.log(this.team + ", " + cea.Summary2Value)
-          
           this.graphData.push({
             x: xValueList,
             y: yValueList,
@@ -91,6 +87,13 @@ export class AnalysisGraphComponent implements OnInit {
     {
       this.apiAnalysis_filter = [];
     }
+
+    this.graphData.sort((a, b) => b.y - a.y);
+
+    this.graph = {
+      data: this.graphData,
+      layout: {width: 640, height: 480, title: this.analysisType}
+    };
   }
 
 }

@@ -100,6 +100,7 @@ export class TeamGraphComponent implements OnInit {
               y: yValueList,
               type: "line",
               showlegend: true,
+              //visible: "legendonly",
               name: this.team
             });
             

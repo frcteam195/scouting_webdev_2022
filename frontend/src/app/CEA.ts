@@ -1,6 +1,6 @@
 export class CEA {
-    Team: String;
-    AnalysisType: String;
+    Team: string;
+    AnalysisType: string;
     AnalysisTypeID: Number;
     EventID: Number;
     Match1Display: String;
@@ -55,7 +55,7 @@ export class CEA {
     Minimum: Number;
     Percent: Number;
 
-    constructor(Team: String,AnalysisType: String,AnalysisTypeID: Number,EventID: Number,Match1Display: String,Match1Format: Number,
+    constructor(Team: string,AnalysisType: string,AnalysisTypeID: Number,EventID: Number,Match1Display: String,Match1Format: Number,
         Match1Value: Number,Match2Display: String,Match2Format: Number,Match2Value: Number,Match3Display: String,Match3Format: Number,
         Match3Value: Number,Match4Display: String,Match4Format: Number,Match4Value: Number,Match5Display: String,Match5Format: Number,
         Match5Value: Number,Match6Display: String,Match6Format: Number,Match6Value: Number,Match7Display: String,Match7Format: Number,

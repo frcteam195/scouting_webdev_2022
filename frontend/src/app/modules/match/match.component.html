@@ -2,9 +2,10 @@
 
     <tr>
         <td>
-            <select ngModel (ngModelChange)="getMatch($event)">
+            <input list="productName" name="matchSelect" ngModel (ngModelChange)="getMatch($event)"/>
+            <datalist id="productName" >
                 <option *ngFor="let m of apiMatchList" [ngValue]="m.MatchNo">{{ m.MatchNo }}</option>
-              </select>
+            </datalist>
         </td>
     </tr>
 

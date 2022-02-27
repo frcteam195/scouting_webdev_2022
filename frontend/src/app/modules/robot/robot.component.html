@@ -1,11 +1,10 @@
 <table>
     <tr>
         <td>
-            <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName"/>
+            <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName" ngModel (ngModelChange)="setTeam(teamSelect.value)"/>
             <datalist id="productName">
                 <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
             </datalist>
-            <button type="button" (click)="setTeam(teamSelect.value)">Update</button>
         </td>
         <td>
             <div *ngFor="let x of apiTeamsList">

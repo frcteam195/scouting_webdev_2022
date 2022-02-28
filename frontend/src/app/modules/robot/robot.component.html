@@ -1,4 +1,4 @@
-<table>
+<table border="1">
     <tr>
         <td>
             <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName" ngModel (ngModelChange)="setTeam(teamSelect.value)"/>
@@ -19,9 +19,39 @@
     </tr>
 
     <tr>
-        <app-analysis-table  [analysisGroup]=1 [selectedTeam]="teamSelect.value"></app-analysis-table>
-        <app-analysis-table  [analysisGroup]=2 [selectedTeam]="teamSelect.value"></app-analysis-table> 
-        <app-analysis-graph [analysisTypeID]=10 [selectedTeam]="teamSelect.value"> </app-analysis-graph>
+        <td>
+            <app-analysis-table  [analysisGroup]=1 [selectedTeam]="teamSelect.value"></app-analysis-table>
+            <br>
+            <app-analysis-table  [analysisGroup]=2 [selectedTeam]="teamSelect.value"></app-analysis-table> 
+            <br>
+            <app-analysis-graph [analysisTypeID]=10 [selectedTeam]="teamSelect.value"> </app-analysis-graph>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <div *ngFor="let x of apiTeamsList">
+                        <div *ngIf="x.Team + '' == teamSelect.value">
+                            <tr>
+                                <td><b># Of Wheels:</b></td>
+                                <td>{{ x.TeamCity }}</td>
+                            </tr>
+                            <tr>
+                                <td><b># Of Motors:</b></td>
+                                <td>{{ x.TeamStateProv }}</td>
+                            </tr>
+                            <tr>
+                                <td><b># Of Wheels:</b></td>
+                                <td>{{ x.TeamCountry }}</td>
+                            </tr>
+                        </div>
+                    </div>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <p>graph info</p>
+        </td>
+
     </tr>
 </table>
 

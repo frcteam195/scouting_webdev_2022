@@ -55,7 +55,7 @@ export class AnalysisTableComponent implements OnInit {
       let analysisTypes = [];
 
       if (this.analysisGroup == 1) {
-        analysisTypes = [1,10,11,20,21,22,30];
+        analysisTypes = [1,10,11,20,21,22,30,60,61,62,70]; // temp added 60,61,62,70
       } else {
         analysisTypes = [40,41,42,43,44,45,46,47,48,49];
       }

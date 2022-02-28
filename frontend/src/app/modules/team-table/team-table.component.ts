@@ -49,6 +49,15 @@ export class TeamTableComponent implements OnInit {
     this.regenerateFilter();
   }
 
+  teamPage(team: string) {
+    console.log("Calling Robot Page with: " + team)
+    window.open("/robot/"+team);
+  }
+
+  teamSelect(team: string) {
+    console.log("Highlighting Robot: " + team)
+  }
+
   regenerateFilter() {
     console.log("Analysis Passed to Component: " + this.analysisTypeID);
 

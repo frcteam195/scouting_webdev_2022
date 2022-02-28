@@ -21,7 +21,7 @@
             <th>S</th>
         </tr>
         <tr *ngFor="let a of apiAnalysis_filter">
-            <td align="center">{{ a.Team }}</td>
+            <td align="center"><a (click)="teamSelect( a.Team )" (dblclick)="teamPage( a.Team )">{{ a.Team }}</a></td>
             <td align="center" class="bg{{ a?.Match1Format }}">{{ a.Match1Display }}</td>
             <td align="center" class="bg{{ a?.Match2Format }}">{{ a.Match2Display }}</td>
             <td align="center" class="bg{{ a?.Match3Format }}">{{ a.Match3Display }}</td>

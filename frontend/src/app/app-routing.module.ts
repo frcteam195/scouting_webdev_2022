@@ -13,8 +13,11 @@ const routes: Routes = [{
       path: '',
       component: HomeComponent
   }, {
-      path: 'robot',
-      component: RobotComponent
+    path: 'robot',
+    component: RobotComponent
+  }, {
+    path: 'robot/:team',
+    component: RobotComponent
   }, {
       path: 'match',
       component: MatchComponent    

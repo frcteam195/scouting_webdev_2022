@@ -1,36 +1,36 @@
 <table border="1">
     <tr>
         <td>
-            <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName" ngModel (ngModelChange)="setTeam(teamSelect.value)"/>
+            <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName" ngModel (ngModelChange)="setTeam(team)"/>
             <datalist id="productName">
                 <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
             </datalist>
         </td>
         <td>
             <div *ngFor="let x of apiTeamsList">
-                <div *ngIf="x.Team + '' == teamSelect.value + ''"><b>Team Name:</b> {{ x.TeamName }}</div>
+                <div *ngIf="x.Team + '' == team + ''"><b>Team Name:</b> {{ x.TeamName }}</div>
             </div>
         </td>
         <td>
             <div *ngFor="let x of apiTeamsList">
-                <div *ngIf="x.Team + '' == teamSelect.value + ''"><b>Team Location:</b> {{ x.TeamCity }}, {{ x.TeamStateProv }}</div>
+                <div *ngIf="x.Team + '' == team + ''"><b>Team Location:</b> {{ x.TeamCity }}, {{ x.TeamStateProv }}</div>
             </div>
         </td>
     </tr>
 
     <tr>
         <td>
-            <app-analysis-table  [analysisGroup]=1 [selectedTeam]="teamSelect.value"></app-analysis-table>
+            <app-analysis-table  [analysisGroup]=1 [selectedTeam]="team"></app-analysis-table>
             <br>
-            <app-analysis-table  [analysisGroup]=2 [selectedTeam]="teamSelect.value"></app-analysis-table> 
+            <app-analysis-table  [analysisGroup]=2 [selectedTeam]="team"></app-analysis-table> 
             <br>
-            <app-analysis-graph [analysisTypeID]=10 [selectedTeam]="teamSelect.value"> </app-analysis-graph>
+            <app-analysis-graph [analysisTypeID]=10 [selectedTeam]="team"> </app-analysis-graph>
         </td>
         <td>
             <table>
                 <tr>
                     <div *ngFor="let x of apiTeamsList">
-                        <div *ngIf="x.Team + '' == teamSelect.value">
+                        <div *ngIf="x.Team + '' == team">
                             <tr>
                                 <td><b># Of Wheels:</b></td>
                                 <td>{{ x.TeamCity }}</td>

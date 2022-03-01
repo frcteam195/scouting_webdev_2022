@@ -123,6 +123,33 @@ export interface Teams {
   WheelTypeID: Number;
 }
 
+export interface CurrTeams {
+  team: Number;
+}
+
+export interface Summary {
+  AutonomousMean: Number;
+  AutonomousMedian: Number;
+  AutonomousScoreMean: Number;
+  AutonomousScoreMedian: Number;
+  ClimbMean: Number;
+  ClimbMedian: Number;
+  EventID: Number;
+  Team: String;
+  TeleBallScoreMean: Number;
+  TeleBallScoreMedian: Number;
+  TeleHighBallsMean: Number;
+  TeleHighBallsMedian: Number;
+  TeleLowBallsMean: Number;
+  TeleLolBallsMedian: Number;
+  TeleTotalBallsMean: Number;
+  TeleTotalBallsMedian: Number;
+  TotalBallsMean: Number;
+  TotalBallsMedian: Number;
+  TotalSCoreMean: Number;
+  TotalScoreMedian: Number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -132,6 +159,8 @@ export class ApiService {
   public CEAReplay: ReplaySubject<CEA[]>;
   public MatchReplay: ReplaySubject<Matches[]>;
   public TeamsReplay: ReplaySubject<Teams[]>;
+  public CurrTeamReplay: ReplaySubject<CurrTeams[]>;
+  public SummaryReplay: ReplaySubject<Summary[]>;
 
 
   private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
@@ -143,6 +172,8 @@ export class ApiService {
     this.CEAReplay = new ReplaySubject(1);
     this.MatchReplay = new ReplaySubject(1);
     this.TeamsReplay = new ReplaySubject(1);
+    this.CurrTeamReplay = new ReplaySubject(1);
+    this.SummaryReplay = new ReplaySubject(1);
 
     // Automatically load the data once when the application starts
     this.loadData();
@@ -194,6 +225,36 @@ export class ApiService {
         this.MatchReplay.next(JSON.parse(localStorage.getItem('Matches')!) as Matches[]);
       } catch (err) {
         console.error('Could not load Matches data from server or cache!');
+      }
+    });
+
+    // First try to load a fresh copy of the data from the API
+    this.http.get<CurrTeams[]>(this.apiUrl + '/currTeam').subscribe(response => {
+      // Store the response in the ReplaySubject, which components can use to access the data
+      this.CurrTeamReplay.next(response as CurrTeams[]);
+      // Might as well store it while we have it
+      localStorage.setItem('CurrTeams', JSON.stringify(response));
+    }, () => {
+      try {
+        // Send the cached data
+        this.CurrTeamReplay.next(JSON.parse(localStorage.getItem('CurrTeams')!) as CurrTeams[]);
+      } catch (err) {
+        console.error('Could not load Current Teams data from server or cache!');
+      }
+    });
+
+    // First try to load a fresh copy of the data from the API
+    this.http.get<Summary[]>(this.apiUrl + '/summary').subscribe(response => {
+      // Store the response in the ReplaySubject, which components can use to access the data
+      this.SummaryReplay.next(response as Summary[]);
+      // Might as well store it while we have it
+      localStorage.setItem('Summary', JSON.stringify(response));
+    }, () => {
+      try {
+        // Send the cached data
+        this.SummaryReplay.next(JSON.parse(localStorage.getItem('Summary')!) as Summary[]);
+      } catch (err) {
+        console.error('Could not load Summary data from server or cache!');
       }
     });
 

@@ -24,7 +24,8 @@ export class RobotComponent implements OnInit {
   }
 
   setTeam(team: string) {
-    console.log(team)
+    console.log(team);
+    this.team = team;
   }
 
   ngOnInit(): void {

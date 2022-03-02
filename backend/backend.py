@@ -41,7 +41,7 @@ def get_analysis():
     )
     return response
 
-    
+'''    
 @app.route("/teams/", methods =['GET', 'POST'])
 def get_teams():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -55,7 +55,7 @@ def get_teams():
         mimetype='application/json'
     )
     return response
-
+'''
 # Get Team Data
 @app.route("/teams/", methods =['GET', 'POST'])
 def get_teams():

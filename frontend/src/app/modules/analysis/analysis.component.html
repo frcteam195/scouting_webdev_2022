@@ -2,7 +2,7 @@
     <table border="1">
         <tr>
             <td>&nbsp;</td>
-            <td colspan="3"> 
+            <td colspan="3">
                 <div >
                 <button (click)="changeDisplay(1)">Auto</button>
                 <button (click)="changeDisplay(2)">Low|High</button>
@@ -26,14 +26,15 @@
                         <td align="right">
                             <div align="center">Final</div>
                             <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
-                            <form *ngFor="let c of apiFinal24List">
-                                {{ c.SortOrder }} <input type="text" size="3" value="{{ c.Team }}">
-                            </form>
+                            <ng-container *ngFor="let c of apiFinal24List; let i = index">
+                                {{ i }} <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClick(i)" (ngModelChange)="teamSelectionChange()"><br>
+                            </ng-container>
+                          <button (click)="addEnd()">Add</button>
 
 <!--                             <div formArrayName="times">
                                 <span *ngFor="let c of apiFinal24List;let i=index">
                                     {{ c.SortOrder }}
-                                      <input type="text" class="form-control" [formControlName]="i" 
+                                      <input type="text" class="form-control" [formControlName]="i"
                                            placeholder="team" size="3" value="{{ c.Team }}">  <br>
                                 </span>
                             </div> -->
@@ -61,6 +62,7 @@
                             <!-- <input type="hidden" [(ngModel)]='sortType'> -->
                             <br>
                             <button (click)="changeView(viewType)">{{ viewType == 1 ? 'Graph View' : 'Table View' }}</button>
+                          <button (click)="apiService.saveFinal24(apiFinal24List)">Save to server</button>
                         </td>
                     </tr>
                 </table>

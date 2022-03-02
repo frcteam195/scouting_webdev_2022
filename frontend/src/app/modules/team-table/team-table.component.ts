@@ -1,5 +1,5 @@
 import { SelectorMatcher } from '@angular/compiler';
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, OnChanges} from '@angular/core';
 import { ApiService, CEA, Final24} from '../../services/api.service'
 
 
@@ -8,12 +8,11 @@ import { ApiService, CEA, Final24} from '../../services/api.service'
   templateUrl: './team-table.component.html',
   styleUrls: ['./team-table.component.scss']
 })
-export class TeamTableComponent implements OnInit {
+export class TeamTableComponent implements OnInit, OnChanges {
 
   @Input() teamList: Final24[];
   @Input() analysisTypeID: Number | undefined;
   @Input() sort: Number;
-
 
   apiAnalysis: CEA[] = [];
   apiAnalysis_filter: CEA[] = [];
@@ -36,7 +35,6 @@ export class TeamTableComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Analysis Passed to Component: " + this.analysisTypeID);
-    //this.regenerateFilter();
   }
 
   ngOnChanges() {
@@ -61,7 +59,7 @@ export class TeamTableComponent implements OnInit {
   regenerateFilter() {
     console.log("Analysis Passed to Component: " + this.analysisTypeID);
 
-    if (this.apiAnalysis) {
+    if (this.apiAnalysis && this.apiAnalysis.length && this.teamList && this.teamList.length) {
 
       this.apiAnalysis_filter = [];
 
@@ -72,8 +70,7 @@ export class TeamTableComponent implements OnInit {
           for (const team of this.teamList) {
             //console.log("cea.Team: [" + cea.Team + "] Team: [" + team.Team + "]");
             if (cea.Team == team.Team) {
-              rcount=rcount+1;// increament count
-              //console.log("Match");
+              rcount = rcount+1;// increment count
               //team.Team = "";
               break;
             }
@@ -91,7 +88,7 @@ export class TeamTableComponent implements OnInit {
         //this.apiAnalysis_filter.sort((a, b) => (a.Team > b.Team) ? 1 : -1);
         this.apiAnalysis_filter.sort((a, b) => Number(a.Team) -Number(b.Team));
       }
-    
+
       this.title = this.apiAnalysis_filter[0].AnalysisType;
 
     } else {

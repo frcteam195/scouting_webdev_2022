@@ -32,16 +32,156 @@
                     <div *ngFor="let x of apiTeamsList">
                         <div *ngIf="x.Team + '' == team">
                             <tr>
-                                <td><b># Of Wheels:</b></td>
-                                <td>{{ x.TeamCity }}</td>
+                                <td><b>NumWheels: </b></td>
+                                <td>{{ x.NumWheels }}</td>
                             </tr>
                             <tr>
-                                <td><b># Of Motors:</b></td>
-                                <td>{{ x.TeamStateProv }}</td>
+                                <td><b>NumDriveMotors: </b></td>
+                                <td>{{ x.NumDriveMotors }}</td>
                             </tr>
                             <tr>
-                                <td><b># Of Wheels:</b></td>
-                                <td>{{ x.TeamCountry }}</td>
+                                <td><b>WheelTypeID: </b></td>
+                                <td>{{ x.WheelTypeID }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>DriveTypeID: </b></td>
+                                <td>{{ x.DriveTypeID }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>MotorTypeID: </b></td>
+                                <td>{{ x.MotorTypeID }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>LanguageID: </b></td>
+                                <td>{{ x.LanguageID }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Speed: </b></td>
+                                <td>{{ x.Speed }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>GearRatio: </b></td>
+                                <td>{{ x.GearRatio }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>NumGearSpeed: </b></td>
+                                <td>{{ x.NumGearSpeed }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>RobotLength: </b></td>
+                                <td>{{ x.RobotLength }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>RobotWidth: </b></td>
+                                <td>{{ x.RobotWidth }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>RobotHeight: </b></td>
+                                <td>{{ x.RobotHeight }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>RobotWeight: </b></td>
+                                <td>{{ x.RobotWeight }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Pneumatics: </b></td>
+                                <td>{{ x.Pneumatics }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>IntakeType: </b></td>
+                                <td>{{ x.IntakeType }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Preload: </b></td>
+                                <td>{{ x.Preload }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>HasAuto: </b></td>
+                                <td>{{ x.HasAuto }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>AutoScoredHigh: </b></td>
+                                <td>{{ x.AutoScoredHigh }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>AutoScoredLow: </b></td>
+                                <td>{{ x.AutoScoredLow }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>MoveBonus: </b></td>
+                                <td>{{ x.MoveBonus }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>AutoPickUp: </b></td>
+                                <td>{{ x.AutoPickUp }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>AutoStartPosID: </b></td>
+                                <td>{{ x.AutoStartPosID }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>AutoSummary: </b></td>
+                                <td>{{ x.AutoSummary }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>AutoHuman: </b></td>
+                                <td>{{ x.AutoHuman }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>TeleBallsScoredHigh: </b></td>
+                                <td>{{ x.TeleBallsScoredHigh }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>TeleBallsScoredLow: </b></td>
+                                <td>{{ x.TeleBallsScoredLow }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>MaxBallCapacity: </b></td>
+                                <td>{{ x.MaxBallCapacity }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>TeleDefense: </b></td>
+                                <td>{{ x.TeleDefense }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>TeleDefenseEvade: </b></td>
+                                <td>{{ x.TeleDefenseEvade }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>TeleStrategy: </b></td>
+                                <td>{{ x.TeleStrategy }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>TeleDefenseStrat: </b></td>
+                                <td>{{ x.TeleDefenseStrat }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>TeleSortCargo: </b></td>
+                                <td>{{ x.TeleSortCargo }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>TeleShootWhileDrive: </b></td>
+                                <td>{{ x.TeleShootWhileDrive }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>CanClimb: </b></td>
+                                <td>{{ x.CanClimb }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>ClimbPosition: </b></td>
+                                <td>{{ x.ClimbPosition }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>ClimbStrategy: </b></td>
+                                <td>{{ x.ClimbStrategy }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>ClimbTime: </b></td>
+                                <td>{{ x.ClimbTime }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>ClimbHeightID: </b></td>
+                                <td>{{ x.ClimbHeightID }}</td>
                             </tr>
                         </div>
                     </div>

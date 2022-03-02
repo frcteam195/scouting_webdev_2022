@@ -11,6 +11,12 @@ export class RobotComponent implements OnInit {
 
   team: string;
   analysisGroup: number = 2;
+  analysisTypes: string[] = ["NumWheels", "NumDriveMotors", "WheelTypeID", "DriveTypeID", "MotorTypeID", "LanguageID", "Speed", "GearRatio", 
+                    "NumGearSpeed", "RobotLength", "RobotWidth", "RobotHeight", "RobotWeight", "Pneumatics", "IntakeType", "Preload", 
+                    "HasAuto", "AutoScoredHigh", "AutoScoredLow", "MoveBonus", "AutoPickUp", "AutoStartPosID", "AutoSummary", "AutoHuman", 
+                    "TeleBallsScoredHigh", "TeleBallsScoredLow", "MaxBallCapacity", "TeleDefense", "TeleDefenseEvade", "TeleStrategy", 
+                    "TeleDefenseStrat", "TeleSortCargo", "TeleShootWhileDrive", "CanClimb", "ClimbPosition", "ClimbStrategy", "ClimbTime", 
+                    "ClimbHeightID", ];
 
 
   //apiAnalysis: CEA[] = [];

@@ -1,12 +1,12 @@
 <div>
+    <div [hidden]="titleShow" >
+        <table border="1" class="cea_table" width="550">
+            <tr>
+                <th [ngClass]="{'titleR': color == 1, 'titleB' : color == 2 }">{{selectedTeam}}</th>
+            </tr>
+        </table>
+    </div>
     <table border="1" class="cea_table">
-        <div [hidden]="titleShow">
-        <tr>
-            <!-- <div [ngClass]="{'titleR': color == 1, 'titleB' : color == 2 }">
-             --><td>{{selectedTeam}}</td>
-            <!-- </div> -->
-        </tr>
-        </div>
         <tr>
             <th>Type</th>
             <th>Q1</th>

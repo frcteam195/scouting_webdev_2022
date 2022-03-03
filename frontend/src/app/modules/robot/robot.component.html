@@ -1,7 +1,7 @@
 <table border="1">
     <tr>
         <td>
-            <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName" ngModel (ngModelChange)="setTeam(team)"/>
+            <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName" ngModel (ngModelChange)="setTeam(teamSelect.value)"/>
             <datalist id="productName">
                 <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
             </datalist>
@@ -20,11 +20,9 @@
 
     <tr>
         <td>
-            <app-analysis-table  [analysisGroup]=1 [selectedTeam]="team"></app-analysis-table>
+            <app-analysis-table  [analysisGroup]=1 [selectedTeam]=team></app-analysis-table>
             <br>
-            <app-analysis-table  [analysisGroup]=2 [selectedTeam]="team"></app-analysis-table> 
-            <br>
-            <app-analysis-graph [analysisTypeID]=10 [selectedTeam]="team"> </app-analysis-graph>
+            <app-analysis-table  [analysisGroup]=2 [selectedTeam]=team></app-analysis-table> 
         </td>
         <td>
             <table>
@@ -33,15 +31,47 @@
                         <div *ngIf="x.Team + '' == team">
                             <tr>
                                 <td><b># Of Wheels:</b></td>
-                                <td>{{ x.TeamCity }}</td>
+                                <td>{{ x.NumWheels }}</td>
                             </tr>
                             <tr>
                                 <td><b># Of Motors:</b></td>
-                                <td>{{ x.TeamStateProv }}</td>
+                                <td>{{ x.NumDriveMotors }}</td>
                             </tr>
                             <tr>
-                                <td><b># Of Wheels:</b></td>
-                                <td>{{ x.TeamCountry }}</td>
+                                <td><b>Type of Wheels:</b></td>
+                                <td>{{ x.WheelTypeID }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Type of Drive:</b></td>
+                                <td>{{ x.DriveTypeID }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Type of Motors:</b></td>
+                                <td>{{ x.MotorTypeID }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Language:</b></td>
+                                <td>{{ x.LanguageID }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Speed:</b></td>
+                                <td>{{ x.Speed }} ft/s</td>
+                            </tr>
+                            <tr>
+                                <td><b>Gear Ratio:</b></td>
+                                <td>{{ x.GearRatio }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Gear Speed:</b></td>
+                                <td>{{ x.NumGearSpeed }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Legth:</b></td>
+                                <td>{{ x.RobotLength }} in.</td>
+                            </tr>
+                            <tr>
+                                <td><b>Width:</b></td>
+                                <td>{{ x.RobotWidth }} in.</td>
                             </tr>
                         </div>
                     </div>
@@ -49,7 +79,7 @@
             </table>
         </td>
         <td>
-            <p>graph info</p>
+            <app-analysis-graph [analysisTypeID]=10 [selectedTeam]=team> </app-analysis-graph>
         </td>
 
     </tr>

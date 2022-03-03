@@ -42,6 +42,22 @@ def get_analysis():
     return response
 
 
+# Get Current Teams
+@app.route("/currteam/", methods =['GET', 'POST'])
+def get_currteam():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT t.team "
+                "FROM Teams t, CurrentEventTeams c "
+                "WHERE t.team = c.team;")
+    data = cursor.fetchall()
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+
 # Get Team Data
 @app.route("/teams/", methods =['GET', 'POST'])
 def get_teams():
@@ -75,7 +91,23 @@ def get_matches():
     return response
 
 
-# Get Matches Data
+# Get Summary Data
+@app.route("/summary/", methods =['GET', 'POST'])
+def get_summary():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("select a.* from CurrentEventAnalysisGraphs a, Events b "
+                    "where a.EventID=b.EventID "
+                    "and b.CurrentEvent = 1;")
+    data = cursor.fetchall()
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+
+# Get Final 24 Data
 @app.get("/final24/")
 def get_final24():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -88,12 +120,31 @@ def get_final24():
     )
     return response
 
+
+# Class for Final 24
+class FinalOut(mysql.Model):
+    SortOrder = mysql.Column(mysql.Integer, primary_key=True)
+    Team = mysql.Column(mysql.String(10))
+
+
 # Get Matches Data
 @app.post("/final24")
 def post_final24():
     # TODO: IMPLEMENT ME
+
+    my_data = FinalOut.query.get(request.form.get(10))
+    my_data.Team = request.form['123']
+    mysql.session.commit()
+
     return '1'
 
+
+
+
+
+
+
+
 if __name__=="__main__":
-    app.run()
+    app.run(host='0.0.0.0',debug=True)
 

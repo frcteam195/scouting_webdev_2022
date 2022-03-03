@@ -58,17 +58,27 @@ export class AnalysisGraphComponent implements OnInit {
     //console.log("regenerateFilter: Analysis Passed to Component: " + this.selectedTeam);
 
     console.log("Analysis Type ID: " + this.analysisTypeID);
+    console.log("Selected Team: " + this.selectedTeam);
+
 
     if (this.apiAnalysis) {
 
+      this.graphData = [];
       this.apiAnalysis_filter = [];
       let xValueList = [1];
       for (const cea of this.apiAnalysis)
       {
         if (cea.AnalysisTypeID == this.analysisTypeID) 
         {
+          
           let yValueList = [];
+          let color = 'blue';
+
           this.team = cea.Team;
+
+          if (this.team == this.selectedTeam) {
+            color = 'yellow';
+          }
 
           yValueList.push(cea.Summary2Value);
           
@@ -77,7 +87,9 @@ export class AnalysisGraphComponent implements OnInit {
           this.graphData.push({
             x: xValueList,
             y: yValueList,
+            text: yValueList.map(String),
             type: "bar",
+            marker: { color: color },
             showlegend: true,
             name: this.team
           });

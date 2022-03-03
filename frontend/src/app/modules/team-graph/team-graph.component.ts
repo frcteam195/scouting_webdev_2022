@@ -64,7 +64,7 @@ export class TeamGraphComponent implements OnInit {
       this.graphData = [];
 
       let rcount = 0;
-      let xValueList = [1,2,3,4,5,6];
+      let xValueList = [1,2,3,4,5,6,7,8,9,10,11,12];
       for (const cea of this.apiAnalysis){
         if (cea.AnalysisTypeID == this.analysisTypeID) {
           rcount = 0;   // set count to 0
@@ -107,7 +107,7 @@ export class TeamGraphComponent implements OnInit {
           }
         }
       }
-      console.log("Graph Data y-values: " + this.graphData[0].y);
+
     } else {
       this.apiAnalysis_filter = [];
     }
@@ -116,7 +116,7 @@ export class TeamGraphComponent implements OnInit {
 
     this.graph = {
       data: this.graphData,
-      layout: {width: 640, height: 480, title: this.analysisType}
+      layout: {width: 1000, height: 360, title: this.analysisType}
     };
 
   }

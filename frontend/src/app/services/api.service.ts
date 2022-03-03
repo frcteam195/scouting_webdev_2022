@@ -165,8 +165,8 @@ export class ApiService {
   public CurrTeamReplay: ReplaySubject<CurrTeams[]>;
   public SummaryReplay: ReplaySubject<Summary[]>;
 
-  private apiUrl = 'http://localhost:5000';
-  //private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
+  //private apiUrl = 'http://localhost:5000';
+  private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
   //private apiUrl = 'http://10.0.0.195:23450';     // Mark's House
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
 
@@ -216,7 +216,7 @@ export class ApiService {
     });
 
     // First try to load a fresh copy of the data from the API
-    this.http.get<CurrTeams[]>(this.apiUrl + '/currTeam').subscribe(response => {
+    this.http.get<CurrTeams[]>(this.apiUrl + '/currteam').subscribe(response => {
       // Store the response in the ReplaySubject, which components can use to access the data
       this.CurrTeamReplay.next(response as CurrTeams[]);
       // Might as well store it while we have it

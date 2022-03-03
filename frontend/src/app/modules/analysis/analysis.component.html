@@ -3,17 +3,68 @@
         <tr>
             <td>&nbsp;</td>
             <td colspan="3">
-                <div >
+                <div style="float:left;width:50%;">
                 <button (click)="changeDisplay(1)">Auto</button>
                 <button (click)="changeDisplay(2)">Low|High</button>
                 <button (click)="changeDisplay(3)">Cargo|Score</button>
                 <button (click)="changeDisplay(4)">Tele|Climb</button>
-                <button (click)="changeDisplay(5)">GPickup|DAgainst</button>
+<!--                 <button (click)="changeDisplay(5)">GPickup|DAgainst</button>
                 <button (click)="changeDisplay(6)">Launch|Sort</button>
                 <button (click)="changeDisplay(7)">Shoot Drive|T Pickup</button>
                 <button (click)="changeDisplay(8)">Played D|Lost Comm</button>
                 <button (click)="changeDisplay(9)">SubBroke|BrokeDown</button>
-                <button (click)="changeDisplay(10)">TeleScore|Videos</button>
+                <button (click)="changeDisplay(10)">TeleScore|Videos</button> -->
+                </div>
+                <div style="float:right;width:50%;">
+                <b>&nbsp;Left Table: </b>
+                <select class="form-control" type="text" name="AnalysisType1" [(ngModel)] = "analysis1" (ngModelChange)="select(1,$event)">
+                    <option [value]="1">Start POS</option>
+                    <option [value]="10">Auto</option>
+                    <option [value]="11">AutoScore</option>
+                    <option [value]="20">Tele Low</option>
+                    <option [value]="21">Tele High</option>
+                    <option [value]="22">Tele Total</option>
+                    <option [value]="30">climb</option>
+                    <option [value]="40">Ground Pickup</option>
+                    <option [value]="41">D Against</option>
+                    <option [value]="42">Launch Pad</option>
+                    <option [value]="43">Sort Cargo</option>
+                    <option [value]="44">Shoot Drive</option>
+                    <option [value]="45">Pickup</option>
+                    <option [value]="46">Played D</option>
+                    <option [value]="47">Lost Comm</option>
+                    <option [value]="48">Sub Broke</option>
+                    <option [value]="49">Broke Down</option>
+                    <option [value]="60">Total Cargo</option>
+                    <option [value]="61">Total Score</option>
+                    <option [value]="62">TeleBall Score</option>
+                    <option [value]="70">Match Videos</option>
+                </select>
+                <b>&nbsp;Right Table: </b>
+                <select class="form-control" type="text" name="AnalysisType2" [(ngModel)] = "analysis2" (ngModelChange)="select(2,$event)">
+                    <option [value]="1">Start POS</option>
+                    <option [value]="10">Auto</option>
+                    <option [value]="11">AutoScore</option>
+                    <option [value]="20">Tele Low</option>
+                    <option [value]="21">Tele High</option>
+                    <option [value]="22">Tele Total</option>
+                    <option [value]="30">climb</option>
+                    <option [value]="40">Ground Pickup</option>
+                    <option [value]="41">D Against</option>
+                    <option [value]="42">Launch Pad</option>
+                    <option [value]="43">Sort Cargo</option>
+                    <option [value]="44">Shoot Drive</option>
+                    <option [value]="45">Pickup</option>
+                    <option [value]="46">Played D</option>
+                    <option [value]="47">Lost Comm</option>
+                    <option [value]="48">Sub Broke</option>
+                    <option [value]="49">Broke Down</option>
+                    <option [value]="60">Total Cargo</option>
+                    <option [value]="61">Total Score</option>
+                    <option [value]="62">TeleBall Score</option>
+                    <option [value]="70">Match Videos</option>
+                </select>
+    
                 <input type="hidden" [(ngModel)]='analysis1'>
                 <input type="hidden" [(ngModel)]='analysis2'>
                 </div>
@@ -27,17 +78,9 @@
                             <div align="center">Final</div>
                             <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
                             <ng-container *ngFor="let c of apiFinal24List; let i = index">
-                                {{ i }} <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClick(i)" (ngModelChange)="teamSelectionChange()"><br>
+                                {{ i+1 }} <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClick(i)" (ngModelChange)="teamSelectionChange()"><br>
                             </ng-container>
                           <button (click)="addEnd()">Add</button>
-
-<!--                             <div formArrayName="times">
-                                <span *ngFor="let c of apiFinal24List;let i=index">
-                                    {{ c.SortOrder }}
-                                      <input type="text" class="form-control" [formControlName]="i"
-                                           placeholder="team" size="3" value="{{ c.Team }}">  <br>
-                                </span>
-                            </div> -->
 
                         </td>
                         <td valign="top" align="center">
@@ -62,27 +105,44 @@
                             <!-- <input type="hidden" [(ngModel)]='sortType'> -->
                             <br>
                             <button (click)="changeView(viewType)">{{ viewType == 1 ? 'Graph View' : 'Table View' }}</button>
+                            <br>
                           <button (click)="apiService.saveFinal24(apiFinal24List)">Save to server</button>
                         </td>
                     </tr>
                 </table>
             </td>
             <td>
-                <app-team-table [analysisTypeID]=analysis1 [teamList]=apiFinal24List [sort]=sortType></app-team-table>
-            </td>
-            <td width="20">
-                &nbsp;
-            </td>
-             <td>
                 <div [hidden]="tableShow">
-                    <app-team-table [analysisTypeID]=analysis2 [teamList]=apiFinal24List [sort]=sortType></app-team-table>
+                <table>
+                    <tr>
+                        <td>
+                            <app-team-table [analysisTypeID]=analysis1 [teamList]=apiFinal24List [sort]=sortType  [focus]=focusTeam (sendTeamEvent)="print_team($event)"></app-team-table>
+                        </td>
+                        <td width="20">
+                            &nbsp;
+                        </td>
+                        <td>
+                            <app-team-table [analysisTypeID]=analysis2 [teamList]=apiFinal24List [sort]=sortType  [focus]=focusTeam (sendTeamEvent)="print_team($event)"></app-team-table>
+                        </td>
+                    </tr>
+                </table>
                 </div>
                 <div [hidden]="graphShow">
-                    <app-team-graph [analysisTypeID]=analysis1 [teamList]=apiFinal24List></app-team-graph>
+                <table>
+                    <tr>
+                        <td>
+                            <app-team-graph [analysisTypeID]=analysis1 [teamList]=apiFinal24List></app-team-graph>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <app-team-graph [analysisTypeID]=analysis2 [teamList]=apiFinal24List></app-team-graph>
+                        </td>
+                    </tr>
+                </table>
                 </div>
+
             </td>
-
-
         </tr>
     </table>
 </div>

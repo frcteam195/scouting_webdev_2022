@@ -21,6 +21,7 @@ export class AnalysisComponent implements OnInit {
   viewType: number = 1;
   graphShow = true;
   tableShow = false;  //show table view by default
+  focusTeam: string;
 
   //apiAnalysis: CEA[] = [];
   apiFinal24List: Final24[] = [];
@@ -30,18 +31,12 @@ export class AnalysisComponent implements OnInit {
     //this.apiService.Final24Replay.subscribe((final24) => (this.apiFinal24List = final24));
     this.apiFinal24List = [new Final24()];
     this.analysisTypeID = 1;
+    this.focusTeam = "";
 
-/*     this.myForm = fb.group({
-      SortOrder: fb.control('initial value', Validators.required),
-      Team: fb.control('initial value', Validators.required)
-    });
- */
   }
 
   ngOnInit(): void  {
     // we will initialize our form here
-    /*     this.myForm.reset({SortOrder: 'new value'});
-        this.myForm.reset({Team: 'new value'}); */
      this.apiService.getFinal24().then(response => this.apiFinal24List = response);
   }
 
@@ -65,6 +60,15 @@ export class AnalysisComponent implements OnInit {
     } else {
       this.apiFinal24List.splice(index, 0, new Final24());
     }
+  }
+
+  select(type: number, analysis: number) {
+    if (type == 1) {
+      this.analysis1 = analysis;
+    } else {
+      this.analysis2 = analysis;
+    }
+
   }
 
   // Deteremine the Analysis Types to send to the team-table component
@@ -146,5 +150,11 @@ export class AnalysisComponent implements OnInit {
 
     console.log("Change IDentified");
   }
+
+  print_team(team: string) {
+    console.log("Team Passed back from Child: " + team);
+    this.focusTeam = team;
+  }
+  
 
 }

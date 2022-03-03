@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 export class AnalysisComponent implements OnInit {
 
   //public myForm: FormGroup; // our form model
-  
+
   //Analysis: CEA[] = CeaJson;
   analysisTypeID: number;
   analysis1: number = 10;
@@ -23,11 +23,12 @@ export class AnalysisComponent implements OnInit {
   tableShow = false;  //show table view by default
 
   //apiAnalysis: CEA[] = [];
-  apiFinal24List: Final24[] = [];  
+  apiFinal24List: Final24[] = [];
 
-  constructor(private apiService: ApiService) {
+  constructor(public apiService: ApiService) {
     //this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
-    this.apiService.Final24Replay.subscribe((final24) => (this.apiFinal24List = final24));
+    //this.apiService.Final24Replay.subscribe((final24) => (this.apiFinal24List = final24));
+    this.apiFinal24List = [new Final24()];
     this.analysisTypeID = 1;
 
 /*     this.myForm = fb.group({
@@ -36,6 +37,36 @@ export class AnalysisComponent implements OnInit {
     });
  */
   }
+
+  ngOnInit(): void  {
+    // we will initialize our form here
+    /*     this.myForm.reset({SortOrder: 'new value'});
+        this.myForm.reset({Team: 'new value'}); */
+     this.apiService.getFinal24().then(response => this.apiFinal24List = response);
+  }
+
+  teamSelectionChange() {
+    // Angular won't detect changes inside an array - so set the array to a new array to force the change detection to fire
+    this.apiFinal24List = this.apiFinal24List.slice();
+  }
+
+  addEnd() {
+    this.apiFinal24List.splice(this.apiFinal24List.length, 0, new Final24());
+  }
+
+  processDoubleClick(index: number){
+    if (this.apiFinal24List.length == 1){
+      this.apiFinal24List.splice(index, 0, new Final24());
+    }
+    else if (this.apiFinal24List[index].Team === '') {
+      if (this.apiFinal24List.length > 1) {
+        this.apiFinal24List.splice(index, 1);
+      }
+    } else {
+      this.apiFinal24List.splice(index, 0, new Final24());
+    }
+  }
+
   // Deteremine the Analysis Types to send to the team-table component
   changeDisplay(type: number) {
     console.log("Display Type: " + type)
@@ -47,28 +78,28 @@ export class AnalysisComponent implements OnInit {
       this.analysis2 = 21;
     } else if (type == 3) {
       this.analysis1 = 60;
-      this.analysis2 = 61; 
+      this.analysis2 = 61;
     } else if (type == 4) {
       this.analysis1 = 22;
-      this.analysis2 = 30; 
+      this.analysis2 = 30;
     } else if (type == 5) {
       this.analysis1 = 40;
-      this.analysis2 = 41; 
+      this.analysis2 = 41;
     } else if (type == 6) {
       this.analysis1 = 42;
-      this.analysis2 = 43; 
+      this.analysis2 = 43;
     } else if (type == 7) {
       this.analysis1 = 44;
-      this.analysis2 = 45; 
+      this.analysis2 = 45;
     } else if (type == 8) {
       this.analysis1 = 46;
-      this.analysis2 = 47; 
+      this.analysis2 = 47;
     } else if (type == 9) {
       this.analysis1 = 48;
-      this.analysis2 = 49; 
+      this.analysis2 = 49;
     } else if (type == 10) {
       this.analysis1 = 62;
-      this.analysis2 = 70; 
+      this.analysis2 = 70;
     } else {
        this.analysis1 = 10;
        this.analysis2 = 11;
@@ -78,7 +109,7 @@ export class AnalysisComponent implements OnInit {
   }
 
   changeSort(type: number) {
-    
+
     console.log("Sort Type: " + type)
     if (type == 1) {
       this.sortType = 2;
@@ -88,7 +119,7 @@ export class AnalysisComponent implements OnInit {
   }
 
   changeView(view: number) {
-    
+
     console.log("View Type: " + view)
     if (view == 1) {
       this.viewType = 2;
@@ -100,7 +131,7 @@ export class AnalysisComponent implements OnInit {
 
     console.log("Graph: " + this.graphShow + " Table: " + this.tableShow);
   }
-  
+
 
   listRecipients() {
     console.log("Hello!");
@@ -112,15 +143,8 @@ export class AnalysisComponent implements OnInit {
   }
 
   onChanges(): void {
-    
-    console.log("Change IDentified");
-  }
-  
 
-  ngOnInit(): void  {
-    // we will initialize our form here
-/*     this.myForm.reset({SortOrder: 'new value'});
-    this.myForm.reset({Team: 'new value'}); */
+    console.log("Change IDentified");
   }
 
 }

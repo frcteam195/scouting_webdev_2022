@@ -1,11 +1,15 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
+import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {F} from "@angular/cdk/keycodes";
 
 
-export interface Final24 {
-  SortOrder: Number;
+export class Final24 {
   Team: String;
+
+  constructor() {
+    this.Team = '';
+  }
 }
 
 export interface CEA {
@@ -155,20 +159,18 @@ export interface Summary {
 })
 export class ApiService {
 
-  public Final24Replay: ReplaySubject<Final24[]>;
   public CEAReplay: ReplaySubject<CEA[]>;
   public MatchReplay: ReplaySubject<Matches[]>;
   public TeamsReplay: ReplaySubject<Teams[]>;
   public CurrTeamReplay: ReplaySubject<CurrTeams[]>;
   public SummaryReplay: ReplaySubject<Summary[]>;
 
-
-  private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
+  private apiUrl = 'http://localhost:5000';
+  //private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
   //private apiUrl = 'http://10.0.0.195:23450';     // Mark's House
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
 
   constructor(private http: HttpClient) {
-    this.Final24Replay = new ReplaySubject(1);
     this.CEAReplay = new ReplaySubject(1);
     this.MatchReplay = new ReplaySubject(1);
     this.TeamsReplay = new ReplaySubject(1);
@@ -182,21 +184,6 @@ export class ApiService {
   // This loads the data on service initialization, and then makes the data
   //  available as a ReplaySubject.
   loadData(): void {
-
-    // First try to load a fresh copy of the data from the API
-    this.http.get<Final24[]>(this.apiUrl + '/final24').subscribe(response => {
-      // Store the response in the ReplaySubject, which components can use to access the data
-      this.Final24Replay.next(response as Final24[]);
-      // Might as well store it while we have it
-      localStorage.setItem('Final24', JSON.stringify(response));
-    }, () => {
-      try {
-        // Send the cached data
-        this.Final24Replay.next(JSON.parse(localStorage.getItem('Final24')!) as Final24[]);
-      } catch (err) {
-        console.error('Could not load Final24 data from server or cache!');
-      }
-    });
 
     // First try to load a fresh copy of the data from the API
     this.http.get<CEA[]>(this.apiUrl + '/analysis').subscribe(response => {
@@ -275,4 +262,27 @@ export class ApiService {
   }
 
 
+  async getFinal24(): Promise<Final24[]> {
+    // First try to load a fresh copy of the data from the API
+
+    // First try to load a fresh copy of the data from the API
+    try {
+      const response = await this.http.get<Final24[]>(this.apiUrl + '/final24').toPromise();
+      localStorage.setItem('Final24', JSON.stringify(response));
+      return response as Final24[];
+    } catch (e) {
+      try {
+        // Send the cached data
+        return JSON.parse(localStorage.getItem('Final24')!) as Final24[];
+      } catch (err) {
+        console.error('Could not load Final24 data from server or cache!');
+        return [];
+      }
+    }
+  }
+
+  saveFinal24(final24: Final24[]){
+    localStorage.setItem('Final24', JSON.stringify(final24));
+    this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(Final24)).subscribe();
+  }
 }

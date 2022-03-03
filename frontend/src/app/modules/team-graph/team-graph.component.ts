@@ -58,7 +58,7 @@ export class TeamGraphComponent implements OnInit {
   regenerateFilter() {
     console.log("Analysis Passed to Component: " + this.analysisTypeID);
 
-    if (this.apiAnalysis) {
+    if (this.apiAnalysis && this.apiAnalysis.length) {
 
       this.apiAnalysis_filter = [];
       this.graphData = [];
@@ -94,7 +94,7 @@ export class TeamGraphComponent implements OnInit {
             yValueList.push(cea.Match12Value);
 
             this.analysisType = cea.AnalysisType;
-            
+
             this.graphData.push({
               x: xValueList,
               y: yValueList,
@@ -103,17 +103,17 @@ export class TeamGraphComponent implements OnInit {
               //visible: "legendonly",
               name: this.team
             });
-            
+
           }
         }
       }
-      
+      console.log("Graph Data y-values: " + this.graphData[0].y);
     } else {
       this.apiAnalysis_filter = [];
     }
 
-    console.log("Graph Data y-values: " + this.graphData[0].y);
-            
+
+
     this.graph = {
       data: this.graphData,
       layout: {width: 640, height: 480, title: this.analysisType}

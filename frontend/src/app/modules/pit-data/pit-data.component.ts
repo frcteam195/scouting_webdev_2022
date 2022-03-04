@@ -17,23 +17,26 @@ export class PitDataComponent implements OnInit {
     this.team="195";
   }
 
-  getWheelType(ID: Number) {
-    
-    return "Error, No ID Detected"
+  getYesNo(ID: Number) {
+    if (ID==1 ){
+      return "Yes";
+    } else if (ID == 0) {
+      return "No";
+    }
+    return "Error, input out of bounds";
   }
-  getDriveType(ID: Number) {
-    if (ID == 1)
-      return "Mecanum";
-    else if (ID == 2)
-      return "Tank"
-    else if (ID == 3)
-      return "H-Drive"
-    else if (ID == 4)
-      return "Other"
-    else if (ID == 5)
-      return "Swerve"
-    
-    return "Error, No ID Detected"
+
+  getClimbHeight(ID: Number) {
+    if (ID==4){
+      return "Traversal";
+    } else if (ID==3) {
+      return "High";
+    } else if (ID==2) {
+      return "Mid";
+    } else if (ID==1) {
+      return "Low";
+    }
+    return "Error, input out of bounds";
   }
 
   ngOnInit(): void {

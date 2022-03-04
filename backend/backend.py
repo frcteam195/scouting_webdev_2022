@@ -62,9 +62,13 @@ def get_currteam():
 @app.route("/teams/", methods =['GET', 'POST'])
 def get_teams():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("SELECT t.* "
-                "FROM Teams t, CurrentEventTeams c "
-                "WHERE t.team = c.team;")
+    cursor.execute("SELECT t.*, w.WheelType, d.DriveType, m.MotorType, l.LanguageType "
+                "FROM Teams t, CurrentEventTeams c, WheelTypes w, DriveTypes d, MotorTypes m, LanguageTypes l "
+                "WHERE t.team = c.team "
+                "AND t.WheelTypeID=w.WheelTypeID "
+                "AND t.DriveTypeID=d.DriveTypeID " 
+                "AND t.MotorTypeID=m.MotorTypeID "
+                "AND t.LanguageID=l.LanguageTypeID;")
     data = cursor.fetchall()
     response = app.response_class(
         response=json.dumps(data),
@@ -107,6 +111,25 @@ def get_summary():
     return response
 
 
+# Get Word Cloud Data
+@app.route("/words/", methods =['GET', 'POST'])
+def get_words():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("select m.MatchNo, a.Team, a.WordID, b.Word, a.WordCount "
+                "from WordCloud a, WordID b, Events c, Matches m "
+                "where a.WordID = b.WordID "
+                "and a.EventID = c.EventID "
+                "and a.MatchID = m.MatchID "
+                "and c.CurrentEvent = 1;")
+    data = cursor.fetchall()
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+
 # Get Final 24 Data
 @app.get("/final24/")
 def get_final24():
@@ -122,10 +145,10 @@ def get_final24():
 
 
 # Class for Final 24
-class FinalOut(mysql.Model):
+""" class FinalOut(mysql.Model):
     SortOrder = mysql.Column(mysql.Integer, primary_key=True)
     Team = mysql.Column(mysql.String(10))
-
+ """
 
 # Get Matches Data
 @app.post("/final24")

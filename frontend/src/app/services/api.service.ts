@@ -92,12 +92,15 @@ export interface Teams {
   ClimbPosition: Number;
   ClimbStrategy: String;
   ClimbTime: Number;
+  DriveType: String;
   DriveTypeID: Number;
   GearRatio: String;
   HasAuto: Number;
   IntakeType: Number;
   LanguageID: Number;
+  LanguageType: String;
   MaxBallCapacity: Number;
+  MotorType: String;
   MotorTypeID: Number;
   MoveBonus: Number;
   NumDriveMotors: Number;
@@ -124,6 +127,7 @@ export interface Teams {
   TeleShootWhileDrive: String;
   TeleSortCargo: Number;
   TeleStrategy: String;
+  WheelType: String;
   WheelTypeID: Number;
 }
 

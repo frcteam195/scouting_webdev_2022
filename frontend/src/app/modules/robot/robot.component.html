@@ -1,4 +1,4 @@
-<table border="1">
+<table border="0">
     <tr>
         <td>
             <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName" ngModel (ngModelChange)="setTeam(teamSelect.value)"/>
@@ -17,69 +17,28 @@
             </div>
         </td>
     </tr>
-
+        
     <tr>
         <td>
-            <app-analysis-table  [analysisGroup]=1 [selectedTeam]=team></app-analysis-table>
+            <app-analysis-table  [analysisGroup]=3 [selectedTeam]=team></app-analysis-table>
             <br>
             <app-analysis-table  [analysisGroup]=2 [selectedTeam]=team></app-analysis-table> 
+            <br>
+            <app-analysis-table  [analysisGroup]=4 [selectedTeam]=team></app-analysis-table> 
         </td>
         <td>
-            <table>
+            <app-pit-data [team]="team"></app-pit-data>
+        </td>
+        <td>
+            <table border="1">
                 <tr>
-                    <div *ngFor="let x of apiTeamsList">
-                        <div *ngIf="x.Team + '' == team">
-                            <tr>
-                                <td><b># Of Wheels:</b></td>
-                                <td>{{ x.NumWheels }}</td>
-                            </tr>
-                            <tr>
-                                <td><b># Of Motors:</b></td>
-                                <td>{{ x.NumDriveMotors }}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Type of Wheels:</b></td>
-                                <td>{{ x.WheelTypeID }}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Type of Drive:</b></td>
-                                <td>{{ x.DriveTypeID }}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Type of Motors:</b></td>
-                                <td>{{ x.MotorTypeID }}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Language:</b></td>
-                                <td>{{ x.LanguageID }}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Speed:</b></td>
-                                <td>{{ x.Speed }} ft/s</td>
-                            </tr>
-                            <tr>
-                                <td><b>Gear Ratio:</b></td>
-                                <td>{{ x.GearRatio }}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Gear Speed:</b></td>
-                                <td>{{ x.NumGearSpeed }}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Legth:</b></td>
-                                <td>{{ x.RobotLength }} in.</td>
-                            </tr>
-                            <tr>
-                                <td><b>Width:</b></td>
-                                <td>{{ x.RobotWidth }} in.</td>
-                            </tr>
-                        </div>
-                    </div>
+                    <img src="https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png" alt="robotnotfound" style="width:500px;height:500px;">
                 </tr>
+                <tr>
+                    <app-analysis-graph [analysisTypeID]=10 [selectedTeam]=team> </app-analysis-graph>
+                </tr>
+                
             </table>
-        </td>
-        <td>
-            <app-analysis-graph [analysisTypeID]=10 [selectedTeam]=team> </app-analysis-graph>
         </td>
 
     </tr>

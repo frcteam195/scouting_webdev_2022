@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { SummaryGraphComponent } from './modules/summary-graph/summary-graph.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

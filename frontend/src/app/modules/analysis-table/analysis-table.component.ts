@@ -56,8 +56,12 @@ export class AnalysisTableComponent implements OnInit {
 
       if (this.analysisGroup == 1) {
         analysisTypes = [1,10,11,20,21,22,30,60,61,62,70]; // temp added 60,61,62,70
-      } else {
+      } else if (this.analysisGroup == 2) {
         analysisTypes = [40,41,42,43,44,45,46,47,48,49];
+      } else if (this.analysisGroup == 3) {
+        analysisTypes = [1,10,11,20,21,22,30,60,61,62];
+      } else {
+        analysisTypes = [70];
       }
 
       if (this.color > 0) {

@@ -6,13 +6,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SummaryGraphComponent } from './modules/summary-graph/summary-graph.component';
+import { WordCloudComponent } from './modules/word-cloud/word-cloud.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SummaryGraphComponent
+    SummaryGraphComponent,
+    WordCloudComponent
   ],
   imports: [
     BrowserModule,

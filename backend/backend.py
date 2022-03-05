@@ -59,16 +59,16 @@ def get_currteam():
 
 
 # Get Team Data
-@app.route("/teams/", methods =['GET', 'POST'])
+@app.route("/pitdata/", methods =['GET', 'POST'])
 def get_teams():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT t.*, w.WheelType, d.DriveType, m.MotorType, l.LanguageType "
-                "FROM Teams t, CurrentEventTeams c, WheelTypes w, DriveTypes d, MotorTypes m, LanguageTypes l "
-                "WHERE t.team = c.team "
-                "AND t.WheelTypeID=w.WheelTypeID "
-                "AND t.DriveTypeID=d.DriveTypeID " 
-                "AND t.MotorTypeID=m.MotorTypeID "
-                "AND t.LanguageID=l.LanguageTypeID;")
+                "FROM Teams t "
+                "INNER JOIN CurrentEventTeams c on t.Team = c.Team "
+                "LEFT JOIN WheelTypes w on t.WheelTypeID=w.WheelTypeID "
+                "LEFT JOIN DriveTypes d on t.DriveTypeID=d.DriveTypeID "
+                "LEFT JOIN MotorTypes m on t.MotorTypeID=m.MotorTypeID "
+                "LEFT JOIN LanguageTypes l on t.LanguageID=l.LanguageTypeID")
     data = cursor.fetchall()
     response = app.response_class(
         response=json.dumps(data),

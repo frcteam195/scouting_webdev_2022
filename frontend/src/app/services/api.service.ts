@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {F} from "@angular/cdk/keycodes";
+import { formatDate } from '@angular/common';
 
 
 export class Final24 {
@@ -170,9 +171,10 @@ export class ApiService {
   public SummaryReplay: ReplaySubject<Summary[]>;
 
   //private apiUrl = 'http://localhost:5000';
-  private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
+  //private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
   //private apiUrl = 'http://10.0.0.195:23450';     // Mark's House
-  //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';
+  private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';  // AWS Test
+  //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com/prod/';  // AWS Alternate
 
   constructor(private http: HttpClient) {
     this.CEAReplay = new ReplaySubject(1);
@@ -194,10 +196,18 @@ export class ApiService {
       // Store the response in the ReplaySubject, which components can use to access the data
       this.CEAReplay.next(response as CEA[]);
       // Might as well store it while we have it
+      console.log("Getting Data from Database");
+ 
+      let now = new Date();
+      let date = formatDate(now, 'MM/dd hh:mm a', 'en-US');
+      localStorage.setItem('lastDB', date);
+      console.log("Time: " + date);
+
       localStorage.setItem('CEA', JSON.stringify(response));
     }, () => {
       try {
         // Send the cached data
+        console.log("Getting Data from Cache");
         this.CEAReplay.next(JSON.parse(localStorage.getItem('CEA')!) as CEA[]);
       } catch (err) {
         console.error('Could not load Analysis data from server or cache!');
@@ -250,7 +260,7 @@ export class ApiService {
     });
 
     // First try to load a fresh copy of the data from the API
-    this.http.get<Teams[]>(this.apiUrl + '/teams').subscribe(response => {
+    this.http.get<Teams[]>(this.apiUrl + '/pitdata').subscribe(response => {
       // Store the response in the ReplaySubject, which components can use to access the data
       this.TeamsReplay.next(response as Teams[]);
       // Might as well store it while we have it

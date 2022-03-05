@@ -20,10 +20,8 @@ export class AnalysisGraphComponent implements OnInit {
   analysisType: string;
   graphData: any[];
   public graph = {
-    data: [    { x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], y: [2,3,8,5,6,4,8], type: 'line', name: "195", mode: 'lines+points', marker: {color: 'red'} },
-    { x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], y: [2, 5, 3], type: 'line', name: 'Hello'},
-    ],
-    layout: {width: 640, height: 480, title: 'A Fancy Plot'}
+    data: [    { x: [], y: [],  }    ],
+    layout: {width: 640, height: 480, title: "", margin: {b:0, l:0, r:0, t:0}}
   };
 
   constructor(private apiService: ApiService) {
@@ -65,24 +63,26 @@ export class AnalysisGraphComponent implements OnInit {
 
       this.graphData = [];
       this.apiAnalysis_filter = [];
-      let xValueList = [1];
       for (const cea of this.apiAnalysis)
       {
         if (cea.AnalysisTypeID == this.analysisTypeID) 
         {
           
           let yValueList = [];
-          let color = 'blue';
+          let xValueList = [];
+          let color = '#CCCCCC';
 
           this.team = cea.Team;
-
+          this.analysisType = cea.AnalysisType;
+          
           if (this.team == this.selectedTeam) {
-            color = 'yellow';
+            color = '#0000FF';
           }
 
+          xValueList.push(this.analysisType);
           yValueList.push(cea.Summary2Value);
           
-          this.analysisType = cea.AnalysisType;
+          
 
           this.graphData.push({
             x: xValueList,
@@ -90,7 +90,7 @@ export class AnalysisGraphComponent implements OnInit {
             text: yValueList.map(String),
             type: "bar",
             marker: { color: color },
-            showlegend: true,
+            showlegend: false,
             name: this.team
           });
         }
@@ -104,7 +104,8 @@ export class AnalysisGraphComponent implements OnInit {
 
     this.graph = {
       data: this.graphData,
-      layout: {width: 640, height: 480, title: this.analysisType}
+/*       layout: {width: 640, height: 480, title: this.analysisType} */
+      layout: {width: 240, height: 120, title: " ", margin: {b:20, l:20, r:20, t:20}},
     };
   }
 

@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  
+  lastDBtime: string;
+
+
+  constructor() { 
+
+    this.lastDBtime = "";
+  }
 
   ngOnInit(): void {
+    this.lastDBtime = localStorage.getItem('lastDB') || "";
   }
 
 }

@@ -125,7 +125,7 @@ export interface Teams {
   TeleDefense: Number;
   TeleDefenseEvade: Number;
   TeleDefenseStrat: String;
-  TeleShootWhileDrive: String;
+  TeleShootWhileDrive: Number;
   TeleSortCargo: Number;
   TeleStrategy: String;
   WheelType: String;

@@ -298,15 +298,12 @@ export class ApiService {
 
   saveFinal24(final24: Final24[]){
     localStorage.setItem('Final24', JSON.stringify(final24));
-    //this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(Final24)).subscribe();
-    const mydata = localStorage.getItem('Final24');
-
 
     const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(mydata), options).subscribe();
+    this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(final24), options).subscribe();
 
-    console.log("Data: "+mydata);
-    const len = mydata?.length;
+    console.log("Data: ", final24);
+    const len = JSON.stringify(final24)?.length;
     console.log("Length: "+ len);
 
   }

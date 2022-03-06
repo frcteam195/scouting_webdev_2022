@@ -1,1 +1,20 @@
 td { vertical-align: top;}
+button {
+    border: 1;
+    color: black;
+    background-color: #CCCCCC;
+    padding: 10px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Verdana, sans-serif;
+  }
+  button:hover {
+      background-color: #b4afaf;
+  }
+b {
+    font-size: 14px;
+}

@@ -11,6 +11,7 @@ export class RobotComponent implements OnInit {
 
   team: string;
   analysisGroup: number = 2;
+  display: number;
 
 
   //apiAnalysis: CEA[] = [];
@@ -21,11 +22,16 @@ export class RobotComponent implements OnInit {
     this.apiService.TeamsReplay.subscribe((Teams) => (this.apiTeamsList = Teams));
 
     this.team="195";
+    this.display=0;
   }
 
   setTeam(team: string) {
     console.log(team);
     this.team = team;
+  }
+
+  setDisplay(display: number) {
+    this.display = display;
   }
 
   ngOnInit(): void {

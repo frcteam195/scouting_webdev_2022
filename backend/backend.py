@@ -133,7 +133,7 @@ def get_words():
 
 
 # Get Final 24 Data
-@app.get("/final24/")
+@app.get("/final24")
 def get_final24():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * from Final24;")
@@ -162,9 +162,9 @@ def post_final24():
 
     if not request.is_json:
         return Response('Invalid submission, please submit as JSON.', status=400)
-    data = r.json
+    data = request.json
 
-    print("Data: " + data)
+    print("Data: ", data)
 
     for line in data:
         print(line)
@@ -174,23 +174,13 @@ def post_final24():
 
     # SortOrder is gone from the frontend code - you'll need to iterate through
     # the rows and get SortOrder from the position of the row. Something like
-    # for pos, team in enumerate(data):
-    #    -- update set team = team where SortOrder = pos --
-    team="195"
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team,1))
-    cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team,2))
-    mysql.connection.commit()
 
-    return '1'    
+    with mysql.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
+        for pos, team_selection in enumerate(data):
+            cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team_selection['Team'],pos+1))
+        mysql.connection.commit()
 
-
-
-
-
-
-
-
+    return '1'
 
 
 

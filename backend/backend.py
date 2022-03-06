@@ -1,9 +1,11 @@
 
-from flask import Flask, request, json
+from os import system
+from flask import Flask, jsonify, request, json
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import MySQLdb.cursors
 import re
+from json import dumps
 
 app=Flask(__name__)
 CORS(app)
@@ -154,12 +156,34 @@ def get_final24():
 @app.post("/final24")
 def post_final24():
     # TODO: IMPLEMENT ME
+    #my_data = FinalOut.query.get(request.form.get(10))
+    #my_data.Team = request.form['123']
+    #mysql.session.commit()
 
-    my_data = FinalOut.query.get(request.form.get(10))
-    my_data.Team = request.form['123']
-    mysql.session.commit()
+    print (request.is_json)
+    r = request.data
+ 
+    data = json.loads(r)
+    #data = json.dumps(r)  # TypeError: Object of type bytes is not JSON serializable
+    #data = jsonify(r)  # TypeError: Object of type bytes is not JSON serializable
 
-    return '1'
+    print("Data: " + data)
+
+    for line in data:
+        print(line)
+
+    # Would like to loop through JSON file and update rows on the database.
+    # Just need to figure out how to read the JSON file.
+    team="195"
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team,1))
+    cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team,2))
+    mysql.connection.commit()
+
+    return '1'    
+
+
+
 
 
 

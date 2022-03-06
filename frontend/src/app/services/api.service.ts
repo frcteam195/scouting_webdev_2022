@@ -297,6 +297,14 @@ export class ApiService {
 
   saveFinal24(final24: Final24[]){
     localStorage.setItem('Final24', JSON.stringify(final24));
-    this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(Final24)).subscribe();
+    //this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(Final24)).subscribe();
+    var mydata = localStorage.getItem('Final24');
+
+    this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(mydata)).subscribe();
+
+    console.log("Data: "+mydata);
+    var len=mydata?.length;
+    console.log("Length: "+ len);
+
   }
 }

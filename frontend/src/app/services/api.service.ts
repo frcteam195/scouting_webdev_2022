@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {F} from "@angular/cdk/keycodes";
 import { formatDate } from '@angular/common';
 
@@ -170,8 +170,8 @@ export class ApiService {
   public CurrTeamReplay: ReplaySubject<CurrTeams[]>;
   public SummaryReplay: ReplaySubject<Summary[]>;
 
-  //private apiUrl = 'http://localhost:5000';
-  private apiUrl = 'http://10.0.9.92:5000';
+  private apiUrl = 'http://localhost:5000';
+  //private apiUrl = 'http://10.0.9.92:5000';
   //private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
   //private apiUrl = 'http://10.0.0.195:23450';     // Mark's House
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';  // AWS Test
@@ -198,7 +198,7 @@ export class ApiService {
       this.CEAReplay.next(response as CEA[]);
       // Might as well store it while we have it
       console.log("Getting Data from Database");
- 
+
       let now = new Date();
       let date = formatDate(now, 'MM/dd hh:mm a', 'en-US');
       localStorage.setItem('lastDB', date);
@@ -299,12 +299,14 @@ export class ApiService {
   saveFinal24(final24: Final24[]){
     localStorage.setItem('Final24', JSON.stringify(final24));
     //this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(Final24)).subscribe();
-    var mydata = localStorage.getItem('Final24');
+    const mydata = localStorage.getItem('Final24');
 
-    this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(mydata)).subscribe();
+
+    const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(mydata), options).subscribe();
 
     console.log("Data: "+mydata);
-    var len=mydata?.length;
+    const len = mydata?.length;
     console.log("Length: "+ len);
 
   }

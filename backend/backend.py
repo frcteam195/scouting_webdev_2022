@@ -113,17 +113,40 @@ def get_summary():
     return response
 
 
-# Get Word Cloud Data
+# Get Word Descriptions
 @app.route("/words/", methods =['GET', 'POST'])
 def get_words():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("select m.MatchNo, a.Team, a.WordID, b.Word, a.WordCount "
-                "from WordCloud a, WordID b, Events c, Matches m "
-                "where a.WordID = b.WordID "
-                "and a.EventID = c.EventID "
-                "and a.MatchID = m.MatchID "
-                "and c.CurrentEvent = 1;")
+    cursor.execute("SELECT * FROM WordID ORDER BY DisplayWordOrder;")
     data = cursor.fetchall()
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+# Get Word Cloud Data
+@app.route("/word-cloud/", methods =['GET', 'POST'])
+def get_wordcloud():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT b.* FROM Events a, WordCloud b "
+                   "WHERE a.CurrentEvent = 1 AND a.EventID = b.EventID ORDER BY b.MatchID, b.WordID;")
+    data = cursor.fetchall()
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+
+# Get Matches Data
+@app.route("/types/", methods =['GET', 'POST'])
+def get_types():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * from AnalysisTypes")
+    data = cursor.fetchall()	
     response = app.response_class(
         response=json.dumps(data),
         status=200,

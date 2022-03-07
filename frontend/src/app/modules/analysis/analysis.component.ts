@@ -1,3 +1,4 @@
+import { Types } from './../../types';
 import { Component, OnInit } from '@angular/core';
 import { ApiService, CEA, Final24 } from '../../services/api.service';
 import CeaJson from '../../cea.json';
@@ -25,6 +26,7 @@ export class AnalysisComponent implements OnInit {
 
   //apiAnalysis: CEA[] = [];
   apiFinal24List: Final24[] = [];
+  apiTypes: Types[] = [];
 
   constructor(public apiService: ApiService) {
     //this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
@@ -33,6 +35,9 @@ export class AnalysisComponent implements OnInit {
     this.analysisTypeID = 1;
     this.focusTeam = "";
 
+    this.apiService.TypesReplay.subscribe(types => {
+    this.apiTypes = types; 
+    });
   }
 
   ngOnInit(): void  {

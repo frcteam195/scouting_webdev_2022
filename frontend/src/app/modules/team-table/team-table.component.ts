@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { SelectorMatcher } from '@angular/compiler';
 import {Component, OnInit, Input, OnChanges, Output, EventEmitter} from '@angular/core';
 import { ApiService, CEA, Final24} from '../../services/api.service'
+import { Types } from 'src/app/types';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class TeamTableComponent implements OnInit, OnChanges {
 
   apiAnalysis: CEA[] = [];
   apiAnalysis_filter: CEA[] = [];
+  apiTypes: Types[] = [];
   title: String;
   team: string;
 
@@ -37,6 +39,11 @@ export class TeamTableComponent implements OnInit, OnChanges {
     this.apiService.CEAReplay.subscribe(analysis => {
       this.apiAnalysis = analysis;
       this.regenerateFilter();
+    });
+
+    // Get Analysis Type Info
+    this.apiService.TypesReplay.subscribe(types => {
+      this.apiTypes = types;
     });
 
   }
@@ -100,7 +107,7 @@ export class TeamTableComponent implements OnInit, OnChanges {
           // if count is still 0, write record
           if (rcount == 0) {
             this.apiAnalysis_filter.push(cea);
-            this.title = cea.AnalysisType;
+            //this.title = cea.AnalysisType;
           }
         }
       }
@@ -110,6 +117,18 @@ export class TeamTableComponent implements OnInit, OnChanges {
       } else {
         //this.apiAnalysis_filter.sort((a, b) => (a.Team > b.Team) ? 1 : -1);
         this.apiAnalysis_filter.sort((a, b) => Number(a.Team) -Number(b.Team));
+      }
+      // Lookup AnalysisType for Title and Description
+      for (const type of this.apiTypes) {
+        if (type.AnalysisTypeID == this.analysisTypeID) {
+          if (type.Description != null) {
+            this.title = type.AnalysisType + " (" + type.Description + ")";
+          } else {
+            this.title = type.AnalysisType;
+          }
+          
+          break; 
+        } 
       }
 
     } else {

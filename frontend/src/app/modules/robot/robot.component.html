@@ -15,10 +15,10 @@
                 </td>
             </table>
         </td>
-        <td style="width: 600px;">
-            <button (click)="setDisplay(1)" style="width: 200px; background-color: if(display=1, #969292, #CCCCCC);">Pit Data</button>
-            <button (click)="setDisplay(2)" style="width: 200px;">Picture</button>
-            <button (click)="setDisplay(3)" style="width: 200px;">Dave's Graphs</button>
+        <td style="width: 33%;">
+            <button (click)="setDisplay(1)" style="width: 33.333334%; background-color: if(display=1, #969292, #CCCCCC);">Pit Data</button>
+            <button (click)="setDisplay(2)" style="width: 33.333334%;">Picture</button>
+            <button (click)="setDisplay(3)" style="width: 33.333334%;">Dave's Graphs</button>
         </td>
     </tr>
         
@@ -36,11 +36,11 @@
             </div>
             <table border="1" *ngIf="display==2">
                 <tr>
-                    <td align="center"><img src="https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png" alt="robotnotfound" style="width:500px;"></td>
+                    <td align="center"><img src="https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png" alt="robotnotfound" style="width:95%; align-items: center;"></td>
                 </tr>
                 <tr>
                     <div *ngFor="let x of apiTeamsList">
-                        <td *ngIf="x.Team + '' == team + ''">
+                        <td *ngIf="x.Team + '' == team + ''" colspan="1">
                             <b>{{ x.RobotLength }} in. x {{ x.RobotWidth}} in. x {{ x.RobotHeight }}</b>
                         </td>
                     </div>

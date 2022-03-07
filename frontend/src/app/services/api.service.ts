@@ -1,8 +1,12 @@
+import { Word } from './../word';
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {F} from "@angular/cdk/keycodes";
 import { formatDate } from '@angular/common';
+import { relayout } from 'plotly.js-dist-min';
+import { Types } from '../types';
+import { WordCloud } from '../WordCloud';
 
 
 export class Final24 {
@@ -169,10 +173,13 @@ export class ApiService {
   public TeamsReplay: ReplaySubject<Teams[]>;
   public CurrTeamReplay: ReplaySubject<CurrTeams[]>;
   public SummaryReplay: ReplaySubject<Summary[]>;
+  public WordReplay: ReplaySubject<Word[]>;
+  public TypesReplay: ReplaySubject<Types[]>;
+  public CloudReplay: ReplaySubject<WordCloud[]>;
 
-  private apiUrl = 'http://localhost:5000';
+  //private apiUrl = 'http://localhost:5000';
   //private apiUrl = 'http://10.0.9.92:5000';
-  //private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
+  private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
   //private apiUrl = 'http://10.0.0.195:23450';     // Mark's House
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';  // AWS Test
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com/prod/';  // AWS Alternate
@@ -183,6 +190,9 @@ export class ApiService {
     this.TeamsReplay = new ReplaySubject(1);
     this.CurrTeamReplay = new ReplaySubject(1);
     this.SummaryReplay = new ReplaySubject(1);
+    this.WordReplay = new ReplaySubject(1);
+    this.TypesReplay = new ReplaySubject(1);
+    this.CloudReplay = new ReplaySubject(1);
 
     // Automatically load the data once when the application starts
     this.loadData();
@@ -274,6 +284,53 @@ export class ApiService {
         console.error('Could not load Teams data from server or cache!');
       }
     });
+
+    // First try to load a fresh copy of the data from the API
+    this.http.get<Types[]>(this.apiUrl + '/types').subscribe(response => {
+      // Store the response in the ReplaySubject, which components can use to access the data
+      this.TypesReplay.next(response as Types[]);
+      // Might as well store it while we have it
+      localStorage.setItem('Types', JSON.stringify(response));
+    }, () => {
+      try {
+        // Send the cached data
+        this.TypesReplay.next(JSON.parse(localStorage.getItem('Types')!) as Types[]);
+      } catch (err) {
+        console.error('Could not load analysis types from server or cache!');
+      }
+    });
+
+
+    // First try to load a fresh copy of the data from the API
+    this.http.get<WordCloud[]>(this.apiUrl + '/word-cloud').subscribe(response => {
+      // Store the response in the ReplaySubject, which components can use to access the data
+      this.CloudReplay.next(response as WordCloud[]);
+      // Might as well store it while we have it
+      localStorage.setItem('WordCloud', JSON.stringify(response));
+    }, () => {
+      try {
+        // Send the cached data
+        this.CloudReplay.next(JSON.parse(localStorage.getItem('WordCloud')!) as WordCloud[]);
+      } catch (err) {
+        console.error('Could not load Word Cloud data from server or cache!');
+      }
+    });    
+
+    // First try to load a fresh copy of the data from the API
+    this.http.get<Word[]>(this.apiUrl + '/words').subscribe(response => {
+      // Store the response in the ReplaySubject, which components can use to access the data
+      this.WordReplay.next(response as Word[]);
+      // Might as well store it while we have it
+      localStorage.setItem('Word', JSON.stringify(response));
+    }, () => {
+      try {
+        // Send the cached data
+        this.WordReplay.next(JSON.parse(localStorage.getItem('Word')!) as Word[]);
+      } catch (err) {
+        console.error('Could not load Word data from server or cache!');
+      }
+    });    
+	
   }
 
 

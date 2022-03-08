@@ -19,6 +19,7 @@ import { PlotlyModule } from 'angular-plotly.js';
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { AnalysisGraphComponent } from 'src/app/modules/analysis-graph/analysis-graph.component';
 import { PitDataComponent } from 'src/app/modules/pit-data/pit-data.component';
+import { SummaryGraphComponent } from 'src/app/modules/summary-graph/summary-graph.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -34,7 +35,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     TeamGraphComponent,
     AnalysisGraphComponent,
     PitDataComponent,
-    WordCloudComponent
+    WordCloudComponent,
+    SummaryGraphComponent
   ],
   imports: [
     CommonModule,

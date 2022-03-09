@@ -14,6 +14,9 @@ button {
   }
   button:hover {
       background-color: #b4afaf;
+  } 
+  button:focus {
+      background-color: #868383;
   }
 b {
     font-size: 14px;

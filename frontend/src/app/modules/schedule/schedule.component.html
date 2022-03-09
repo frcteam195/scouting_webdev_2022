@@ -1,0 +1,18 @@
+<div *ngFor="let x of apiMatchList">
+    <table border="1" align="center" width="50%" >
+        <tr>
+            <td class="titleB" (dblclick)="teamPage( x.BlueTeam1 )">{{ x.BlueTeam1 }}</td>
+            <td rowspan="3" align="center" style="font-size: large; font-weight: bold;background-color: #CCCCCC;">Match #{{ x.MatchNo }}</td>
+            <td class="titleR" (dblclick)="teamPage( x.RedTeam1 )">{{ x.RedTeam1 }}</td>
+        </tr>
+        <tr>
+            <td class="titleB" (dblclick)="teamPage( x.BlueTeam2 )">{{ x.BlueTeam2 }}</td>
+            <td class="titleR" (dblclick)="teamPage( x.RedTeam2 )">{{ x.RedTeam2 }}</td>
+        </tr>
+        <tr>
+            <td class="titleB" (dblclick)="teamPage( x.BlueTeam3 )">{{ x.BlueTeam3 }}</td>
+            <td class="titleR" (dblclick)="teamPage( x.RedTeam3 )">{{ x.RedTeam3 }}</td>
+        </tr>
+    </table>
+    <p></p>
+</div>

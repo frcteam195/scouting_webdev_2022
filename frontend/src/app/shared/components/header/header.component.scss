@@ -26,5 +26,7 @@ button {
     font-family: Verdana, sans-serif;
   }
   button:hover {
+      background-color: rgb(148, 1, 148);
+  } button:focus {
       background-color: purple;
   }

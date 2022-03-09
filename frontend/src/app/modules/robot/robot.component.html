@@ -1,7 +1,7 @@
 <table border="1" width="100%">
     <tr>
         <td>
-            <table border="1">
+            <table>
                 <td>
                     <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName" ngModel (ngModelChange)="setTeam(teamSelect.value)" size="4"/>
                     <datalist id="productName">
@@ -16,9 +16,9 @@
             </table>
         </td>
         <td style="width: 33%;">
-            <button (click)="setDisplay(1)" style="width: 33.333334%; background-color: if(display=1, #969292, #CCCCCC);">Pit Data</button>
+            <button (click)="setDisplay(1)" style="width: 33.333334%;" id="pitData">Pit Data</button>
             <button (click)="setDisplay(2)" style="width: 33.333334%;">Picture</button>
-            <button (click)="setDisplay(3)" style="width: 33.333334%;">Dave's Graphs</button>
+            <button (click)="setDisplay(3)" style="width: 33.333334%;">Graphs</button>
         </td>
     </tr>
         

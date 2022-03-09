@@ -66,42 +66,93 @@
                             <br>
                             <button (click)="changeView(viewType)">{{ viewType == 1 ? 'Graph View' : 'Table View' }}</button>
                             <br>
-                          <button (click)="apiService.saveFinal24(apiFinal24List)">Save to server</button>
+                            <button (click)="apiService.saveFinal24(apiFinal24List)">Save to server</button>
+                            <br>
+                            <br>
+                            Compare
+                            <form [formGroup]="compareForm" (ngSubmit)="compareTeams(compareForm.value)">
+                                <input id="team1" type="text" size="3" formControlName="team1"><br>
+                                <input id="team2" type="text" size="3" formControlName="team2"><br>
+                                <input id="team3" type="text" size="3" formControlName="team3"><br>
+                                <input id="team4" type="text" size="3" formControlName="team4"><br>
+                                <input id="team5" type="text" size="3" formControlName="team5"><br>
+                                <button class="button" type="submit">{{ filter == 1 ? 'Compare Off' : 'Compare' }}</button>
+                            </form>                                       
                         </td>
                     </tr>
                 </table>
             </td>
             <td>
+                <!-- Start of the Regular View -->
+                <div [hidden]="fullShow">
                 <div [hidden]="tableShow">
                 <table>
                     <tr>
                         <td>
-                            <app-team-table [analysisTypeID]=analysis1 [teamList]=apiFinal24List [sort]=sortType  [focus]=focusTeam (sendTeamEvent)="print_team($event)"></app-team-table>
+                            <app-team-table [analysisTypeID]=analysis1 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table>
                         </td>
                         <td width="20">
                             &nbsp;
                         </td>
                         <td>
-                            <app-team-table [analysisTypeID]=analysis2 [teamList]=apiFinal24List [sort]=sortType  [focus]=focusTeam (sendTeamEvent)="print_team($event)"></app-team-table>
+                            <app-team-table [analysisTypeID]=analysis2 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table>
                         </td>
                     </tr>
                 </table>
                 </div>
                 <div [hidden]="graphShow">
+                    <table>
+                        <tr>
+                            <td>
+                                <app-team-graph [analysisTypeID]=analysis1 [teamList]=filterList [filter]=filter></app-team-graph>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <app-team-graph [analysisTypeID]=analysis2 [teamList]=filterList [filter]=filter></app-team-graph>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
+                <!-- Start of the Compare View -->
+                <div [hidden]="compareShow">
+                    <div [hidden]="tableShow">
+                    <table>
+                        <tr>
+                            <td>
+                                <app-team-table [analysisTypeID]=10 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                                <app-team-table [analysisTypeID]=20 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                                <app-team-table [analysisTypeID]=21 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                                <app-team-table [analysisTypeID]=60 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table>
+                            </td>
+                            <td width="20">
+                                &nbsp;
+                            </td>
+                            <td>
+                                <app-team-table [analysisTypeID]=11 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                                <app-team-table [analysisTypeID]=22 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                                <app-team-table [analysisTypeID]=30 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                                <app-team-table [analysisTypeID]=61 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div [hidden]="graphShow">
                 <table>
                     <tr>
                         <td>
-                            <app-team-graph [analysisTypeID]=analysis1 [teamList]=apiFinal24List></app-team-graph>
+                            <app-team-graph [analysisTypeID]=analysis1 [teamList]=filterList [filter]=filter></app-team-graph>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <app-team-graph [analysisTypeID]=analysis2 [teamList]=apiFinal24List></app-team-graph>
+                            <app-team-graph [analysisTypeID]=analysis2 [teamList]=filterList [filter]=filter></app-team-graph>
                         </td>
                     </tr>
                 </table>
                 </div>
-
+                </div>
             </td>
         </tr>
     </table>

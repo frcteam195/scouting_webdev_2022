@@ -20,15 +20,29 @@ export class AnalysisComponent implements OnInit {
   type: number = 1;
   sortType: number = 1;
   viewType: number = 1;
-  graphShow = true;
   tableShow = false;  //show table view by default
+  graphShow = true;
+  fullShow = false;  //show full view by default, not compare
+  compareShow = true;
   focusTeam: string;
 
   //apiAnalysis: CEA[] = [];
   apiFinal24List: Final24[] = [];
   apiTypes: Types[] = [];
 
-  constructor(public apiService: ApiService) {
+  compareForm = this.formBuilder.group({
+    team1: '',
+    team2: '',
+    team3: '',
+    team4: '',
+    team5: ''
+  });
+
+  compareList: Final24[]=[];
+  filterList: Final24[]=[];
+  filter: number = 0;
+
+  constructor(public apiService: ApiService, private formBuilder: FormBuilder) {
     //this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
     //this.apiService.Final24Replay.subscribe((final24) => (this.apiFinal24List = final24));
     this.apiFinal24List = [new Final24()];
@@ -43,11 +57,16 @@ export class AnalysisComponent implements OnInit {
   ngOnInit(): void  {
     // we will initialize our form here
      this.apiService.getFinal24().then(response => this.apiFinal24List = response);
+     this.filterList = this.apiFinal24List;
+     this.filter = 0;
   }
 
   teamSelectionChange() {
     // Angular won't detect changes inside an array - so set the array to a new array to force the change detection to fire
     this.apiFinal24List = this.apiFinal24List.slice();
+    // Logic to turn filter back off
+    this.filterList = this.apiFinal24List;
+    this.filter = 0;
   }
 
   addEnd() {
@@ -75,6 +94,30 @@ export class AnalysisComponent implements OnInit {
     }
 
   }
+
+  compareTeams(data: { team1: string; team2: string; team3: string; team4: string; team5: string;}): void {
+    
+    this.compareList = [];
+
+    if (this.filter == 0 ) {
+      this.compareList.push({Team: data.team1});
+      this.compareList.push({Team: data.team2});
+      this.compareList.push({Team: data.team3});
+      this.compareList.push({Team: data.team4});
+      this.compareList.push({Team: data.team5});
+  
+      this.filterList = this.compareList;
+      this.filter = 1;
+
+    } else {
+      // Logic to turn filter back off
+      this.filterList = this.apiFinal24List;
+      this.filter = 0;
+    }
+
+    this.compareShow = !this.compareShow;
+    this.fullShow = !this.fullShow;
+ }
 
   // Deteremine the Analysis Types to send to the team-table component
   changeDisplay(type: number) {

@@ -6,7 +6,7 @@ import {F} from "@angular/cdk/keycodes";
 import { formatDate } from '@angular/common';
 import { relayout } from 'plotly.js-dist-min';
 import { Types } from '../types';
-import { WordCloud } from '../WordCloud';
+import { WordCloud } from '../wordcloud';
 
 
 export class Final24 {

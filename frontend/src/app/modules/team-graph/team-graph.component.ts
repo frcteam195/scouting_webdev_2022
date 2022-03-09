@@ -11,6 +11,7 @@ export class TeamGraphComponent implements OnInit {
 
   @Input() teamList: Final24[];
   @Input() analysisTypeID: Number | undefined;
+  @Input() filter: number;
 
   apiAnalysis: CEA[] = [];
   apiAnalysis_filter: CEA[] = [];
@@ -21,6 +22,7 @@ export class TeamGraphComponent implements OnInit {
   graphData: any[];
 
   team1 = "195";
+  fFlag: string;
 
 
   public graph = {
@@ -39,6 +41,8 @@ export class TeamGraphComponent implements OnInit {
     this.match = [];
     this.graphData = [];
     this.analysisType = "";
+    this.filter = 0;
+    this.fFlag = "N";
 
    }
 
@@ -68,16 +72,24 @@ export class TeamGraphComponent implements OnInit {
       for (const cea of this.apiAnalysis){
         if (cea.AnalysisTypeID == this.analysisTypeID) {
           rcount = 0;   // set count to 0
+          this.fFlag = "N";
           for (const team of this.teamList) {
 
             if (cea.Team == team.Team) {
-              rcount=rcount+1; // increament count
-              break;
+              if (this.filter == 0) {
+                rcount = rcount+1;// increment count
+                //team.Team = "";
+                break;
+              } else {
+                //this.apiAnalysis_filter.push(cea);
+                this.fFlag = "Y";
+              }
             }
           }
           let yValueList = [];
-          // if count is still 0, write record
-          if (rcount == 0) {
+          // if count is still 0, write record if filter value is off
+          // if fFlag is Y, write record if filter value is on
+          if ((rcount == 0 && this.filter == 0) || (this.fFlag == "Y" && this.filter == 1)) {
             this.team = cea.Team;
 
             yValueList.push(cea.Match1Value);

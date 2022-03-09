@@ -199,8 +199,12 @@ def post_final24():
     # the rows and get SortOrder from the position of the row. Something like
 
     with mysql.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
+        cursor.execute('DELETE from Final24 where SortOrder > 0')
+        mysql.connection.commit()
         for pos, team_selection in enumerate(data):
-            cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team_selection['Team'],pos+1))
+            #cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team_selection['Team'],pos+1))
+            cursor.execute('INSERT INTO Final24 VALUES (%s, %s) ON DUPLICATE KEY UPDATE Team=%s',
+                         (pos+1), team_selection['Team'],team_selection['Team'])
         mysql.connection.commit()
 
     return '1'

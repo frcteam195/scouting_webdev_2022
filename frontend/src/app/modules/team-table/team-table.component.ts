@@ -16,6 +16,7 @@ export class TeamTableComponent implements OnInit, OnChanges {
   @Input() analysisTypeID: Number | undefined;
   @Input() sort: Number;
   @Input() focus: string;
+  @Input() filter: number;
 
   @Output() sendTeamEvent = new EventEmitter<string>();
 
@@ -24,6 +25,7 @@ export class TeamTableComponent implements OnInit, OnChanges {
   apiTypes: Types[] = [];
   title: String;
   team: string;
+  fFlag: string;
 
 
   constructor(private apiService: ApiService, private router: Router) {
@@ -34,6 +36,8 @@ export class TeamTableComponent implements OnInit, OnChanges {
     this.sort = 1;
     this.team = "";
     this.focus = "999";
+    this.filter = 0;
+    this.fFlag = "N";
 
     // Update the filter whenever the inputting data changes
     this.apiService.CEAReplay.subscribe(analysis => {
@@ -96,18 +100,25 @@ export class TeamTableComponent implements OnInit, OnChanges {
       for (const cea of this.apiAnalysis){
         if (cea.AnalysisTypeID == this.analysisTypeID) {
           rcount = 0;   // set count to 0
+          this.fFlag = "N";
           for (const team of this.teamList) {
             //console.log("cea.Team: [" + cea.Team + "] Team: [" + team.Team + "]");
             if (cea.Team == team.Team) {
-              rcount = rcount+1;// increment count
-              //team.Team = "";
-              break;
-            }
+              if (this.filter == 0) {
+                rcount = rcount+1;// increment count
+                //team.Team = "";
+                break;
+              } else {
+                //this.apiAnalysis_filter.push(cea);
+                this.fFlag = "Y";
+              }
+            } 
           }
-          // if count is still 0, write record
-          if (rcount == 0) {
+          // if count is still 0, write record if filter value is off
+          // if fFlag is Y, write record if filter value is on
+          if ((rcount == 0 && this.filter == 0) || (this.fFlag == "Y" && this.filter == 1)) {
             this.apiAnalysis_filter.push(cea);
-            //this.title = cea.AnalysisType;
+            
           }
         }
       }

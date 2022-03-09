@@ -1,3 +1,5 @@
+import { SummaryGraphComponent } from './../../modules/summary-graph/summary-graph.component';
+import { ScheduleComponent } from './../../modules/schedule/schedule.component';
 import { WordCloudComponent } from './../../modules/word-cloud/word-cloud.component';
 import { TeamGraphComponent } from './../../modules/team-graph/team-graph.component';
 import { TeamTableComponent } from './../../modules/team-table/team-table.component';
@@ -35,7 +37,9 @@ PlotlyModule.plotlyjs = PlotlyJS;
     TeamGraphComponent,
     AnalysisGraphComponent,
     PitDataComponent,
-    WordCloudComponent
+    WordCloudComponent,
+    ScheduleComponent,
+    SummaryGraphComponent
 
   ],
   imports: [

@@ -141,26 +141,28 @@ export interface CurrTeams {
 }
 
 export interface Summary {
-  AutonomousMean: Number;
-  AutonomousMedian: Number;
-  AutonomousScoreMean: Number;
-  AutonomousScoreMedian: Number;
-  ClimbMean: Number;
-  ClimbMedian: Number;
-  EventID: Number;
-  Team: String;
-  TeleBallScoreMean: Number;
-  TeleBallScoreMedian: Number;
-  TeleHighBallsMean: Number;
-  TeleHighBallsMedian: Number;
-  TeleLowBallsMean: Number;
-  TeleLolBallsMedian: Number;
-  TeleTotalBallsMean: Number;
-  TeleTotalBallsMedian: Number;
-  TotalBallsMean: Number;
-  TotalBallsMedian: Number;
-  TotalSCoreMean: Number;
-  TotalScoreMedian: Number;
+  AnalysisType: string;
+  Summary2Value: number;
+  AutonomousMean: number;
+  AutonomousMedian: number;
+  AutonomousScoreMean: number;
+  AutonomousScoreMedian: number;
+  ClimbMean: number;
+  ClimbMedian: number;
+  EventID: number;
+  Team: string;
+  TeleBallScoreMean: number;
+  TeleBallScoreMedian: number;
+  TeleHighBallsMean: number;
+  TeleHighBallsMedian: number;
+  TeleLowBallsMean: number;
+  TeleLolBallsMedian: number;
+  TeleTotalBallsMean: number;
+  TeleTotalBallsMedian: number;
+  TotalBallsMean: number;
+  TotalBallsMedian: number;
+  TotalSCoreMean: number;
+  TotalScoreMedian: number;
 }
 
 @Injectable({

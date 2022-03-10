@@ -179,12 +179,14 @@ export class ApiService {
   public TypesReplay: ReplaySubject<Types[]>;
   public CloudReplay: ReplaySubject<WordCloud[]>;
 
-  private apiUrl = 'http://localhost:5000';
+  //private apiUrl = 'http://localhost:5000';
   //private apiUrl = 'http://10.0.9.92:5000';
   //private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
   //private apiUrl = 'http://10.0.0.195:23450';     // Mark's House
-  //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';  // AWS Test
+  private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';  // AWS Test
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com/prod/';  // AWS Alternate
+
+  status: string = "";
 
   constructor(private http: HttpClient) {
     this.CEAReplay = new ReplaySubject(1);
@@ -359,7 +361,9 @@ export class ApiService {
     localStorage.setItem('Final24', JSON.stringify(final24));
 
     const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
-    this.http.post<Final24[]>(this.apiUrl + '/final24', JSON.stringify(final24), options).subscribe();
+    //this.http.delete(this.apiUrl + '/final24').subscribe(() => this.status = 'Delete successful');
+    
+    this.http.post<Final24[]>(this.apiUrl + '/final24-update', JSON.stringify(final24), options).subscribe();
 
     console.log("Data: ", final24);
     const len = JSON.stringify(final24)?.length;

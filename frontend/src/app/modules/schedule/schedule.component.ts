@@ -9,6 +9,8 @@ import { Matches } from '../../matches';
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
+  @Input() isOdd: number; //1 = odd, 0 = even
+
   redTeam1: string = "195";
   redTeam2: string = "195";
   redTeam3: string = "195";
@@ -21,8 +23,7 @@ export class ScheduleComponent implements OnInit {
   apiMatchList: Matches[] = [];  
 
   constructor(private apiService: ApiService, private router: Router) {
-
-
+    this.isOdd=0;
   }
 
   getMatch(match: number) {

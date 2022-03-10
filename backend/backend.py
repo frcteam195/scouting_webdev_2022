@@ -176,18 +176,13 @@ def get_final24():
  """
 
 # Get Matches Data
-@app.post("/final24")
+@app.post("/final24-update")
 def post_final24():
     # TODO: IMPLEMENT ME
-    #my_data = FinalOut.query.get(request.form.get(10))
-    #my_data.Team = request.form['123']
-    #mysql.session.commit()
 
     if not request.is_json:
         return Response('Invalid submission, please submit as JSON.', status=400)
     data = request.json
-
-    print("Data: ", data)
 
     for line in data:
         print(line)
@@ -199,15 +194,36 @@ def post_final24():
     # the rows and get SortOrder from the position of the row. Something like
 
     with mysql.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
-        cursor.execute('DELETE from Final24 where SortOrder > 0')
-        mysql.connection.commit()
+        #cursor.execute('DELETE from Final24 where SortOrder > 24')
+        #mysql.connection.commit()
         for pos, team_selection in enumerate(data):
             #cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team_selection['Team'],pos+1))
-            cursor.execute('INSERT INTO Final24 VALUES (%s, %s) ON DUPLICATE KEY UPDATE Team=%s',
-                         (pos+1), team_selection['Team'],team_selection['Team'])
+            cursor.execute('INSERT INTO Final24 VALUES (%s, %s) ON DUPLICATE KEY UPDATE Team=%s',(pos+1, team_selection['Team'],team_selection['Team']))
         mysql.connection.commit()
 
     return '1'
+
+
+# Get Matches Data
+@app.delete("/final24")
+def delete_final24():
+    # TODO: IMPLEMENT ME
+
+    #if not request.is_json:
+    #    return Response('Invalid submission, please submit as JSON.', status=400)
+    #data = request.json
+
+    # Would like to loop through JSON file and delete rows on the database.
+    # Just need to figure out how to read the JSON file.
+    print("*******Deleting Records*********")
+    with mysql.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
+      
+        cursor.execute('DELETE from Final24 where SortOrder > 0')
+        mysql.connection.commit()
+
+    return '1'
+
+
 
 
 

@@ -71,10 +71,17 @@ export class AnalysisTableComponent implements OnInit {
       //console.log("Analysis Count: [" + analysisTypes.length + "]");
 
       // Filter
+      var url;
       let rcount = 0;
       for (const cea of this.apiAnalysis){
         if (cea.Team == this.selectedTeam) {
           if (analysisTypes.includes(cea.AnalysisTypeID)) {
+            
+           /*  if (cea.AnalysisTypeID == 70 ) {
+              url = "\<a href='C:\\ck\\video\\"+cea.Match4Display+".mp4'>"+cea.Match4Display+"</a>";
+              cea.Match4Display = url;
+            } */
+            
             this.apiAnalysis_filter.push(cea);
           }
          }

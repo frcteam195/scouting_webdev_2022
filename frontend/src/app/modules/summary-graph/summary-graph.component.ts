@@ -13,6 +13,13 @@ export class SummaryGraphComponent implements OnInit {
   title: string;
   team: string;
   analysisType: string;
+  graphData: any[];
+
+
+  public graph = {
+    data: [    { x: [], y: [], type: 'bar', name: '195'}],
+    layout: {width: 640, height: 480, title: '195'}
+  };
 
   selectedTeam: string;
   analysisTypeID: number;
@@ -28,6 +35,7 @@ export class SummaryGraphComponent implements OnInit {
     this.analysisTypeID = 0;
     this.team = "195";
     this.analysisType = "";
+    this.graphData = [];
 
     // Update the filter whenever the inputting data changes
       this.apiService.SummaryReplay.subscribe(summary => {
@@ -36,6 +44,7 @@ export class SummaryGraphComponent implements OnInit {
     });
   }
 
+  
     
     regenerateFilter() {
       //console.log("regenerateFilter: Analysis Passed to Component: " + this.selectedTeam);
@@ -71,7 +80,74 @@ export class SummaryGraphComponent implements OnInit {
         
         console.log("Total Balls: ",  ballsList);
 
-        this.chartOptions = {
+        var trace1 = {
+          x: [teamList],
+          y: [autoList],
+          name: 'Autonomous Mean',
+          type: 'bar'
+        };
+        var trace2 = {
+          x: [teamList],
+          y: [ballsList],
+          name: 'Auto Total Balls Mean',
+          type: 'bar'
+        };
+        var trace3 = {
+          x: [teamList],
+          y: [scoreList],
+          name: 'Auto Total Score Mean',
+          type: 'bar'
+        };
+        var trace4 = {
+          x: [teamList],
+          y: [climbList],
+          name: 'Auto Score Mean',
+          type: 'bar'
+        };
+        var trace5 = {
+          x: [teamList],
+          y: [upperList],
+          name: 'Tele Upper Ball Mean',
+          type: 'bar'
+        };
+        var trace6 = {
+          x: [teamList],
+          y: [lowerList],
+          name: 'Tele Lower Ball Mean',
+          type: 'bar'
+        };
+        var trace7 = {
+          x: [teamList],
+          y: [totalList],
+          name: 'Tele Total Ball Mean',
+          type: 'bar'
+        };
+
+//[trace1, trace2, trace3, trace4, trace5, trace6, trace7],
+        this.graphData.push(trace1);
+        this.graphData.push(trace2);
+        this.graphData.push(trace3);
+        this.graphData.push(trace4);
+        this.graphData.push(trace5);
+        this.graphData.push(trace6);
+        this.graphData.push(trace7);
+
+        this.graph = {
+        data: this.graphData,
+        layout: {width: 1000, height: 360, title: this.analysisType}
+        //layout: {barmode: 'stack'}
+        };
+
+
+        /*this.chartOptions = {
+
+
+          
+
+         
+          
+
+
           series: [
             {
               name: "Auto Mean",
@@ -83,7 +159,7 @@ export class SummaryGraphComponent implements OnInit {
             },
             {
               name: "Total Score Mean",
-              data: climbList
+              data: scoreList
             },
             {
               name: "Climb Mean",
@@ -143,7 +219,7 @@ export class SummaryGraphComponent implements OnInit {
           fill: {
             opacity: 1
           }
-        };
+        }; */
       }
       
     } 

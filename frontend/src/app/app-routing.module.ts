@@ -5,6 +5,7 @@ import { RobotComponent } from './modules/robot/robot.component';
 import { DefaultComponent } from './layouts/default/default.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MobileComponent } from './modules/mobile/mobile.component';
 
 const routes: Routes = [{
   path: '',
@@ -24,7 +25,10 @@ const routes: Routes = [{
   },{
     path: 'analysis',
     component: AnalysisComponent
-  }]
+  }], 
+}, {
+  path: 'mobile',
+  component: MobileComponent
 }];
 
 @NgModule({

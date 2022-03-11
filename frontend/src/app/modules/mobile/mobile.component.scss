@@ -1,0 +1,18 @@
+button {
+    border: none;
+    color: white;
+    background-color: darkorchid;
+    padding: 20px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Verdana, sans-serif;
+  }
+  button:hover {
+      background-color: rgb(148, 1, 148);
+  } button:focus {
+      background-color: purple;
+  }

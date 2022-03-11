@@ -1,0 +1,41 @@
+<table width="760px" style="background-color: darkorchid;" align="center">
+    <tr>
+        <td><button style="width: 100%;" (click)="setDisplay(1)">Match Report</button></td>
+        <td><button style="width: 100%;" (click)="setDisplay(2)">Robo Snapshot</button></td>
+    </tr>
+</table>
+<table width="760px" align="center">
+    <tr *ngIf="display==0">
+        <table align="center" width="100%">
+            <tr>
+                <th style="background-color: white;font-size: large;">
+                    Welcome to the Cyberscouter&trade;!
+                </th>
+            </tr>
+            <tr>
+                <td style="font-size: medium;">
+                    Here you can acess all of the data for our matches. 
+                    The robot snapshot allows you to see infividual profiles of each robot. 
+                    The math report has reports of differents matches with data from each robot in the alliance.
+                </td>
+            </tr>
+            <p></p>
+            <tr>
+                <td align="center"><img src="https://cdn.discordapp.com/attachments/830144707794305064/950545078684889088/g.JPG" alt="logo"></td>
+            </tr>
+        </table>
+        <p></p>
+        <table border="0" width="100%" align="center">
+            <tr>
+                <td><app-schedule [isOdd]="1"></app-schedule></td>
+                <td><app-schedule></app-schedule></td>
+            </tr>
+        </table>
+    </tr>
+    <tr *ngIf="display==1">
+        Goodbye
+    </tr>
+    <tr *ngIf="display==2">
+        Goodbye
+    </tr>
+</table>

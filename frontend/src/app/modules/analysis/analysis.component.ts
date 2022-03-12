@@ -20,10 +20,12 @@ export class AnalysisComponent implements OnInit {
   type: number = 1;
   sortType: number = 1;
   viewType: number = 1;
+  summType: number = 1;
   tableShow = false;  //show table view by default
   graphShow = true;
   fullShow = false;  //show full view by default, not compare
   compareShow = true;
+  summaryShow = true;
   focusTeam: string;
 
   //apiAnalysis: CEA[] = [];
@@ -35,7 +37,10 @@ export class AnalysisComponent implements OnInit {
     team2: '',
     team3: '',
     team4: '',
-    team5: ''
+    team5: '',
+    team6: '',
+    team7: '',
+    team8: ''
   });
 
   compareList: Final24[]=[];
@@ -52,6 +57,7 @@ export class AnalysisComponent implements OnInit {
     this.apiService.TypesReplay.subscribe(types => {
     this.apiTypes = types; 
     });
+    
   }
 
   ngOnInit(): void  {
@@ -95,7 +101,7 @@ export class AnalysisComponent implements OnInit {
 
   }
 
-  compareTeams(data: { team1: string; team2: string; team3: string; team4: string; team5: string;}): void {
+  compareTeams(data: { team1: string; team2: string; team3: string; team4: string; team5: string; team6: string; team7: string; team8: string;}): void {
     
     this.compareList = [];
 
@@ -105,6 +111,9 @@ export class AnalysisComponent implements OnInit {
       this.compareList.push({Team: data.team3});
       this.compareList.push({Team: data.team4});
       this.compareList.push({Team: data.team5});
+      this.compareList.push({Team: data.team6});
+      this.compareList.push({Team: data.team7});
+      this.compareList.push({Team: data.team8});
   
       this.filterList = this.compareList;
       this.filter = 1;
@@ -121,7 +130,7 @@ export class AnalysisComponent implements OnInit {
 
   // Deteremine the Analysis Types to send to the team-table component
   changeDisplay(type: number) {
-    console.log("Display Type: " + type)
+    //console.log("Display Type: " + type)
     if (type == 1) {
       this.analysis1 = 10;
       this.analysis2 = 11;
@@ -156,13 +165,13 @@ export class AnalysisComponent implements OnInit {
        this.analysis1 = 10;
        this.analysis2 = 11;
     }
-    console.log("Left Table: " + this.analysis1 + ", Right Table: " + this.analysis2 );
+    //console.log("Left Table: " + this.analysis1 + ", Right Table: " + this.analysis2 );
 
   }
 
   changeSort(type: number) {
 
-    console.log("Sort Type: " + type)
+    //console.log("Sort Type: " + type)
     if (type == 1) {
       this.sortType = 2;
     } else {
@@ -170,9 +179,18 @@ export class AnalysisComponent implements OnInit {
     }
   }
 
+  summaryView(view: number) {
+    if (view == 1) {
+      this.summType = 2;
+    } else {
+      this.summType = 1;
+    }
+    this.summaryShow = !this.summaryShow;
+  }
+
   changeView(view: number) {
 
-    console.log("View Type: " + view)
+    //console.log("View Type: " + view)
     if (view == 1) {
       this.viewType = 2;
     } else {
@@ -181,7 +199,7 @@ export class AnalysisComponent implements OnInit {
     this.graphShow = !this.graphShow;
     this.tableShow = !this.tableShow;
 
-    console.log("Graph: " + this.graphShow + " Table: " + this.tableShow);
+    //console.log("Graph: " + this.graphShow + " Table: " + this.tableShow);
   }
 
 
@@ -200,7 +218,7 @@ export class AnalysisComponent implements OnInit {
   }
 
   print_team(team: string) {
-    console.log("Team Passed back from Child: " + team);
+    //console.log("Team Passed back from Child: " + team);
     this.focusTeam = team;
   }
   

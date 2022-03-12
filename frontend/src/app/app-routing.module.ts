@@ -6,6 +6,7 @@ import { DefaultComponent } from './layouts/default/default.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MobileComponent } from './modules/mobile/mobile.component';
+import { ScheduleComponent } from './modules/schedule/schedule.component';
 
 const routes: Routes = [{
   path: '',
@@ -23,8 +24,14 @@ const routes: Routes = [{
       path: 'match',
       component: MatchComponent    
   },{
+    path: 'match/:match',
+    component: MatchComponent
+  },{
     path: 'analysis',
     component: AnalysisComponent
+  },{
+    path: 'schedule',
+    component: ScheduleComponent
   }], 
 }, {
   path: 'mobile',

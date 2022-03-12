@@ -44,7 +44,6 @@ PlotlyModule.plotlyjs = PlotlyJS;
     SummaryGraphComponent,
     MobileComponent,
     RobotInfoComponent
-
   ],
   imports: [
     CommonModule,

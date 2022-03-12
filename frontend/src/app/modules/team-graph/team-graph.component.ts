@@ -60,7 +60,7 @@ export class TeamGraphComponent implements OnInit {
   }
 
   regenerateFilter() {
-    console.log("Analysis Passed to Component: " + this.analysisTypeID);
+    //console.log("Analysis Passed to Component: " + this.analysisTypeID);
 
     if (this.apiAnalysis && this.apiAnalysis.length) {
 

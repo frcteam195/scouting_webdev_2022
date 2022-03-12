@@ -1,5 +1,5 @@
 <header fxLayoutAlign="space-between center">
-    <div><b>&emsp;CyberScouter 2022</b></div>
+    <div><b>&emsp;CyberScouter 2022</b></div><p>Last Update: {{ lastDBtime }}</p>
     <div fxLayout="row">
         <a routerLink="/"><button type="button" (click)="setDisplay(1)" [ngClass]="{'selected': display == 1}">Home</button></a>
         <a routerLink="/analysis"><button type="button" (click)="setDisplay(2)" [ngClass]="{'selected': display == 2}">Team Picker</button></a> 

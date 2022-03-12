@@ -53,7 +53,7 @@ export class TeamTableComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log("Analysis Passed to Component: " + this.analysisTypeID);
+    //console.log("Analysis Passed to Component: " + this.analysisTypeID);
   }
 
   ngOnChanges() {
@@ -62,13 +62,13 @@ export class TeamTableComponent implements OnInit, OnChanges {
   }
 
   localSort(type: number) {
-    console.log("Local Sort Type: " + type)
+    //console.log("Local Sort Type: " + type)
     this.sort = type;
     this.regenerateFilter();
   }
 
   teamPage(team: string) {
-    console.log("Calling Robot Page with: " + team)
+    //console.log("Calling Robot Page with: " + team)
     //this.router.navigateByUrl('/robot/'+team);
     // Opens in New Tab
     this.router.navigate([]).then(result => { window.open('#/robot/'+team, '_blank'); }); 
@@ -81,7 +81,7 @@ export class TeamTableComponent implements OnInit, OnChanges {
         console.log("Highlight off");
     } else {
       this.team = team;
-      console.log("Highlighting Robot: " + team);
+      //console.log("Highlighting Robot: " + team);
     }
     
     // Send team back to parent component
@@ -90,7 +90,7 @@ export class TeamTableComponent implements OnInit, OnChanges {
   }
 
   regenerateFilter() {
-    console.log("Analysis Passed to Component: " + this.analysisTypeID);
+    //console.log("Analysis Passed to Component: " + this.analysisTypeID);
 
     if (this.apiAnalysis && this.apiAnalysis.length && this.teamList && this.teamList.length) {
 

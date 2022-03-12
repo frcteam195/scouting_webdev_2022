@@ -8,6 +8,7 @@
                 <button (click)="changeDisplay(2)">Low|High</button>
                 <button (click)="changeDisplay(3)">Cargo|Score</button>
                 <button (click)="changeDisplay(4)">Tele|Climb</button>
+                <button (click)="summaryView(summType)">{{ summType == 1 ? 'Summary On' : 'Summary Off' }}</button>
 <!--                 <button (click)="changeDisplay(5)">GPickup|DAgainst</button>
                 <button (click)="changeDisplay(6)">Launch|Sort</button>
                 <button (click)="changeDisplay(7)">Shoot Drive|T Pickup</button>
@@ -76,14 +77,28 @@
                                 <input id="team3" type="text" size="3" formControlName="team3"><br>
                                 <input id="team4" type="text" size="3" formControlName="team4"><br>
                                 <input id="team5" type="text" size="3" formControlName="team5"><br>
+                                <input id="team3" type="text" size="3" formControlName="team6"><br>
+                                <input id="team4" type="text" size="3" formControlName="team7"><br>
+                                <input id="team5" type="text" size="3" formControlName="team8"><br>
                                 <button class="button" type="submit">{{ filter == 1 ? 'Compare Off' : 'Compare' }}</button>
-                            </form>                                       
+                            </form>
+                            <br>
+                            DNP
                         </td>
                     </tr>
                 </table>
             </td>
             <td>
                 <!-- Start of the Regular View -->
+                <div [hidden]="summaryShow">
+                    <table>
+                        <tr>
+                            <td>
+                                <app-summary-graph [teamList]=filterList [filter]=filter></app-summary-graph>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <div [hidden]="fullShow">
                 <div [hidden]="tableShow">
                 <table>

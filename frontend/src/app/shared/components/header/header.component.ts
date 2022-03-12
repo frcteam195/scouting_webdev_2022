@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+
+  lastDBtime: string;
+
+
+  constructor() { 
+
+    this.lastDBtime = "";
+
   display: number;
 
   constructor() { 
@@ -15,9 +23,11 @@ export class HeaderComponent implements OnInit {
 
   setDisplay(ID: number){
     this.display=ID;
+
   }
 
   ngOnInit(): void {
+    this.lastDBtime = localStorage.getItem('lastDB') || "";
   }
 
 }

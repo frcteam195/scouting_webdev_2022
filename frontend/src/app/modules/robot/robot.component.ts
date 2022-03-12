@@ -35,13 +35,8 @@ export class RobotComponent implements OnInit {
   }
 
   ngOnInit(): void {
- /*    this.route.queryParams.subscribe(params => {
-      this.team = params['team'];
-    }); */
-    //const team = this.route.snapshot.paramMap.get('team');
-    ;
     this.team = this.route.snapshot.paramMap.get('team') || '';
-    console.log("Check Robot: " + this.team)
+    //console.log("Check Robot: " + this.team)
   }
 
   

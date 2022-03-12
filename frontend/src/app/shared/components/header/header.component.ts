@@ -9,15 +9,12 @@ export class HeaderComponent implements OnInit {
 
 
   lastDBtime: string;
-
+  display: number;
 
   constructor() { 
 
     this.lastDBtime = "";
 
-  display: number;
-
-  constructor() { 
     this.display=1;
   }
 

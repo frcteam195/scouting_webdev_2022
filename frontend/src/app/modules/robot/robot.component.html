@@ -5,7 +5,7 @@
                 <td>
                     <input #teamSelect type="string" id="teamSelect" name="teamSelect" list="productName" ngModel (ngModelChange)="setTeam(teamSelect.value)" size="4"/>
                     <datalist id="productName">
-                    <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
+                        <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
                     </datalist>
                 </td>
                 <td style="vertical-align: middle;">
@@ -15,10 +15,12 @@
                 </td>
             </table>
         </td>
+        <th style="background-color: white;font-size: x-large;">General Info</th>
         <td style="width: 33%;">
-            <button (click)="setDisplay(1)" style="width: 33.333334%;" id="pitData">Pit Data</button>
-            <button (click)="setDisplay(2)" style="width: 33.333334%;">Picture</button>
-            <button (click)="setDisplay(3)" style="width: 33.333334%;">Graphs</button>
+            <button (click)="setDisplay(1)" style="width: 25%;" id="pitData" [ngClass]="{'selected': display == 1}">Pit Data</button>
+            <button (click)="setDisplay(2)" style="width: 25%;" [ngClass]="{'selected': display == 2}">Picture</button>
+            <button (click)="setDisplay(3)" style="width: 25%;" [ngClass]="{'selected': display == 3}">Graphs</button>
+            <button (click)="setDisplay(4)" style="width: 25%;" [ngClass]="{'selected': display == 4}">Word Cloud</button>
         </td>
     </tr>
         
@@ -30,23 +32,57 @@
             <br>
             <app-analysis-table  [analysisGroup]=4 [selectedTeam]=team></app-analysis-table> 
         </td>
+        <td style="width: 25%;">
+            <table border="1" width="100%">
+                <tr>
+                    <td>Auto Accuracy: </td>
+                    <td>Auto total scored / auto total missed</td>
+                </tr>
+                <tr>
+                    <td>Auto Accuracy High: </td>
+                    <td>Auto total scored / auto total missed</td>
+                </tr>
+                <tr>
+                    <td>Auto Accuracy Low: </td>
+                    <td>Auto total scored / auto total missed</td>
+                </tr>
+                <tr>
+                    <td>Tele Accuracy: </td>
+                    <td>Tele total scored / tele total missed</td>
+                </tr>
+                <tr>
+                    <td>Tele Accuracy High: </td>
+                    <td>Tele total scored / tele total missed</td>
+                </tr>
+                <tr>
+                    <td>Tele Accuracy Low: </td>
+                    <td>Tele total scored / tele total missed</td>
+                </tr>
+                <tr>
+                    <td>Auto pickup locations</td>
+                </tr>
+                <tr>
+                    <td>starting position picture</td>
+                </tr>
+            </table>
+        </td>
         <td>
-            <div *ngIf="display==1">
+            <div *ngIf="display==1" align="center">
                 <app-pit-data [team]="team"></app-pit-data>
             </div>
-            <table border="1" *ngIf="display==2">
+            <table border="0" *ngIf="display==2" align="center">
                 <tr>
                     <td align="center"><img src="https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png" alt="robotnotfound" style="width:95%; align-items: center;"></td>
                 </tr>
                 <tr>
                     <div *ngFor="let x of apiTeamsList">
-                        <td *ngIf="x.Team + '' == team + ''" colspan="1">
+                        <td *ngIf="x.Team + '' == team + ''" align="center" style="align-items: center;">
                             <b>{{ x.RobotLength }} in. x {{ x.RobotWidth}} in. x {{ x.RobotHeight }}</b>
                         </td>
                     </div>
                 </tr>
             </table>
-            <table border="1" *ngIf="display==3">
+            <table border="1" *ngIf="display==3" align="center">
                 <tr>
                     <td>
                         <app-analysis-graph [analysisTypeID]=10 [selectedTeam]=team> </app-analysis-graph>
@@ -61,6 +97,9 @@
                         <app-analysis-graph [analysisTypeID]=61 [selectedTeam]=team> </app-analysis-graph>
                     </td>
                 </tr>
+            </table>
+            <table *ngIf="display==4" align="center"><!-- word cloud stuff can go here -->
+                yooo look at me im a cloud of words or smth idk
             </table>
         </td>
 

@@ -27,11 +27,15 @@ button {
   }
   button:hover {
       background-color: rgb(148, 1, 148);
-  } button:focus {
+  } 
+  button:focus {
       background-color: purple;
   }
-
   p { 
     font-size: 12px;
     padding: 0px;
  }
+
+.selected {
+    background-color: purple;
+}

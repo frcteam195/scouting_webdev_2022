@@ -32,39 +32,8 @@
             <br>
             <app-analysis-table  [analysisGroup]=4 [selectedTeam]=team></app-analysis-table> 
         </td>
-        <td style="width: 25%;">
-            <table border="1" width="100%">
-                <tr>
-                    <td>Auto Accuracy: </td>
-                    <td>Auto total scored / auto total missed</td>
-                </tr>
-                <tr>
-                    <td>Auto Accuracy High: </td>
-                    <td>Auto total scored / auto total missed</td>
-                </tr>
-                <tr>
-                    <td>Auto Accuracy Low: </td>
-                    <td>Auto total scored / auto total missed</td>
-                </tr>
-                <tr>
-                    <td>Tele Accuracy: </td>
-                    <td>Tele total scored / tele total missed</td>
-                </tr>
-                <tr>
-                    <td>Tele Accuracy High: </td>
-                    <td>Tele total scored / tele total missed</td>
-                </tr>
-                <tr>
-                    <td>Tele Accuracy Low: </td>
-                    <td>Tele total scored / tele total missed</td>
-                </tr>
-                <tr>
-                    <td>Auto pickup locations</td>
-                </tr>
-                <tr>
-                    <td>starting position picture</td>
-                </tr>
-            </table>
+        <td style="width: 25%;" align="center">
+            <app-robot-info [selectedTeam]="team"></app-robot-info>
         </td>
         <td>
             <div *ngIf="display==1" align="center">
@@ -99,7 +68,7 @@
                 </tr>
             </table>
             <table *ngIf="display==4" align="center"><!-- word cloud stuff can go here -->
-                yooo look at me im a cloud of words or smth idk
+                <app-word-cloud></app-word-cloud>
             </table>
         </td>
 

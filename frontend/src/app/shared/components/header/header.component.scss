@@ -27,6 +27,7 @@ button {
   }
   button:hover {
       background-color: rgb(148, 1, 148);
-  } button:focus {
-      background-color: purple;
-  }
+  } 
+.selected {
+    background-color: purple;
+}

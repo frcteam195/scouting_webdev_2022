@@ -7,7 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  display: number;
+
+  constructor() { 
+    this.display=1;
+  }
+
+  setDisplay(ID: number){
+    this.display=ID;
+  }
 
   ngOnInit(): void {
   }

@@ -11,8 +11,24 @@ button {
     cursor: pointer;
     font-family: Verdana, sans-serif;
   }
-  button:hover {
-      background-color: rgb(148, 1, 148);
-  } button:focus {
-      background-color: purple;
-  }
+.button1 {
+    border: 1;
+    color: black;
+    background-color: #CCCCCC;
+    padding: 10px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Verdana, sans-serif;
+} 
+
+.selected {
+    background-color: purple;
+}
+.selected1 {
+    background-color: #868383;
+}
+

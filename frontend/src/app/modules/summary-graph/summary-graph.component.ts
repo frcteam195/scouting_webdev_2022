@@ -17,13 +17,14 @@ export class SummaryGraphComponent implements OnInit {
   team: string;
   graphData: any[];
   fFlag: string;
+  sortType: number;
 
 
   public graph = {
     data: [{ x: ["195","230","181"], y: [4,3,2], type: 'bar', name: 'Auto'},
     { x: ["195","230","181"], y: [32,21,18], type: 'bar', name: 'Tele'},
     { x: ["195","230","181"], y: [15,15,10], type: 'bar', name: 'Climb'}],
-    layout: {width: 1000, height: 360, barmode: 'stack', xaxis: { type: 'category' }, title: 'Summary Graph'}
+    layout: {width: 1000, height: 360, barmode: 'stack', xaxis: { type: 'category' }, title: 'Summary Graph Mean'}
   };
 
   selectedTeam: string;
@@ -34,19 +35,31 @@ export class SummaryGraphComponent implements OnInit {
 
     this.apiSummary_filter = [];
     this.apiSummary = [];
-    this.title = "Title";
     this.selectedTeam = "";
     this.team = "195";
     this.graphData = [];
     this.fFlag="N"
     this.teamList = [];
     this.filter = 0;
+    this.sortType = 1;
+    this.title = "Summary Graph Median";
 
     // Update the filter whenever the inputting data changes
       this.apiService.SummaryReplay.subscribe(summary => {
       this.apiSummary = summary;
       this.regenerateFilter();
     });
+  }
+
+  changeSort(view: number) {
+    if (view == 1) {
+      this.sortType = 2;
+      this.title = "Summary Graph Mean"
+    } else {
+      this.sortType = 1;
+      this.title = "Summary Graph Median"
+    }
+    this.regenerateFilter();
   }
 
   ngOnChanges() {
@@ -65,12 +78,14 @@ export class SummaryGraphComponent implements OnInit {
 
       let robotList = [];
       let autoList = []; //autonomous mean
-      let ballsList = []; //total balls mean
-      let scoreList = []; //total score mean
+     // let ballsList = []; //total balls mean
+     // let scoreList = []; //total score mean
       let climbList = []; //climb mean
       let upperList = []; //tele upper balls
       let lowerList = []; //tele lower balls
-      let totalList = []; //tele total balls
+      //let totalList = []; //tele total balls
+    
+
 
       let rcount = 0;
       for (const t of this.apiSummary_filter)
@@ -93,14 +108,23 @@ export class SummaryGraphComponent implements OnInit {
         if ((rcount == 0 && this.filter == 0) || (this.fFlag == "Y" && this.filter == 1)) {
 
             robotList.push(t.Team);
-            autoList.push(t.AutonomousMean);
-            ballsList.push(t.TotalBallsMean)
-            scoreList.push(t.TotalScoreMean)
-            climbList.push(t.ClimbMean)
-            upperList.push(t.TeleHighBallsMean)
-            lowerList.push(t.TeleLowBallsMean)
-            totalList.push(t.TeleTotalBallsMean)
+
+            if (this.sortType == 1) {
             
+            autoList.push(t.AutonomousMean);
+           // ballsList.push(t.TotalBallsMean)
+           // scoreList.push(t.TotalScoreMean)
+            climbList.push(t.ClimbMean)
+            lowerList.push(t.TeleLowBallsMean)
+            upperList.push(t.TeleHighBallsMean)
+         //   totalList.push(t.TeleTotalBallsMean)
+            }
+            else {  
+             autoList.push(t.AutonomousMedian);
+             climbList.push(t.ClimbMedian)
+             lowerList.push(t.TeleLowBallsMedian)
+             upperList.push(t.TeleHighBallsMedian)
+            }
         }
       }
 
@@ -111,26 +135,29 @@ export class SummaryGraphComponent implements OnInit {
           name: 'Auto',
           marker: {color: '#0000ff'}
         });
-        this.graphData.push({
+       /* this.graphData.push({
           x: robotList,
           y: ballsList,
           type: 'bar',
           name: 'Total Balls',
           marker: {color: '#5630ff'}
         });
-        this.graphData.push({
+        */
+       /* this.graphData.push({
           x: robotList,
           y: scoreList,
           type: 'bar',
           name: 'Total Score',
           marker: {color: '#7a4efe'}
         });
+        */
+        
         this.graphData.push({
           x: robotList,
-          y: climbList,
+          y: lowerList,
           type: 'bar',
-          name: 'Climb',
-          marker: {color: '#9569fd'}          
+          name: 'Tele Lower',
+          marker: {color: '#9569fd'}
         });
         this.graphData.push({
           x: robotList,
@@ -139,24 +166,25 @@ export class SummaryGraphComponent implements OnInit {
           name: 'Tele High',
           marker: {color: '#ab84fc'}
         });
-        this.graphData.push({
-          x: robotList,
-          y: lowerList,
-          type: 'bar',
-          name: 'Tele Lower',
-          marker: {color: '#bf9efa'}
-        });
-        this.graphData.push({
+        
+       /* this.graphData.push({
           x: robotList,
           y: totalList,
           type: 'bar',
           name: 'Tele Total',
           marker: {color: '#d1b9f8'}
         });
-
+        */
+        this.graphData.push({
+          x: robotList,
+          y: climbList,
+          type: 'bar',
+          name: 'Climb',
+          marker: {color: '#bf9efa'}          
+        });
         this.graph = {
         data: this.graphData,
-        layout: {width: 1000, height: 600, barmode: 'stack', xaxis: { type: 'category' }, title: 'Summary Graph'}
+        layout: {width: 1000, height: 600, barmode: 'stack', xaxis: { type: 'category' }, title: this.title}
         };
       }
       

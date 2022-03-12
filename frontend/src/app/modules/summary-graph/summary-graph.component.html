@@ -1,1 +1,2 @@
+<button (click)="changeSort(sortType)">{{ sortType == 1 ? 'Median' : 'Mean' }}</button>
 <plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>

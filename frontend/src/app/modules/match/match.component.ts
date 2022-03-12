@@ -62,7 +62,7 @@ export class MatchComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.matchNo = Number(this.route.snapshot.paramMap.get('match')|| '');
+    this.matchNo = Number(this.route.snapshot.paramMap.get('match')|| '1');
     //this.matchNo = Number(this.matchString);
     console.log("Check Match: " + this.matchNo)
   }

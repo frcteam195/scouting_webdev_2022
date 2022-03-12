@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  lastDBtime: string;
+
+
+  constructor() { 
+
+    this.lastDBtime = "";
+  }
 
   ngOnInit(): void {
+    this.lastDBtime = localStorage.getItem('lastDB') || "";
   }
 
 }

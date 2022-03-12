@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService, Summary } from 'src/app/services/api.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { ApiService, Summary, Final24 } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-summary-graph',
@@ -8,21 +8,25 @@ import { ApiService, Summary } from 'src/app/services/api.service';
 })
 export class SummaryGraphComponent implements OnInit {
 
+  @Input() teamList: Final24[];
+  @Input() filter: number;
+
   apiSummary: Summary[] = []
   apiSummary_filter: Summary[] = [];
   title: string;
   team: string;
-  analysisType: string;
   graphData: any[];
+  fFlag: string;
 
 
   public graph = {
-    data: [    { x: [], y: [], type: 'bar', name: '195'}],
-    layout: {width: 640, height: 480, title: '195'}
+    data: [{ x: ["195","230","181"], y: [4,3,2], type: 'bar', name: 'Auto'},
+    { x: ["195","230","181"], y: [32,21,18], type: 'bar', name: 'Tele'},
+    { x: ["195","230","181"], y: [15,15,10], type: 'bar', name: 'Climb'}],
+    layout: {width: 1000, height: 360, barmode: 'stack', xaxis: { type: 'category' }, title: 'Summary Graph'}
   };
 
   selectedTeam: string;
-  analysisTypeID: number;
 
   chartOptions: { series: { name: string; data: number[]; }[]; chart: { type: string; height: number; stacked: boolean; toolbar: { show: boolean; }; zoom: { enabled: boolean; }; }; responsive: { breakpoint: number; options: { legend: { position: string; offsetX: number; offsetY: number; }; }; }[]; plotOptions: { bar: { horizontal: boolean; }; }; xaxis: { type: string; categories: string[]; }; legend: { position: string; offsetY: number; }; fill: { opacity: number; }; } | undefined;
 
@@ -32,10 +36,11 @@ export class SummaryGraphComponent implements OnInit {
     this.apiSummary = [];
     this.title = "Title";
     this.selectedTeam = "";
-    this.analysisTypeID = 0;
     this.team = "195";
-    this.analysisType = "";
     this.graphData = [];
+    this.fFlag="N"
+    this.teamList = [];
+    this.filter = 0;
 
     // Update the filter whenever the inputting data changes
       this.apiService.SummaryReplay.subscribe(summary => {
@@ -44,6 +49,9 @@ export class SummaryGraphComponent implements OnInit {
     });
   }
 
+  ngOnChanges() {
+    this.regenerateFilter();
+  }
   
     
     regenerateFilter() {
@@ -51,9 +59,11 @@ export class SummaryGraphComponent implements OnInit {
      
     if (this.apiSummary) {
 
-      this.apiSummary_filter = [];
-      let teamList = [];
+      this.apiSummary_filter = this.apiSummary;
 
+      this.graphData = [];
+
+      let robotList = [];
       let autoList = []; //autonomous mean
       let ballsList = []; //total balls mean
       let scoreList = []; //total score mean
@@ -62,172 +72,96 @@ export class SummaryGraphComponent implements OnInit {
       let lowerList = []; //tele lower balls
       let totalList = []; //tele total balls
 
-      for (const t of this.apiSummary)
+      let rcount = 0;
+      for (const t of this.apiSummary_filter)
       {
+        rcount = 0;   // set count to 0
+        this.fFlag = "N";
+        for (const team of this.teamList) {
 
-          teamList.push(t.Team);
-
-          autoList.push(t.AutonomousMean);
-          ballsList.push(t.TotalBallsMean)
-          scoreList.push(t.TotalSCoreMean)
-          climbList.push(t.ClimbMean)
-          upperList.push(t.TeleHighBallsMean)
-          lowerList.push(t.TeleLowBallsMean)
-          totalList.push(t.TeleTotalBallsMean)
-          
-          this.analysisType = t.AnalysisType;
+          if (t.Team == team.Team) {
+            if (this.filter == 0) {
+              rcount = rcount+1;// increment count
+              //team.Team = "";
+              break;
+            } else {
+              //this.apiAnalysis_filter.push(cea);
+              this.fFlag = "Y";
+            }
+          }
         }
-        
-        console.log("Total Balls: ",  ballsList);
+        if ((rcount == 0 && this.filter == 0) || (this.fFlag == "Y" && this.filter == 1)) {
 
-        var trace1 = {
-          x: [teamList],
-          y: [autoList],
-          name: 'Autonomous Mean',
-          type: 'bar'
-        };
-        var trace2 = {
-          x: [teamList],
-          y: [ballsList],
-          name: 'Auto Total Balls Mean',
-          type: 'bar'
-        };
-        var trace3 = {
-          x: [teamList],
-          y: [scoreList],
-          name: 'Auto Total Score Mean',
-          type: 'bar'
-        };
-        var trace4 = {
-          x: [teamList],
-          y: [climbList],
-          name: 'Auto Score Mean',
-          type: 'bar'
-        };
-        var trace5 = {
-          x: [teamList],
-          y: [upperList],
-          name: 'Tele Upper Ball Mean',
-          type: 'bar'
-        };
-        var trace6 = {
-          x: [teamList],
-          y: [lowerList],
-          name: 'Tele Lower Ball Mean',
-          type: 'bar'
-        };
-        var trace7 = {
-          x: [teamList],
-          y: [totalList],
-          name: 'Tele Total Ball Mean',
-          type: 'bar'
-        };
+            robotList.push(t.Team);
+            autoList.push(t.AutonomousMean);
+            ballsList.push(t.TotalBallsMean)
+            scoreList.push(t.TotalScoreMean)
+            climbList.push(t.ClimbMean)
+            upperList.push(t.TeleHighBallsMean)
+            lowerList.push(t.TeleLowBallsMean)
+            totalList.push(t.TeleTotalBallsMean)
+            
+        }
+      }
 
-//[trace1, trace2, trace3, trace4, trace5, trace6, trace7],
-        this.graphData.push(trace1);
-        this.graphData.push(trace2);
-        this.graphData.push(trace3);
-        this.graphData.push(trace4);
-        this.graphData.push(trace5);
-        this.graphData.push(trace6);
-        this.graphData.push(trace7);
+        this.graphData.push({
+          x: robotList,
+          y: autoList,
+          type: 'bar',
+          name: 'Auto',
+          marker: {color: '#0000ff'}
+        });
+        this.graphData.push({
+          x: robotList,
+          y: ballsList,
+          type: 'bar',
+          name: 'Total Balls',
+          marker: {color: '#5630ff'}
+        });
+        this.graphData.push({
+          x: robotList,
+          y: scoreList,
+          type: 'bar',
+          name: 'Total Score',
+          marker: {color: '#7a4efe'}
+        });
+        this.graphData.push({
+          x: robotList,
+          y: climbList,
+          type: 'bar',
+          name: 'Climb',
+          marker: {color: '#9569fd'}          
+        });
+        this.graphData.push({
+          x: robotList,
+          y: upperList,
+          type: 'bar',
+          name: 'Tele High',
+          marker: {color: '#ab84fc'}
+        });
+        this.graphData.push({
+          x: robotList,
+          y: lowerList,
+          type: 'bar',
+          name: 'Tele Lower',
+          marker: {color: '#bf9efa'}
+        });
+        this.graphData.push({
+          x: robotList,
+          y: totalList,
+          type: 'bar',
+          name: 'Tele Total',
+          marker: {color: '#d1b9f8'}
+        });
 
         this.graph = {
         data: this.graphData,
-        layout: {width: 1000, height: 360, title: this.analysisType}
-        //layout: {barmode: 'stack'}
+        layout: {width: 1000, height: 600, barmode: 'stack', xaxis: { type: 'category' }, title: 'Summary Graph'}
         };
-
-
-        /*this.chartOptions = {
-
-
-          
-
-         
-          
-
-
-          series: [
-            {
-              name: "Auto Mean",
-              data: autoList
-            },
-            {
-              name: "Total Balls Mean",
-              data: ballsList
-            },
-            {
-              name: "Total Score Mean",
-              data: scoreList
-            },
-            {
-              name: "Climb Mean",
-              data: climbList
-            },
-            {
-              name: "Tele High Balls Mean",
-              data: upperList
-            },
-            {
-              name: "Tele Bottom Balls Mean",
-              data: lowerList
-            },
-            {
-              name: "Tele Total Balls Mean",
-              data: totalList
-            }
-            
-          ],
-          chart: {
-            type: "bar",
-            height: 350,
-            stacked: true,
-            toolbar: {
-              show: true
-            },
-            zoom: {
-              enabled: true
-            }
-          },
-          responsive: [
-            {
-              breakpoint: 480,
-              options: {
-                legend: {
-                  position: "bottom",
-                  offsetX: -10,
-                  offsetY: 0
-                }
-              }
-            }
-          ],
-          plotOptions: {
-            bar: {
-              horizontal: false
-            }
-          },
-    
-          xaxis: {
-            type: "category",
-            categories:  teamList
-          },
-          legend: {
-            position: "right",
-            offsetY: 40
-          },
-          fill: {
-            opacity: 1
-          }
-        }; */
       }
       
     } 
-    /*else 
-    {
-      this.apiAnalysis_filter = [];
-   }*/   
-  
+ 
   
 ngOnInit(): void {
   }

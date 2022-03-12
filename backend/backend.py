@@ -12,10 +12,12 @@ CORS(app)
 
 app.secret_key = 'secret key'
  
+#.config['MYSQL_HOST'] = '10.0.20.195'
 app.config['MYSQL_HOST'] = 'frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com'
 app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_USER'] = 'admin'
-app.config['MYSQL_PASSWORD'] = 'Einstein195'
+app.config['MYSQL_PASSWORD'] = 'Einstein195'  # Password for AWS
+#app.config['MYSQL_PASSWORD'] = 'team195'  # Password for Pi
 app.config['MYSQL_DB'] = 'team195_scouting'
 
 mysql = MySQL(app)
@@ -50,7 +52,7 @@ def get_currteam():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT t.team "
                 "FROM Teams t, CurrentEventTeams c "
-                "WHERE t.team = c.team;")
+                "WHERE t.team = c.team order by Team;")
     data = cursor.fetchall()
     response = app.response_class(
         response=json.dumps(data),

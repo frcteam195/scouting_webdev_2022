@@ -42,7 +42,6 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ScheduleComponent,
     SummaryGraphComponent,
     MobileComponent
-
   ],
   imports: [
     CommonModule,

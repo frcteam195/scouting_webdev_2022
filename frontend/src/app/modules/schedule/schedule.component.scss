@@ -1,17 +1,26 @@
 td {
-    width: 33.33334%;   
-    padding: 2px;
+    min-width: 40px;
+    padding: 3px;
     font-size: small;
-    font-weight: bold;
-    background-color: #CCCCCC;
+    text-align: center;
+
+}
+.sche_table { 
+    border-spacing: 1;
+    border-collapse: collapse;
 }
 .titleR {
     color:#FF0000;
-    text-align: center;
-
 }
 .titleB {
     color:#0000FF;
-    text-align: center;
+}
+.sortedR {
+    background-color: #FF0000;
+    color: #FFFFFF;
+}
 
+.sortedB {
+    background-color: #0000FF;
+    color: #FFFFFF;
 }

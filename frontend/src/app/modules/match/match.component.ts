@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ApiService, CEA } from 'src/app/services/api.service';
 import { Matches } from '../../matches';
@@ -16,12 +17,17 @@ export class MatchComponent implements OnInit {
  blueTeam2: string = "195";
  blueTeam3: string = "195";
  matchNo: number = 1;
+ matchString: string = "";
 
   //apiAnalysis: CEA[] = [];
   apiMatchList: Matches[] = [];  
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private route: ActivatedRoute) {
 
+    this.apiService.MatchReplay.subscribe(match => {
+      this.apiMatchList = match;
+      this.regenerateFilter();
+    });
 
   }
 
@@ -55,10 +61,10 @@ export class MatchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apiService.MatchReplay.subscribe(match => {
-      this.apiMatchList = match;
-      this.regenerateFilter();
-    });
+
+    this.matchNo = Number(this.route.snapshot.paramMap.get('match')|| '');
+    //this.matchNo = Number(this.matchString);
+    console.log("Check Match: " + this.matchNo)
   }
 
 }

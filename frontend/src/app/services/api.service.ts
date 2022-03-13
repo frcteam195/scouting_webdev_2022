@@ -156,7 +156,7 @@ export interface Summary {
   TeleHighBallsMean: number;
   TeleHighBallsMedian: number;
   TeleLowBallsMean: number;
-  TeleLolBallsMedian: number;
+  TeleLowBallsMedian: number;
   TeleTotalBallsMean: number;
   TeleTotalBallsMedian: number;
   TotalBallsMean: number;

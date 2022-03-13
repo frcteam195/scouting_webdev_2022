@@ -23,6 +23,7 @@ import { AnalysisGraphComponent } from 'src/app/modules/analysis-graph/analysis-
 import { PitDataComponent } from 'src/app/modules/pit-data/pit-data.component';
 import { MobileComponent } from 'src/app/modules/mobile/mobile.component';
 import { RobotInfoComponent } from 'src/app/modules/robot-info/robot-info.component';
+import { SummaryTableComponent } from 'src/app/modules/summary-table/summary-table.component';
 
 
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -43,7 +44,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ScheduleComponent,
     SummaryGraphComponent,
     MobileComponent,
-    RobotInfoComponent
+    RobotInfoComponent,
+    SummaryTableComponent
   ],
   imports: [
     CommonModule,

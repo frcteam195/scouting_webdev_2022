@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService, Teams, CEA } from 'src/app/services/api.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Matches } from '../../matches';
+import { Meta } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-mobile',
@@ -23,13 +25,13 @@ export class MobileComponent implements OnInit {
   blueTeam3: string = "195";
   matchNo: number = 1;
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute) {
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private meta: Meta) {
     //this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
     this.apiService.TeamsReplay.subscribe((Teams) => (this.apiTeamsList = Teams));
-
     this.team="195";
     this.display=0;
     this.littleDisplay=2;
+    this.meta.addTags([{name: 'viewport', content: 'width=device-width, initial-scale=1'}])
    }
    setTeam(team: string) {
     console.log(team);

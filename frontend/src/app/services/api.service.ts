@@ -1,7 +1,7 @@
 import { Word } from './../word';
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {F} from "@angular/cdk/keycodes";
 import { formatDate } from '@angular/common';
 import { relayout } from 'plotly.js-dist-min';
@@ -179,11 +179,11 @@ export class ApiService {
   public TypesReplay: ReplaySubject<Types[]>;
   public CloudReplay: ReplaySubject<WordCloud[]>;
 
-  private apiUrl = 'http://localhost:5000';
+  //private apiUrl = 'http://localhost:5000';
   //private apiUrl = 'http://10.0.9.92:5000';
   //private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
   //private apiUrl = 'http://10.0.20.195:23450';     // Mark's House
-  //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';  // AWS Test
+  private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';  // AWS Test
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com/prod/';  // AWS Alternate
 
   status: string = "";
@@ -360,14 +360,46 @@ export class ApiService {
   saveFinal24(final24: Final24[]){
     localStorage.setItem('Final24', JSON.stringify(final24));
 
-    const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    //const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    //const params = new HttpParams().append('table', 'Final24');
+    const options = {headers: new HttpHeaders({'Content-Type': 'application/json'}),
+                     params: new HttpParams().append('table', 'Final24')};
     //this.http.delete(this.apiUrl + '/final24').subscribe(() => this.status = 'Delete successful');
     
     this.http.post<Final24[]>(this.apiUrl + '/final24-update', JSON.stringify(final24), options).subscribe();
 
-    console.log("Data: ", final24);
-    const len = JSON.stringify(final24)?.length;
-    console.log("Length: "+ len);
+    console.log("Saving Final24 Data");
 
   }
+
+  async getDnp(): Promise<Final24[]> {
+    // First try to load a fresh copy of the data from the API
+    try {
+      const response = await this.http.get<Final24[]>(this.apiUrl + '/dnp').toPromise();
+      localStorage.setItem('DNP', JSON.stringify(response));
+      return response as Final24[];
+    } catch (e) {
+      try {
+        // Send the cached data
+        return JSON.parse(localStorage.getItem('DNP')!) as Final24[];
+      } catch (err) {
+        console.error('Could not load DNP data from server or cache!');
+        return [];
+      }
+    }
+  }  
+
+
+  saveDnp(dnp: Final24[]){
+    localStorage.setItem('Final24', JSON.stringify(dnp));
+
+    const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    //this.http.delete(this.apiUrl + '/final24').subscribe(() => this.status = 'Delete successful');
+    
+    this.http.post<Final24[]>(this.apiUrl + '/dnp-update', JSON.stringify(dnp), options).subscribe();
+
+    console.log("Saving DNP Data");
+
+  }
+
 }

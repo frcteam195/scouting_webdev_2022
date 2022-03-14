@@ -1,7 +1,7 @@
 <div>
     <table border="1">
         <tr>
-            <td>&nbsp;</td>
+            <td width="225">&nbsp;</td>
             <td colspan="3">
                 <div style="float:left;width:50%;">
                 <button (click)="changeDisplay(1)">Auto</button>
@@ -36,16 +36,16 @@
                 <table border="0">
                     <tr>
                         <td align="right">
-                            <div align="center">Final</div>
+                            <div align="center"><b>Final</b></div>
                             <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
                             <ng-container *ngFor="let c of apiFinal24List; let i = index">
-                                {{ i+1 }} <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClick(i)" (ngModelChange)="teamSelectionChange()"><br>
+                                {{ i+1 }} <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClick(i)" (ngModelChange)="teamSelectionChange(1)"><br>
                             </ng-container>
-                          <button (click)="addEnd()">Add</button>
+                          <button (click)="addEnd(1)">Add</button>
 
                         </td>
                         <td valign="top" align="center">
-                            Pick
+                            <b>Pick</b>
                             <form>
                                 <input type="text" size="3"><br>
                                 <input type="text" size="3"><br>
@@ -67,10 +67,10 @@
                             <br>
                             <button (click)="changeView(viewType)">{{ viewType == 1 ? 'Graph View' : 'Table View' }}</button>
                             <br>
-                            <button (click)="apiService.saveFinal24(apiFinal24List)">Save to server</button>
+                            <button (click)="save()">Save to server</button>
                             <br>
                             <br>
-                            Compare
+                            <b>Compare</b>
                             <form [formGroup]="compareForm" (ngSubmit)="compareTeams(compareForm.value)">
                                 <input id="team1" type="text" size="3" formControlName="team1"><br>
                                 <input id="team2" type="text" size="3" formControlName="team2"><br>
@@ -83,7 +83,12 @@
                                 <button class="button" type="submit">{{ filter == 1 ? 'Compare Off' : 'Compare' }}</button>
                             </form>
                             <br>
-                            DNP
+                            <b>DNP</b>
+                            <br>
+                            <ng-container *ngFor="let c of apiDnpList; let i = index">
+                                <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClickDnp(i)" (ngModelChange)="teamSelectionChange(2)"><br>
+                            </ng-container>
+                          <button (click)="addEnd(2)">Add</button>
                         </td>
                     </tr>
                 </table>

@@ -46,7 +46,7 @@ def get_analysis():
     return response
 
 
-# Get Current Teams
+# Get Event Team List
 @app.route("/currteam/", methods =['GET', 'POST'])
 def get_currteam():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -62,7 +62,7 @@ def get_currteam():
     return response
 
 
-# Get Team Data
+# Get Pit Data
 @app.route("/pitdata/", methods =['GET', 'POST'])
 def get_teams():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -94,7 +94,7 @@ def get_matches():
     response = app.response_class(
         response=json.dumps(data),
         status=200,
-        mimetype='application/json'
+        mimetype='application/json' 
     )
     return response
 
@@ -143,7 +143,7 @@ def get_wordcloud():
     return response
 
 
-# Get Matches Data
+# Get Analysis Type Data
 @app.route("/types/", methods =['GET', 'POST'])
 def get_types():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -158,7 +158,7 @@ def get_types():
 
 
 # Get Final 24 Data
-@app.get("/final24")
+@app.route("/final24", methods =['GET'])
 def get_final24():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * from Final24;")
@@ -171,14 +171,8 @@ def get_final24():
     return response
 
 
-# Class for Final 24
-""" class FinalOut(mysql.Model):
-    SortOrder = mysql.Column(mysql.Integer, primary_key=True)
-    Team = mysql.Column(mysql.String(10))
- """
-
-# Get Matches Data
-@app.post("/final24-update")
+# Update FInal24 Data
+@app.route("/final24-update", methods =['POST'])
 def post_final24():
     # TODO: IMPLEMENT ME
 
@@ -189,15 +183,15 @@ def post_final24():
     for line in data:
         print(line)
 
-    # Would like to loop through JSON file and update rows on the database.
-    # Just need to figure out how to read the JSON file.
+    
+    #param = request.form['table'] 
+
+    
 
     # SortOrder is gone from the frontend code - you'll need to iterate through
     # the rows and get SortOrder from the position of the row. Something like
 
     with mysql.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
-        #cursor.execute('DELETE from Final24 where SortOrder > 24')
-        #mysql.connection.commit()
         for pos, team_selection in enumerate(data):
             #cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team_selection['Team'],pos+1))
             cursor.execute('INSERT INTO Final24 VALUES (%s, %s) ON DUPLICATE KEY UPDATE Team=%s',(pos+1, team_selection['Team'],team_selection['Team']))
@@ -206,8 +200,8 @@ def post_final24():
     return '1'
 
 
-# Get Matches Data
-@app.delete("/final24")
+# Delete Final24 Data
+@app.route("/final24", methods =['DELETE'])
 def delete_final24():
     # TODO: IMPLEMENT ME
 
@@ -225,7 +219,40 @@ def delete_final24():
 
     return '1'
 
+# Get DNP List Data
+@app.route("/dnp", methods =['GET'])
+def get_dnp():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * from DnpList;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
+# Update FInal24 Data
+@app.route("/dnp-update", methods =['POST'])
+def post_dnp():
+
+    if not request.is_json:
+        return Response('Invalid submission, please submit as JSON.', status=400)
+    data = request.json
+
+    for line in data:
+        print(line)
+
+    # SortOrder is gone from the frontend code - you'll need to iterate through
+    # the rows and get SortOrder from the position of the row. Something like
+
+    with mysql.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
+        for pos, team_selection in enumerate(data):
+            #cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team_selection['Team'],pos+1))
+            cursor.execute('INSERT INTO DnpList VALUES (%s, %s) ON DUPLICATE KEY UPDATE Team=%s',(pos+1, team_selection['Team'],team_selection['Team']))
+        mysql.connection.commit()
+
+    return '1'
 
 
 

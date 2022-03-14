@@ -31,6 +31,7 @@ export class AnalysisComponent implements OnInit {
   //apiAnalysis: CEA[] = [];
   apiFinal24List: Final24[] = [];
   apiTypes: Types[] = [];
+  apiDnpList: Final24[] = [];
 
   compareForm = this.formBuilder.group({
     team1: '',
@@ -62,21 +63,39 @@ export class AnalysisComponent implements OnInit {
 
   ngOnInit(): void  {
     // we will initialize our form here
-     this.apiService.getFinal24().then(response => this.apiFinal24List = response);
-     this.filterList = this.apiFinal24List;
+    this.apiService.getDnp().then(response => this.apiDnpList = response);
+    //this.filterList = this.apiDnpList;
+
+    this.apiService.getFinal24().then(response => this.apiFinal24List = response);
+    this.filterList = this.apiFinal24List.concat(this.apiDnpList);
+
      this.filter = 0;
   }
 
-  teamSelectionChange() {
+  teamSelectionChange(list: number) {
     // Angular won't detect changes inside an array - so set the array to a new array to force the change detection to fire
-    this.apiFinal24List = this.apiFinal24List.slice();
+    if (list == 1) {
+      this.apiFinal24List = this.apiFinal24List.slice();
+    }
+    else if (list == 2) {
+      this.apiDnpList = this.apiDnpList.slice();
+    }
+
+
     // Logic to turn filter back off
-    this.filterList = this.apiFinal24List;
+    //this.filterList = this.apiFinal24List;
+    this.filterList = this.apiFinal24List.concat(this.apiDnpList);
     this.filter = 0;
   }
 
-  addEnd() {
-    this.apiFinal24List.splice(this.apiFinal24List.length, 0, new Final24());
+  addEnd(list: number) {
+    if (list == 1) {
+      this.apiFinal24List.splice(this.apiFinal24List.length, 0, new Final24());
+    }
+    else if (list == 2) {
+      this.apiDnpList.splice(this.apiDnpList.length, 0, new Final24());
+    }
+
   }
 
   processDoubleClick(index: number){
@@ -91,6 +110,20 @@ export class AnalysisComponent implements OnInit {
       this.apiFinal24List.splice(index, 0, new Final24());
     }
   }
+
+  processDoubleClickDnp(index: number){
+    if (this.apiDnpList.length == 1){
+      this.apiDnpList.splice(index, 0, new Final24());
+    }
+    else if (this.apiDnpList[index].Team === '') {
+      if (this.apiDnpList.length > 1) {
+        this.apiDnpList.splice(index, 1);
+      }
+    } else {
+      this.apiDnpList.splice(index, 0, new Final24());
+    }
+  }
+
 
   select(type: number, analysis: number) {
     if (type == 1) {
@@ -120,7 +153,8 @@ export class AnalysisComponent implements OnInit {
 
     } else {
       // Logic to turn filter back off
-      this.filterList = this.apiFinal24List;
+      //this.filterList = this.apiFinal24List;
+      this.filterList = this.apiFinal24List.concat(this.apiDnpList);
       this.filter = 0;
     }
 
@@ -208,8 +242,9 @@ export class AnalysisComponent implements OnInit {
   }
 
   save() {
-    // call API to save customer
-    console.log("Hello!");
+    // call API to save Team Selection Data
+    this.apiService.saveFinal24(this.apiFinal24List);
+    this.apiService.saveDnp(this.apiDnpList);
   }
 
   onChanges(): void {

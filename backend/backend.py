@@ -12,7 +12,7 @@ CORS(app)
 
 app.secret_key = 'secret key'
  
-#.config['MYSQL_HOST'] = '10.0.20.195'
+#app.config['MYSQL_HOST'] = '10.0.20.195'
 app.config['MYSQL_HOST'] = 'frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com'
 app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_USER'] = 'admin'
@@ -184,7 +184,9 @@ def post_final24():
         print(line)
 
     
-    #param = request.form['table'] 
+    table = request.args.get('table', default = '*', type = str)
+
+    print("Updating " + table + " table")
 
     
 
@@ -194,7 +196,10 @@ def post_final24():
     with mysql.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
         for pos, team_selection in enumerate(data):
             #cursor.execute('UPDATE Final24 SET Team =% s where SortOrder=%s', (team_selection['Team'],pos+1))
-            cursor.execute('INSERT INTO Final24 VALUES (%s, %s) ON DUPLICATE KEY UPDATE Team=%s',(pos+1, team_selection['Team'],team_selection['Team']))
+            #query1='INSERT INTO '+table+' VALUES (%s, %s) ON DUPLICATE KEY UPDATE Team=%s',(pos+1, team_selection['Team'],team_selection['Team'])
+            ##print(query1)
+            #cursor.execute(query1)
+            cursor.execute('INSERT INTO '+table+' VALUES (%s, %s) ON DUPLICATE KEY UPDATE Team=%s',(pos+1, team_selection['Team'],team_selection['Team']))
         mysql.connection.commit()
 
     return '1'
@@ -254,6 +259,18 @@ def post_dnp():
 
     return '1'
 
+# Get DNP List Data
+@app.route("/pick", methods =['GET'])
+def get_pick():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * from PickList1;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 
 if __name__=="__main__":

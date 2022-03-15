@@ -391,14 +391,48 @@ export class ApiService {
 
 
   saveDnp(dnp: Final24[]){
-    localStorage.setItem('Final24', JSON.stringify(dnp));
+    localStorage.setItem('DNP', JSON.stringify(dnp));
 
-    const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    //const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    const options = {headers: new HttpHeaders({'Content-Type': 'application/json'}),
+                     params: new HttpParams().append('table', 'DnpList')};
     //this.http.delete(this.apiUrl + '/final24').subscribe(() => this.status = 'Delete successful');
     
-    this.http.post<Final24[]>(this.apiUrl + '/dnp-update', JSON.stringify(dnp), options).subscribe();
+    this.http.post<Final24[]>(this.apiUrl + '/final24-update', JSON.stringify(dnp), options).subscribe();
 
     console.log("Saving DNP Data");
+
+  }
+
+  async getPick(): Promise<Final24[]> {
+    // First try to load a fresh copy of the data from the API
+    try {
+      const response = await this.http.get<Final24[]>(this.apiUrl + '/pick').toPromise();
+      localStorage.setItem('Pick', JSON.stringify(response));
+      return response as Final24[];
+    } catch (e) {
+      try {
+        // Send the cached data
+        return JSON.parse(localStorage.getItem('Pick')!) as Final24[];
+      } catch (err) {
+        console.error('Could not load Pick List data from server or cache!');
+        return [];
+      }
+    }
+  }  
+
+
+  savePick(picklist: Final24[]){
+    localStorage.setItem('Pick', JSON.stringify(picklist));
+
+    //const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    const options = {headers: new HttpHeaders({'Content-Type': 'application/json'}),
+                     params: new HttpParams().append('table', 'PickList1')};
+    //this.http.delete(this.apiUrl + '/final24').subscribe(() => this.status = 'Delete successful');
+    
+    this.http.post<Final24[]>(this.apiUrl + '/final24-update', JSON.stringify(picklist), options).subscribe();
+
+    console.log("Saving Pick List Data");
 
   }
 

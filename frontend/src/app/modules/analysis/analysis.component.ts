@@ -25,6 +25,7 @@ export class AnalysisComponent implements OnInit {
   graphShow = true;
   fullShow = false;  //show full view by default, not compare
   compareShow = true;
+  detailShow = false; //show analysis types, not summary
   summaryShow = true;
   focusTeam: string;
 
@@ -32,6 +33,7 @@ export class AnalysisComponent implements OnInit {
   apiFinal24List: Final24[] = [];
   apiTypes: Types[] = [];
   apiDnpList: Final24[] = [];
+  apiPickList: Final24[] = [];
 
   compareForm = this.formBuilder.group({
     team1: '',
@@ -64,12 +66,13 @@ export class AnalysisComponent implements OnInit {
   ngOnInit(): void  {
     // we will initialize our form here
     this.apiService.getDnp().then(response => this.apiDnpList = response);
-    //this.filterList = this.apiDnpList;
 
     this.apiService.getFinal24().then(response => this.apiFinal24List = response);
-    this.filterList = this.apiFinal24List.concat(this.apiDnpList);
 
-     this.filter = 0;
+    this.apiService.getPick().then(response => this.apiPickList = response);
+
+    this.filterList = this.apiFinal24List.concat(this.apiDnpList);
+    this.filter = 0;
   }
 
   teamSelectionChange(list: number) {
@@ -79,6 +82,9 @@ export class AnalysisComponent implements OnInit {
     }
     else if (list == 2) {
       this.apiDnpList = this.apiDnpList.slice();
+    }
+    else if (list == 3) {
+      this.apiPickList = this.apiPickList.slice();
     }
 
 
@@ -94,6 +100,9 @@ export class AnalysisComponent implements OnInit {
     }
     else if (list == 2) {
       this.apiDnpList.splice(this.apiDnpList.length, 0, new Final24());
+    }
+    else if (list == 3) {
+      this.apiPickList.splice(this.apiPickList.length, 0, new Final24());
     }
 
   }
@@ -124,6 +133,19 @@ export class AnalysisComponent implements OnInit {
     }
   }
 
+
+  processDoubleClickPick(index: number){
+    if (this.apiPickList.length == 1){
+      this.apiPickList.splice(index, 0, new Final24());
+    }
+    else if (this.apiPickList[index].Team === '') {
+      if (this.apiPickList.length > 1) {
+        this.apiPickList.splice(index, 1);
+      }
+    } else {
+      this.apiPickList.splice(index, 0, new Final24());
+    }
+  }
 
   select(type: number, analysis: number) {
     if (type == 1) {
@@ -199,8 +221,9 @@ export class AnalysisComponent implements OnInit {
        this.analysis1 = 10;
        this.analysis2 = 11;
     }
-    //console.log("Left Table: " + this.analysis1 + ", Right Table: " + this.analysis2 );
-
+    //Turn off Summary Show when Other top buttons are selected
+    this.summaryShow = true;
+    this.detailShow = false;
   }
 
   changeSort(type: number) {
@@ -213,13 +236,9 @@ export class AnalysisComponent implements OnInit {
     }
   }
 
-  summaryView(view: number) {
-    if (view == 1) {
-      this.summType = 2;
-    } else {
-      this.summType = 1;
-    }
-    this.summaryShow = !this.summaryShow;
+  summaryView() {
+    this.summaryShow = false;
+    this.detailShow = true;
   }
 
   changeView(view: number) {
@@ -245,6 +264,24 @@ export class AnalysisComponent implements OnInit {
     // call API to save Team Selection Data
     this.apiService.saveFinal24(this.apiFinal24List);
     this.apiService.saveDnp(this.apiDnpList);
+    this.apiService.savePick(this.apiPickList);
+  }
+
+  copyToPick() {
+    //this.apiPickList  = Object.assign([], this.apiFinal24List)
+    this.apiPickList = [];
+    //this.apiPickList = Array.from(this.apiFinal24List);
+    //for (const team of this.apiFinal24List)  {
+    //  this.apiPickList.push(team);
+    //}
+    this.apiPickList = JSON.parse(JSON.stringify(this.apiFinal24List))
+
+  }
+
+  clearFinal24() {
+    for (const t of this.apiFinal24List)  {
+      t.Team = "";
+    }
   }
 
   onChanges(): void {

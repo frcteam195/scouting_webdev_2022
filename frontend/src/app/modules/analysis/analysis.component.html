@@ -8,13 +8,7 @@
                 <button (click)="changeDisplay(2)">Low|High</button>
                 <button (click)="changeDisplay(3)">Cargo|Score</button>
                 <button (click)="changeDisplay(4)">Tele|Climb</button>
-                <button (click)="summaryView(summType)">{{ summType == 1 ? 'Summary On' : 'Summary Off' }}</button>
-<!--                 <button (click)="changeDisplay(5)">GPickup|DAgainst</button>
-                <button (click)="changeDisplay(6)">Launch|Sort</button>
-                <button (click)="changeDisplay(7)">Shoot Drive|T Pickup</button>
-                <button (click)="changeDisplay(8)">Played D|Lost Comm</button>
-                <button (click)="changeDisplay(9)">SubBroke|BrokeDown</button>
-                <button (click)="changeDisplay(10)">TeleScore|Videos</button> -->
+                <button (click)="summaryView()">Summary</button>
                 </div>
                 <div style="float:right;width:50%;">
                 <b>&nbsp;Left Table: </b>
@@ -45,21 +39,11 @@
 
                         </td>
                         <td valign="top" align="center">
-                            <b>Pick</b>
-                            <form>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                                <input type="text" size="3"><br>
-                            </form>
+                            <b>Pick</b><br>
+                            <ng-container *ngFor="let c of apiPickList; let i = index">
+                                <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClickPick(i)" (ngModelChange)="teamSelectionChange(3)"><br>
+                            </ng-container>
+                          <button (click)="addEnd(3)">Add</button>
                         </td>
                         <td>
                             <button (click)="changeSort(sortType)">{{ sortType == 1 ? 'Team Sort' : 'Amt Sort' }}</button>
@@ -83,29 +67,25 @@
                                 <button class="button" type="submit">{{ filter == 1 ? 'Compare Off' : 'Compare' }}</button>
                             </form>
                             <br>
-                            <b>DNP</b>
-                            <br>
+                            <b>DNP</b><br>
                             <ng-container *ngFor="let c of apiDnpList; let i = index">
                                 <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClickDnp(i)" (ngModelChange)="teamSelectionChange(2)"><br>
                             </ng-container>
                           <button (click)="addEnd(2)">Add</button>
+                          <br><br>
+                          <button (click)="copyToPick()">Copy2Pick</button>
+                          <br>
+                          <button (click)="clearFinal24()">Clear Final</button>
                         </td>
                     </tr>
                 </table>
             </td>
             <td>
                 <!-- Start of the Regular View -->
-                <div [hidden]="summaryShow">
-                    <table>
-                        <tr>
-                            <td>
-                                <app-summary-graph [teamList]=filterList [filter]=filter></app-summary-graph>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+
                 <div [hidden]="fullShow">
                 <div [hidden]="tableShow">
+                <div [hidden]="detailShow">
                 <table>
                     <tr>
                         <td>
@@ -120,7 +100,18 @@
                     </tr>
                 </table>
                 </div>
+                <div [hidden]="summaryShow">
+                    <table>
+                        <tr>
+                            <td>
+                                <app-summary-table></app-summary-table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
                 <div [hidden]="graphShow">
+                <div [hidden]="detailShow">
                     <table>
                         <tr>
                             <td>
@@ -134,10 +125,21 @@
                         </tr>
                     </table>
                 </div>
+                <div [hidden]="summaryShow">
+                    <table>
+                        <tr>
+                            <td>
+                                <app-summary-graph [teamList]=filterList [filter]=filter></app-summary-graph>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
                 </div>
                 <!-- Start of the Compare View -->
                 <div [hidden]="compareShow">
                     <div [hidden]="tableShow">
+                    <div [hidden]="detailShow">
                     <table>
                         <tr>
                             <td>
@@ -158,7 +160,18 @@
                         </tr>
                     </table>
                 </div>
+                <div [hidden]="summaryShow">
+                    <table>
+                        <tr>
+                            <td>
+                                <app-summary-table></app-summary-table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
                 <div [hidden]="graphShow">
+                <div [hidden]="detailShow">
                 <table>
                     <tr>
                         <td>
@@ -171,6 +184,16 @@
                         </td>
                     </tr>
                 </table>
+                </div>
+                <div [hidden]="summaryShow">
+                    <table>
+                        <tr>
+                            <td>
+                                <app-summary-graph [teamList]=filterList [filter]=filter></app-summary-graph>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 </div>
                 </div>
             </td>

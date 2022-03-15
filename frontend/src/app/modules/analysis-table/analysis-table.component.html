@@ -27,7 +27,9 @@
         <th>S</th>
     </tr>
     <tr *ngFor="let a of apiAnalysis_filter">
-        <td align="center" >{{ a.AnalysisType }}</td>
+        <ng-container *ngFor="let x of apiTypes">
+            <td align="center" *ngIf=" x.AnalysisType == a.AnalysisType" title="{{ x.Description }}">{{ a.AnalysisType }}</td>
+        </ng-container>
         <td align="center" class="bg{{ a?.Match1Format }}">{{ a.Match1Display }}</td>
         <td align="center" class="bg{{ a?.Match2Format }}">{{ a.Match2Display }}</td>
         <td align="center" class="bg{{ a?.Match3Format }}">{{ a.Match3Display }}</td>

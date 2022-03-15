@@ -18,6 +18,7 @@ export class AnalysisTableComponent implements OnInit {
   apiAnalysis_filter: CEA[] = [];
   title: String;
   titleShow = true;
+  url: string = "";
 
 
   constructor(private apiService: ApiService) {
@@ -77,10 +78,12 @@ export class AnalysisTableComponent implements OnInit {
         if (cea.Team == this.selectedTeam) {
           if (analysisTypes.includes(cea.AnalysisTypeID)) {
             
-           /*  if (cea.AnalysisTypeID == 70 ) {
-              url = "\<a href='C:\\ck\\video\\"+cea.Match4Display+".mp4'>"+cea.Match4Display+"</a>";
-              cea.Match4Display = url;
-            } */
+            if (cea.AnalysisTypeID == 70 ) {
+             //messageText = "<a href='http://www.google.com'>Open Google</a>"
+             //this.url = "<a href='http://www.google.com'>Open Google</a>";
+             //url = "<a href='C:/ck/video/"+cea.Match1Display+".mp4'>"+cea.Match1Display+"</a>";
+              //cea.Match4Display = this.url;
+            }
             
             this.apiAnalysis_filter.push(cea);
           }

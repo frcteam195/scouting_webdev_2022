@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { Word } from 'src/app/word';
 import { WordCloud } from '../../wordcloud';
@@ -10,12 +10,14 @@ import { WordCloud } from '../../wordcloud';
 })
 export class WordCloudComponent implements OnInit {
 
+  @Input() selectedTeam: string;
+
   apiCloud: WordCloud[];
   apiCloud_filter: WordCloud[];
   apiWord: Word[];
   apiWord_filter: Word[];
-  team: string;
   graphData: any[];
+  team: string;
 
   public graph = {
     data: [    { x: [], y: [], type: 'bar', name: '', marker: {color: 'red'} }],
@@ -24,12 +26,13 @@ export class WordCloudComponent implements OnInit {
 
 
   constructor(private apiService: ApiService) {
-    this.team="1071";
     this.apiCloud = [];
     this.apiCloud_filter = [];
     this.apiWord = [];
     this.apiWord_filter = [];
     this.graphData = [];
+    this.team = "";
+    this.selectedTeam = "";
 
     // Get Analysis Type Info
     this.apiService.WordReplay.subscribe(word => {
@@ -47,6 +50,10 @@ export class WordCloudComponent implements OnInit {
 
   ngOnInit(): void {
 
+  } 
+  
+  ngOnChanges() {
+    this.regenerateFilter();
   }
 
   regenerateFilter() {
@@ -55,6 +62,8 @@ export class WordCloudComponent implements OnInit {
 
       this.apiCloud_filter = this.apiCloud;
       this.apiWord_filter = this.apiWord;
+      this.team = this.selectedTeam;
+      this.graphData = [];
 
       let word1 = 0;
       let word2 = 0;
@@ -66,6 +75,7 @@ export class WordCloudComponent implements OnInit {
 
       for (const c of this.apiCloud_filter){
         if (c.Team == this.team) {
+          console.log("Found Team: "+this.team)
           switch(c.WordID) { 
             case 1: {
               word1 = word1 + c.WordCount;

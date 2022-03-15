@@ -22,7 +22,7 @@ export class RobotComponent implements OnInit {
     this.apiService.TeamsReplay.subscribe((Teams) => (this.apiTeamsList = Teams));
 
     this.team="195";
-    this.display=2;
+    this.display=1;
   }
 
   setTeam(team: string) {

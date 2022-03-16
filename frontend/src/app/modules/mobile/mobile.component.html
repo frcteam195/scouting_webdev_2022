@@ -58,7 +58,7 @@
                     <button class="button1" (click)="setLittleDisplay(1)" style="width: 25%;" [ngClass]="{'selected1': littleDisplay == 1}">Pit Data</button>
                     <button class="button1" (click)="setLittleDisplay(2)" style="width: 25%;" [ngClass]="{'selected1': littleDisplay == 2}">Picture</button>
                     <button class="button1" (click)="setLittleDisplay(3)" style="width: 25%;" [ngClass]="{'selected1': littleDisplay == 3}">Graphs</button>
-                    <button class="button1" (click)="setLittleDisplay(4)" style="width: 25%;" [ngClass]="{'selected1': littleDisplay == 4}">Word Cloud</button>
+                    <button class="button1" (click)="setLittleDisplay(4)" style="width: 25%;" [ngClass]="{'selected1': littleDisplay == 4}">Level 2</button>
                 </td>
             </tr>
             <tr>
@@ -95,7 +95,7 @@
                         </tr>
                     </table>
                     <table *ngIf="littleDisplay==4" align="center"><!-- word cloud stuff can go here -->
-                        yooo look at me im a cloud of words or smth idk
+                        <app-word-cloud [selectedTeam]=team></app-word-cloud>
                     </table>
                 </td>
             </tr>
@@ -103,31 +103,24 @@
     </tr>
     <tr *ngIf="display==2">
         <td>
-            <table border="0" width="100%">
+            <table border="1" width="100%">
 
                 <tr>
-                    <td align="center">
-                        <input list="productName" name="matchSelect" ngModel (ngModelChange)="getMatch($event)"/>
-                        <datalist id="productName" >
+                    <td colspan="3" align="center"><h2>Match {{matchNo}}</h2>
+                        <b>Select Match: </b>
+                        <select list="productName" name="matchSelect" ngModel (ngModelChange)="getMatch($event)">
                             <option *ngFor="let m of apiMatchList" [ngValue]="m.MatchNo">{{ m.MatchNo }}</option>
-                        </datalist>
+                        </select>
                     </td>
                 </tr>
-            
                 <tr>
-                    <td colspan="3" align="center"><h1>Match {{matchNo}}</h1></td>
-                </tr>
-                <tr>
-                    <td>
+                    <td align="center">
                         <app-analysis-table  [analysisGroup]=1 [selectedTeam]=redTeam1 [color]=1></app-analysis-table>
                         <br>
                         <app-analysis-table  [analysisGroup]=1 [selectedTeam]=redTeam2 [color]=1></app-analysis-table>
                         <br>
                         <app-analysis-table  [analysisGroup]=1 [selectedTeam]=redTeam3 [color]=1></app-analysis-table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+                        <br>
                         <app-analysis-table  [analysisGroup]=1 [selectedTeam]=blueTeam1 [color]=2></app-analysis-table>
                         <br>
                         <app-analysis-table  [analysisGroup]=1 [selectedTeam]=blueTeam2 [color]=2></app-analysis-table>

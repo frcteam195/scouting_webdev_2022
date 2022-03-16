@@ -1,10 +1,10 @@
 <header fxLayoutAlign="space-between center">
-    <div><b>&emsp;CyberScouter 2022</b></div><p>Last Update: {{ lastDBtime }}</p>
+    <div><b title="i LOVE harish">&emsp;CyberScouter 2022</b></div><p>Last Update: {{ lastDBtime }}</p>
     <div fxLayout="row">
-        <a routerLink="/"><button type="button" (click)="setDisplay(1)" [ngClass]="{'selected': display == 1}">Home</button></a>
-        <a routerLink="/analysis"><button type="button" (click)="setDisplay(2)" [ngClass]="{'selected': display == 2}">Team Picker</button></a> 
-        <a routerLink="/robot"><button type="button" (click)="setDisplay(3)" [ngClass]="{'selected': display == 3}">Robot Snapshot</button></a>    
-        <a routerLink="/match"><button type="button" (click)="setDisplay(4)" [ngClass]="{'selected': display == 4}">Match Report</button></a>
-        <a routerLink="/schedule"><button type="button" (click)="setDisplay(5)" [ngClass]="{'selected': display == 5}">Schedule</button></a>    
+        <a routerLink="/"><button type="button" (click)="setDisplay(1)" [ngClass]="{'selected': display == 1}" title="Homepage">Home</button></a>
+        <a routerLink="/analysis"><button type="button" (click)="setDisplay(2)" [ngClass]="{'selected': display == 2}" title="Overveiw of all teams, good for selecting">Team Picker</button></a> 
+        <a routerLink="/robot"><button type="button" (click)="setDisplay(3)" [ngClass]="{'selected': display == 3}" title="Overveiw of a certain robot">Robot Snapshot</button></a>    
+        <a routerLink="/match"><button type="button" (click)="setDisplay(4)" [ngClass]="{'selected': display == 4}" title="Overveiw of the robots competing in a match">Match Report</button></a>
+        <a routerLink="/schedule"><button type="button" (click)="setDisplay(5)" [ngClass]="{'selected': display == 5}" title="Schedule for the current event">Schedule</button></a>    
     </div>
 </header>

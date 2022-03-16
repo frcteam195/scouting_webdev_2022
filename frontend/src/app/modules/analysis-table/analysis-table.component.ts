@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiService, CEA } from 'src/app/services/api.service';
+import { Types } from 'src/app/types';
 
 @Component({
   selector: 'app-analysis-table',
@@ -16,6 +17,7 @@ export class AnalysisTableComponent implements OnInit {
 
   apiAnalysis: CEA[] = [];
   apiAnalysis_filter: CEA[] = [];
+  apiTypes: Types[] = [];
   title: String;
   titleShow = true;
   url: string = "";
@@ -33,6 +35,9 @@ export class AnalysisTableComponent implements OnInit {
     this.apiService.CEAReplay.subscribe(analysis => {
       this.apiAnalysis = analysis;
       this.regenerateFilter();
+    });
+    this.apiService.TypesReplay.subscribe(types => {
+      this.apiTypes = types;
     });
 
   }
@@ -55,6 +60,8 @@ export class AnalysisTableComponent implements OnInit {
       this.apiAnalysis_filter = [];
       let analysisTypes = [];
 
+      
+
       if (this.analysisGroup == 1) {
         analysisTypes = [1,10,11,20,21,22,30,60,61,62]; // temp added 60,61,62,70
       } else if (this.analysisGroup == 2) {
@@ -70,7 +77,7 @@ export class AnalysisTableComponent implements OnInit {
       }
 
       //console.log("Analysis Count: [" + analysisTypes.length + "]");
-
+      
       // Filter
       var url;
       let rcount = 0;

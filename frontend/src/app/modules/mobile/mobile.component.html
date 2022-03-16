@@ -31,7 +31,7 @@
         <p></p>
         <table border="0" width="100%" align="center">
             <tr>
-                <td align="center"><app-schedule></app-schedule></td>
+                <td align="center"><app-schedule [isMobile]="1" (sendMatchEvent)="openMatch($event)" (sendTeamEvent)="openTeam($event)"></app-schedule></td>
             </tr>
         </table>
     </tr>

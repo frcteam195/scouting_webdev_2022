@@ -1,4 +1,4 @@
-<div>
+<div [hidden]="normalShow">
     <table border="1" class="cea_table">
         <tr><th colspan="17">{{ title }}</th></tr>
         <tr>
@@ -15,10 +15,10 @@
             <th>Q10</th>
             <th>Q11</th>
             <th>Q12</th>
-            <th>A</th>
+            <th><div [ngClass]="{'sorted': this.sort==3}"><a (click)="localSort(3)">A</a></div></th>
             <th><div [ngClass]="{'sorted': this.sort==1}"><a (click)="localSort(1)">M</a></div></th>
             <th>R</th>
-            <th>S</th>
+            <!-- <th>S</th> -->
         </tr>
         <tr *ngFor="let a of apiAnalysis_filter">
             <td align="center"><a (click)="teamSelect( a.Team )" (dblclick)="teamPage( a.Team )"><div [ngClass]="{'sorted': a.Team==this.team}">{{ a.Team }}</div></a></td>
@@ -38,7 +38,25 @@
             <td align="center" class="bg{{ a?.Summary1Format }}">{{ a.Summary1Display }}</td>
             <td align="center" class="bg{{ a?.Summary2Format }}">{{ a.Summary2Display }}</td>
             <td align="center" class="bg{{ a?.Summary3Format }}">{{ a.Summary3Display }}</td>
-            <td align="center" class="bg{{ a?.Summary4Format }}">{{ a.Summary4Display }}</td>
+            <!-- <td align="center" class="bg{{ a?.Summary4Format }}">{{ a.Summary4Display }}</td> -->
+        </tr>
+    </table>
+</div>
+
+<div [hidden]="baShow">
+    <table border="1" class="cea_table">
+        <tr><th colspan="17">{{ title }}</th></tr>
+        <tr>
+            <th><div [ngClass]="{'sorted': this.sort==2}"><a (click)="localSort(2)">Team</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==3}"><a (click)="localSort(3)">OPR</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==1}"><a (click)="localSort(1)">R</a></div></th>
+
+        </tr>
+        <tr *ngFor="let a of apiAnalysis_filter">
+            <td align="center"><a (click)="teamSelect( a.Team )" (dblclick)="teamPage( a.Team )"><div [ngClass]="{'sorted': a.Team==this.team}">{{ a.Team }}</div></a></td>
+            <td align="center" class="bg{{ a?.Summary1Format }}">{{ a.Summary1Display }}</td>
+            <td align="center" class="bg{{ a?.Summary2Format }}">{{ a.Summary2Display }}</td>
+
         </tr>
     </table>
 </div>

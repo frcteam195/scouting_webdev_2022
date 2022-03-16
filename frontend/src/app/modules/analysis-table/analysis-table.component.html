@@ -1,7 +1,7 @@
 <div [hidden]="titleShow" >
-    <table border="1" class="cea_table" width="550">
+    <table border="1" class="cea_table" width="641">
         <tr>
-            <th [ngClass]="{'titleR': color == 1, 'titleB' : color == 2 }">{{selectedTeam}}</th>
+            <th [ngClass]="{'titleR': color == 1, 'titleB' : color == 2 }" (dblclick)="teamPage( selectedTeam )">{{selectedTeam}}</th>
         </tr>
     </table>
 </div>
@@ -24,7 +24,7 @@
         <th>A</th>
         <th>M</th>
         <th>R</th>
-        <th>S</th>
+        <!-- <th>S</th> -->
     </tr>
     <tr *ngFor="let a of apiAnalysis_filter">
         <ng-container *ngFor="let x of apiTypes">
@@ -45,6 +45,6 @@
         <td align="center" class="bg{{ a?.Summary1Format }}">{{ a.Summary1Display }}</td>
         <td align="center" class="bg{{ a?.Summary2Format }}">{{ a.Summary2Display }}</td>
         <td align="center" class="bg{{ a?.Summary3Format }}">{{ a.Summary3Display }}</td>
-        <td align="center" class="bg{{ a?.Summary4Format }}">{{ a.Summary4Display }}</td>
+        <!-- <td align="center" class="bg{{ a?.Summary4Format }}">{{ a.Summary4Display }}</td> -->
     </tr>
 </table>

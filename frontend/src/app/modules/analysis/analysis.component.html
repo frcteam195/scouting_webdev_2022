@@ -33,7 +33,7 @@
                             <div align="center"><b>Final</b></div>
                             <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
                             <ng-container *ngFor="let c of apiFinal24List; let i = index">
-                                {{ i+1 }} <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClick(i)" (ngModelChange)="teamSelectionChange(1)"><br>
+                                {{ i+1 }} <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (dblclick)="processDoubleClick(i)" (ngModelChange)="teamSelectionChange(1)"><br>
                             </ng-container>
                           <button (click)="addEnd(1)">Add</button>
 
@@ -41,7 +41,7 @@
                         <td valign="top" align="center">
                             <b>Pick</b><br>
                             <ng-container *ngFor="let c of apiPickList; let i = index">
-                                <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClickPick(i)" (ngModelChange)="teamSelectionChange(3)"><br>
+                                <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (dblclick)="processDoubleClickPick(i)" (ngModelChange)="teamSelectionChange(3)"><br>
                             </ng-container>
                           <button (click)="addEnd(3)">Add</button>
                         </td>
@@ -56,20 +56,20 @@
                             <br>
                             <b>Compare</b>
                             <form [formGroup]="compareForm" (ngSubmit)="compareTeams(compareForm.value)">
-                                <input id="team1" type="text" size="3" formControlName="team1"><br>
-                                <input id="team2" type="text" size="3" formControlName="team2"><br>
-                                <input id="team3" type="text" size="3" formControlName="team3"><br>
-                                <input id="team4" type="text" size="3" formControlName="team4"><br>
-                                <input id="team5" type="text" size="3" formControlName="team5"><br>
-                                <input id="team3" type="text" size="3" formControlName="team6"><br>
-                                <input id="team4" type="text" size="3" formControlName="team7"><br>
-                                <input id="team5" type="text" size="3" formControlName="team8"><br>
+                                <input id="team1" type="text" class="tbox" maxlength="4"formControlName="team1"><br>
+                                <input id="team2" type="text" class="tbox" maxlength="4" formControlName="team2"><br>
+                                <input id="team3" type="text" class="tbox" maxlength="4" formControlName="team3"><br>
+                                <input id="team4" type="text" class="tbox" maxlength="4" formControlName="team4"><br>
+                                <input id="team5" type="text" class="tbox" maxlength="4" formControlName="team5"><br>
+                                <input id="team3" type="text" class="tbox" maxlength="4" formControlName="team6"><br>
+                                <input id="team4" type="text" class="tbox" maxlength="4" formControlName="team7"><br>
+                                <input id="team5" type="text" class="tbox" maxlength="4" formControlName="team8"><br>
                                 <button class="button" type="submit">{{ filter == 1 ? 'Compare Off' : 'Compare' }}</button>
                             </form>
                             <br>
                             <b>DNP</b><br>
                             <ng-container *ngFor="let c of apiDnpList; let i = index">
-                                <input type="text" size="3" [(ngModel)]="c.Team" (dblclick)="processDoubleClickDnp(i)" (ngModelChange)="teamSelectionChange(2)"><br>
+                                <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (dblclick)="processDoubleClickDnp(i)" (ngModelChange)="teamSelectionChange(2)"><br>
                             </ng-container>
                           <button (click)="addEnd(2)">Add</button>
                           <br><br>
@@ -80,7 +80,7 @@
                     </tr>
                 </table>
             </td>
-            <td>
+            <td> 
                 <!-- Start of the Regular View -->
 
                 <div [hidden]="fullShow">
@@ -196,6 +196,11 @@
                 </div>
                 </div>
                 </div>
+            </td>
+            <td style="padding: 4px;">
+                <!-- Start of Blue Alliance Ranking -->
+
+                <app-team-table [analysisTypeID]=80 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
             </td>
         </tr>
     </table>

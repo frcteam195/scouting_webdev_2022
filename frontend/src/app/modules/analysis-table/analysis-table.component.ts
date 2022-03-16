@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiService, CEA } from 'src/app/services/api.service';
 import { Types } from 'src/app/types';
@@ -23,7 +24,7 @@ export class AnalysisTableComponent implements OnInit {
   url: string = "";
 
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private router: Router) {
     this.apiAnalysis_filter = [];
     this.apiAnalysis = [];
     this.title = "Title";
@@ -51,6 +52,12 @@ export class AnalysisTableComponent implements OnInit {
     this.regenerateFilter();
   }
 
+  teamPage(team: string) {
+    //console.log("Calling Robot Page with: " + team)
+    //this.router.navigateByUrl('/robot/'+team);
+    // Opens in New Tab
+    this.router.navigate([]).then(result => { window.open('#/robot/'+team, '_blank'); }); 
+  }
 
   regenerateFilter() {
     //console.log("regenerateFilter: Analysis Passed to Component: " + this.selectedTeam);
@@ -63,13 +70,13 @@ export class AnalysisTableComponent implements OnInit {
       
 
       if (this.analysisGroup == 1) {
-        analysisTypes = [1,10,11,20,21,22,30,60,61,62]; // temp added 60,61,62,70
+        analysisTypes = [1,2,3,10,11,20,21,22,30,60,61,62]; // Match Report
       } else if (this.analysisGroup == 2) {
-        analysisTypes = [40,41,42,43,44,45,46,47,48,49];
+        analysisTypes = [40,41,42,43,44,45,46,47,48,49];  // Robot Snapshot Middle
       } else if (this.analysisGroup == 3) {
-        analysisTypes = [1,10,11,20,21,22,30,60,61,62];
+        analysisTypes = [1,2,3,10,11,20,21,22,30,60,61,62];  // Robot Snapshot Top
       } else {
-        analysisTypes = [70,71];
+        analysisTypes = [70,71];   // Robot Snapshot Bottom
       }
 
       if (this.color > 0) {

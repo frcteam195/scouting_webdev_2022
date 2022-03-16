@@ -21,7 +21,7 @@ export class WordCloudComponent implements OnInit {
 
   public graph = {
     data: [    { x: [], y: [], type: 'bar', name: '', marker: {color: 'red'} }],
-    layout: {width: 640, height: 480, xaxis: { type: 'category' }, title: ''}
+    layout: {width: 480, height: 360, xaxis: { type: 'category' }, title: '', margin: {b:20, l:20, r:20, t:20}, yaxis:{rangebreaks:[{bounds:[-3,3]}]}}
   };
 
 
@@ -132,7 +132,7 @@ export class WordCloudComponent implements OnInit {
 
       this.graph = {
         data: this.graphData,
-        layout: {width: 640, height: 480, xaxis: { type: 'category' }, title: "Word Cloud"}
+        layout: {width: 480, height: 360, xaxis: { type: 'category' }, title: "Word Cloud", margin: {b:50, l:20, r:20, t:50}, yaxis:{rangebreaks:[{bounds:[-3,3]}]}} 
       };
 
     } else {

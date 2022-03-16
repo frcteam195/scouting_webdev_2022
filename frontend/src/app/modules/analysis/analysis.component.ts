@@ -56,15 +56,13 @@ export class AnalysisComponent implements OnInit {
     this.apiFinal24List = [new Final24()];
     this.analysisTypeID = 1;
     this.focusTeam = "";
-
-    this.apiService.TypesReplay.subscribe(types => {
-    this.apiTypes = types; 
-    });
     
   }
 
   ngOnInit(): void  {
     // we will initialize our form here
+    this.apiService.TypesReplay.subscribe(types => { this.apiTypes = types; });
+
     this.apiService.getDnp().then(response => this.apiDnpList = response);
 
     this.apiService.getFinal24().then(response => this.apiFinal24List = response);
@@ -73,6 +71,8 @@ export class AnalysisComponent implements OnInit {
 
     this.filterList = this.apiFinal24List.concat(this.apiDnpList);
     this.filter = 0;
+
+    this.teamSelectionChange(1);
   }
 
   teamSelectionChange(list: number) {
@@ -87,7 +87,7 @@ export class AnalysisComponent implements OnInit {
       this.apiPickList = this.apiPickList.slice();
     }
 
-
+    console.log("Change IDentified");
     // Logic to turn filter back off
     //this.filterList = this.apiFinal24List;
     this.filterList = this.apiFinal24List.concat(this.apiDnpList);
@@ -261,10 +261,18 @@ export class AnalysisComponent implements OnInit {
   }
 
   save() {
-    // call API to save Team Selection Data
-    this.apiService.saveFinal24(this.apiFinal24List);
-    this.apiService.saveDnp(this.apiDnpList);
-    this.apiService.savePick(this.apiPickList);
+    var pass = prompt("Password Required to save to Database");
+
+    if(pass == '999') {
+      // call API to save Team Selection Data
+      alert("Access Approved");
+      this.apiService.saveFinal24(this.apiFinal24List);
+      this.apiService.saveDnp(this.apiDnpList);
+
+    } else {
+      alert("ERROR: Invalid Password");
+    }
+
   }
 
   copyToPick() {

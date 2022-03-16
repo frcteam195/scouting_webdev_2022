@@ -27,6 +27,9 @@ export class TeamTableComponent implements OnInit, OnChanges {
   team: string;
   fFlag: string;
 
+  normalShow = false;
+  baShow = true;
+
 
   constructor(private apiService: ApiService, private router: Router) {
     this.apiAnalysis_filter = [];
@@ -96,6 +99,14 @@ export class TeamTableComponent implements OnInit, OnChanges {
 
       this.apiAnalysis_filter = [];
 
+      if (this.analysisTypeID == 80) {
+        this.normalShow = true;
+        this.baShow = false;
+      } else {
+        this.normalShow = false;
+        this.baShow = true;
+      }
+
       let rcount = 0;
       for (const cea of this.apiAnalysis){
         if (cea.AnalysisTypeID == this.analysisTypeID) {
@@ -124,11 +135,21 @@ export class TeamTableComponent implements OnInit, OnChanges {
       }
       // Sort Logic
       if (this.sort == 1)  {
+        if (this.analysisTypeID == 80) {
+          this.apiAnalysis_filter.sort((a, b) => a.Summary2Value - b.Summary2Value);
+        } else {
+          this.apiAnalysis_filter.sort((a, b) => b.Summary2Value - a.Summary2Value);
+        }
+      } else if (this.sort == 3) {
+        //this.apiAnalysis_filter.sort((a, b) => (a.Team > b.Team) ? 1 : -1);
         this.apiAnalysis_filter.sort((a, b) => b.Summary1Value - a.Summary1Value);
+        
       } else {
         //this.apiAnalysis_filter.sort((a, b) => (a.Team > b.Team) ? 1 : -1);
-        this.apiAnalysis_filter.sort((a, b) => Number(a.Team) -Number(b.Team));
+        this.apiAnalysis_filter.sort((a, b) => Number(a.Team) - Number(b.Team));
       }
+
+
       // Lookup AnalysisType for Title and Description
       for (const type of this.apiTypes) {
         if (type.AnalysisTypeID == this.analysisTypeID) {

@@ -74,6 +74,8 @@ export class SummaryGraphComponent implements OnInit {
 
       this.apiSummary_filter = this.apiSummary;
 
+      this.apiSummary_filter.sort((a, b) => b.TotalScoreMean - a.TotalScoreMean);
+
       this.graphData = [];
 
       let robotList = [];
@@ -111,19 +113,19 @@ export class SummaryGraphComponent implements OnInit {
 
             if (this.sortType == 1) {
             
-            autoList.push(t.AutonomousMean);
-           // ballsList.push(t.TotalBallsMean)
-           // scoreList.push(t.TotalScoreMean)
-            climbList.push(t.ClimbMean)
-            lowerList.push(t.TeleLowBallsMean)
-            upperList.push(t.TeleHighBallsMean)
-         //   totalList.push(t.TeleTotalBallsMean)
+              autoList.push(t.AutonomousMean);
+            // ballsList.push(t.TotalBallsMean)
+            // scoreList.push(t.TotalScoreMean)
+              climbList.push(t.ClimbMean)
+              lowerList.push(t.TeleLowBallsMean)
+              upperList.push(t.TeleHighBallsMean)
+          //   totalList.push(t.TeleTotalBallsMean)
             }
             else {  
-             autoList.push(t.AutonomousMedian);
-             climbList.push(t.ClimbMedian)
-             lowerList.push(t.TeleLowBallsMedian)
-             upperList.push(t.TeleHighBallsMedian)
+              autoList.push(t.AutonomousMedian);
+              climbList.push(t.ClimbMedian)
+              lowerList.push(t.TeleLowBallsMedian)
+              upperList.push(t.TeleHighBallsMedian)
             }
         }
       }

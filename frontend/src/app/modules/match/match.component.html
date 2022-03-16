@@ -1,19 +1,14 @@
-<table border="1" width="100%">
-
+<table border="0" width="100%">
     <tr>
-        <td>
-            <input list="productName" name="matchSelect" ngModel (ngModelChange)="getMatch($event)"/>
-            <datalist id="productName" >
-                <option *ngFor="let m of apiMatchList" [ngValue]="m.MatchNo">{{ m.MatchNo }}</option>
-            </datalist>
+        <td colspan="3" align="center"><h2>Match {{matchNo}}</h2>
+        <b>Select Match: </b>
+        <select list="productName" name="matchSelect" ngModel (ngModelChange)="getMatch($event)">
+            <option *ngFor="let m of apiMatchList" [ngValue]="m.MatchNo">{{ m.MatchNo }}</option>
+        </select>
         </td>
     </tr>
-
     <tr>
-        <td colspan="3" align="center"><h1>Match {{matchNo}}</h1></td>
-    </tr>
-    <tr>
-        <td>
+        <td align="right" valign="top">
             <app-analysis-table  [analysisGroup]=1 [selectedTeam]=redTeam1 [color]=1></app-analysis-table>
             <br>
             <app-analysis-table  [analysisGroup]=1 [selectedTeam]=redTeam2 [color]=1></app-analysis-table>
@@ -21,9 +16,9 @@
             <app-analysis-table  [analysisGroup]=1 [selectedTeam]=redTeam3 [color]=1></app-analysis-table>
         </td>
         <td>    
-        
+            &nbsp;&nbsp;
         </td>
-        <td>
+        <td align="left" valign="top">
             <app-analysis-table  [analysisGroup]=1 [selectedTeam]=blueTeam1 [color]=2></app-analysis-table>
             <br>
             <app-analysis-table  [analysisGroup]=1 [selectedTeam]=blueTeam2 [color]=2></app-analysis-table>

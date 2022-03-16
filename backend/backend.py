@@ -36,7 +36,7 @@ def get_analysis():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT cea.*, at.AnalysisType "
                 "FROM CurrentEventAnalysis cea, AnalysisTypes at "
-                "WHERE cea.AnalysisTypeID = at.AnalysisTypeID;")
+                "WHERE cea.AnalysisTypeID = at.AnalysisTypeID order by SortOrder;")
     data = cursor.fetchall()	
     response = app.response_class(
         response=json.dumps(data),

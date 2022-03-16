@@ -21,7 +21,7 @@ export class WordCloudComponent implements OnInit {
 
   public graph = {
     data: [    { x: [], y: [], type: 'bar', name: '', marker: {color: 'red'} }],
-    layout: {width: 480, height: 360, xaxis: { type: 'category' }, title: '', margin: {b:20, l:20, r:20, t:20}, yaxis:{rangebreaks:[{bounds:[-3,3]}]}}
+    layout: {width: 480, height: 360, xaxis: { type: 'category' }, title: '', margin: {b:20, l:20, r:20, t:20}, yaxis:{range:[-3,3]}}
   };
 
 
@@ -56,6 +56,15 @@ export class WordCloudComponent implements OnInit {
     this.regenerateFilter();
   }
 
+  getColor(val: number) {
+    if (val >= 0) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+
+
   regenerateFilter() {
 
     if ((this.apiCloud) && (this.apiWord)) {
@@ -72,6 +81,7 @@ export class WordCloudComponent implements OnInit {
       let word5 = 0;
       let word6 = 0;
       let word7 = 0;
+      let mCount = 0;
 
       for (const c of this.apiCloud_filter){
         if (c.Team == this.team) {
@@ -79,6 +89,8 @@ export class WordCloudComponent implements OnInit {
           switch(c.WordID) { 
             case 1: {
               word1 = word1 + c.WordCount;
+              // assume a 1 record for all matches to get match count
+              mCount = mCount + 1;
               break; 
             } case 2: {
               word2 = word2 + c.WordCount;
@@ -105,8 +117,17 @@ export class WordCloudComponent implements OnInit {
          } 
         }
       }
+
+      word1 = word1 / mCount;
+      word2 = word2 / mCount;
+      word3 = word3 / mCount;
+      word4 = word4 / mCount;
+      word5 = word5 / mCount;
+      word6 = word6 / mCount;
+      word7 = word7 / mCount;
+
       var xValueList = [];
-      var yValueList = [word1, word2,word3,word4,word5,word6,word7];
+      var yValueList = [word1,word2,word3,word4,word5,word6,word7];
 
       //push words into x value array
       for (const w of this.apiWord_filter) {
@@ -125,14 +146,18 @@ export class WordCloudComponent implements OnInit {
         x: xValueList,
         y: yValueList,
         type: "bar",
-        showlegend: true,
-        name: this.team
+        showlegend: false,
+        name: this.team,
+        marker: {
+          // check y value and color green if y > 0, otherwise color red
+          color: yValueList.map(y => { if (y >= 0) { return '#00FF00'} else { return '#FF0000'} })
+        }
         //visible: 
       });
 
       this.graph = {
         data: this.graphData,
-        layout: {width: 480, height: 360, xaxis: { type: 'category' }, title: "Word Cloud", margin: {b:50, l:20, r:20, t:50}, yaxis:{rangebreaks:[{bounds:[-3,3]}]}} 
+        layout: {width: 480, height: 360, xaxis: { type: 'category' }, title: "Level 2", margin: {b:50, l:20, r:20, t:50}, yaxis:{range:[-3,3]}}
       };
 
     } else {

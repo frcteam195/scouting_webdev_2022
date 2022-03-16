@@ -52,7 +52,7 @@ def get_currteam():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT t.team "
                 "FROM Teams t, CurrentEventTeams c "
-                "WHERE t.team = c.team order by Team;")
+                "WHERE t.team = c.team order by cast(Team as int);")
     data = cursor.fetchall()
     response = app.response_class(
         response=json.dumps(data),

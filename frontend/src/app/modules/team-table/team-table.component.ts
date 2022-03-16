@@ -81,7 +81,7 @@ export class TeamTableComponent implements OnInit, OnChanges {
     //console.log("Current Team: " + this.team);
     if (team == this.team) {
         //this.team = "";
-        console.log("Highlight off");
+        //console.log("Highlight off");
     } else {
       this.team = team;
       //console.log("Highlighting Robot: " + team);

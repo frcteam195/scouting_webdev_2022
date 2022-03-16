@@ -28,9 +28,17 @@ export class MobileComponent implements OnInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute, private meta: Meta) {
     //this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
     this.apiService.TeamsReplay.subscribe((Teams) => (this.apiTeamsList = Teams));
+
+    // Get Match Data
+    this.apiService.MatchReplay.subscribe(match => {
+      this.apiMatchList = match;
+      this.regenerateFilter();
+    });
+
+
     this.team="195";
     this.display=0;
-    this.littleDisplay=2;
+    this.littleDisplay=1;
     this.meta.addTags([{name: 'viewport', content: 'width=device-width, initial-scale=1'}])
    }
    setTeam(team: string) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService, CurrTeams } from 'src/app/services/api.service';
 import { Matches } from '../../matches';
@@ -10,7 +10,10 @@ import { Matches } from '../../matches';
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
-  @Input() isOdd: number; //1 = odd, 0 = even
+  @Input() isMobile: number; //1 = mobile, 0 = standard
+
+  @Output() sendMatchEvent = new EventEmitter<number>();
+  @Output() sendTeamEvent = new EventEmitter<string>();
 
   redTeam1: string = "195";
   redTeam2: string = "195";
@@ -28,7 +31,7 @@ export class ScheduleComponent implements OnInit {
   apiCurrTeamList: CurrTeams[];
 
   constructor(private apiService: ApiService, private router: Router) {
-    this.isOdd=0;
+    this.isMobile=0;
     this.apiMatchList = [];
     this.apiMatchList_filter = [];
     this.apiCurrTeamList = [];
@@ -53,15 +56,25 @@ export class ScheduleComponent implements OnInit {
   teamPage(team: string) {
     console.log("Calling Robot Page with: " + team)
     //this.router.navigateByUrl('/robot/'+team);
-    // Opens in New Tab
-    this.router.navigate([]).then(result => { window.open('#/robot/'+team, '_blank'); }); 
+    if (this.isMobile == 1) {
+      this.sendTeamEvent.emit(team);
+    } else {
+      // Opens in New Tab
+      this.router.navigate([]).then(result => { window.open('#/robot/'+team, '_blank'); });
+    }
   }
 
   matchPage(match: number) {
     console.log("Calling Match Page with: " + match)
     //this.router.navigateByUrl('/robot/'+team);
-    // Opens in New Tab
-    this.router.navigate([]).then(result => { window.open('#/match/'+match, '_blank'); }); 
+
+    if (this.isMobile == 1) {
+      this.sendMatchEvent.emit(match);
+    } else {
+      // Opens in New Tab
+      this.router.navigate([]).then(result => { window.open('#/match/'+match, '_blank'); }); 
+    }
+   
   }
 
 

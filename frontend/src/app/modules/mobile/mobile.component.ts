@@ -57,6 +57,17 @@ export class MobileComponent implements OnInit {
     this.regenerateFilter();
 
   }
+
+  openMatch(match: number) {
+    this.setDisplay(2);
+    this.getMatch(match);
+  }
+
+  openTeam(team: string) {
+    this.setDisplay(1);
+    this.setTeam(team);
+  }
+
   regenerateFilter() {
 
     //console.log("Made it to Filter with [" + this.matchNo + "]");

@@ -42,8 +42,8 @@
         <td align="center" class="bg{{ a?.Match10Format }}">{{ a.Match10Display }}</td>
         <td align="center" class="bg{{ a?.Match11Format }}">{{ a.Match11Display }}</td>
         <td align="center" class="bg{{ a?.Match12Format }}">{{ a.Match12Display }}</td>
-        <td align="center" class="bg{{ a?.Summary1Format }}">{{ a.Summary1Display }}</td>
-        <td align="center" class="bg{{ a?.Summary2Format }}">{{ a.Summary2Display }}</td>
+        <td align="center" class="bg{{ a?.Summary1Format }}">{{ a.Summary1Display | number : '1.1-1' }}</td>
+        <td align="center" class="bg{{ a?.Summary2Format }}">{{ a.Summary2Display | number : '1.1-1' }}</td>
         <td align="center" class="bg{{ a?.Summary3Format }}">{{ a.Summary3Display }}</td>
         <!-- <td align="center" class="bg{{ a?.Summary4Format }}">{{ a.Summary4Display }}</td> -->
     </tr>

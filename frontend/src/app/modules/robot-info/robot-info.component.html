@@ -1,33 +1,22 @@
 
 <table border=1 width="100%">
+    <ng-container *ngFor="let x of apiAnalysis">
+        <ng-container *ngIf="x.AnalysisTypeID == 72 && x.Team == selectedTeam">
+            <tr>
+                <td>Tele Accuracy: </td>
+                <td>{{ x.Summary1Value * 100 }}%</td>
+            </tr>
+            <tr>
+                <td>Auto Accuracy: </td>
+                <td>{{ x.Summary4Value * 100 }}%</td>
+            </tr>
+        </ng-container>
+    </ng-container>
     <tr>
-        <td>Auto Accuracy: </td>
-        <td>
-            <!-- <div *ngFor="let x of apiAnalysis">
-                <div *ngIf="x.Team + '' == selectedTeam + ''">
-                    <div *ngIf=""></div>
-                </div>
-            </div> -->
-        </td>
+        <td colspan="2" align="center"><img title="Picture of starting positions" style="width: 200px;height: 200px;" src="https://cdn.discordapp.com/attachments/830144707794305064/954157172596568096/Screenshot_2022-03-17_191944.png"></td>
     </tr>
     <tr>
-        <td colspan="2">Picture of starting positions</td>
+        <td colspan="2" align="center"><img title="Picture of starting positions" style="width: 350px;" src="https://cdn.discordapp.com/attachments/830144707794305064/954158477268373504/1233231.png"></td>
     </tr>
-    <tr>
-        <td>Tele Accuracy: </td>
-        <td>
-            <!-- <div *ngFor="let x of apiAnalysis">
-                <div *ngIf="x.Team + '' == selectedTeam + ''">
-                    <div *ngIf=""></div>
-                </div>
-            </div> -->
-        </td>
-    </tr>
-    <tr>
-        <td>Starting Positions: </td>
-        <td>Numbers</td>
-    </tr>
-    <tr>
-        <td colspan="2">Picture of starting positions</td>
-    </tr>
+    
 </table>

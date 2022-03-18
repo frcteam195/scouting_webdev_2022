@@ -1,12 +1,8 @@
-<div [hidden]="titleShow" >
-    <table border="1" class="cea_table" width="641">
-        <tr>
-            <th [ngClass]="{'titleR': color == 1, 'titleB' : color == 2 }" (dblclick)="teamPage( selectedTeam )">{{selectedTeam}}</th>
-        </tr>
-    </table>
-</div>
 
 <table border="1" class="cea_table">
+    <tr *ngIf="!titleShow">
+        <th [ngClass]="{'titleR': color == 1, 'titleB' : color == 2 }" (dblclick)="teamPage( selectedTeam )" colspan="16">{{selectedTeam}}</th>
+    </tr>
     <tr>
         <th style="width: 70px;">Type</th>
         <th>Q1</th>

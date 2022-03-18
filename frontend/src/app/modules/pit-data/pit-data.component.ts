@@ -26,6 +26,21 @@ export class PitDataComponent implements OnInit {
     return "Error, input out of bounds";
   }
 
+  getClimbPosition(ID: Number) {
+    if (ID==4) {
+      return "Any";
+    } else if (ID==3) {
+      return "Right";
+    } else if (ID==2) {
+      return "Center";
+    } else if (ID==1) {
+      return "Left";
+    } else if (ID==0) {
+      return "None";
+    }
+    return "Error, input out of bounds"
+  }
+
   getClimbHeight(ID: Number) {
     if (ID==4){
       return "Traversal";
@@ -35,6 +50,8 @@ export class PitDataComponent implements OnInit {
       return "Mid";
     } else if (ID==1) {
       return "Low";
+    } else if (ID==0) {
+      return "None";
     }
     return "Error, input out of bounds";
   }

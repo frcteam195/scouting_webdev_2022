@@ -70,11 +70,11 @@ export class AnalysisTableComponent implements OnInit {
       
 
       if (this.analysisGroup == 1) {
-        analysisTypes = [1,2,3,10,11,20,21,22,30,60,61,62]; // Match Report
+        analysisTypes = [1,2,3,10,11,20,21,22,30,61]; // Match Report
       } else if (this.analysisGroup == 2) {
-        analysisTypes = [40,41,42,43,44,45,46,47,48,49];  // Robot Snapshot Middle
+        analysisTypes = [40,41,42,43,44,45,46,47,48,49,50];  // Robot Snapshot Middle
       } else if (this.analysisGroup == 3) {
-        analysisTypes = [1,2,3,10,11,20,21,22,30,60,61,62];  // Robot Snapshot Top
+        analysisTypes = [1,2,3,10,11,12,20,21,22,30,60,61,62,72];  // Robot Snapshot Top
       } else {
         analysisTypes = [70,71];   // Robot Snapshot Bottom
       }

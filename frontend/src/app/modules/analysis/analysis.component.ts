@@ -290,6 +290,7 @@ export class AnalysisComponent implements OnInit {
     for (const t of this.apiFinal24List)  {
       t.Team = "";
     }
+    this.teamSelectionChange(1);
   }
 
   onChanges(): void {

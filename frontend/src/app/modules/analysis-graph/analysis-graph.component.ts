@@ -11,6 +11,7 @@ export class AnalysisGraphComponent implements OnInit {
 
   @Input() selectedTeam: string;
   @Input() analysisTypeID: number;
+  @Input() graphSize: number;
   
 
   apiAnalysis: CEA[] = [];
@@ -33,6 +34,7 @@ export class AnalysisGraphComponent implements OnInit {
     this.team = "195";
     this.analysisType = "";
     this.graphData = [];
+    this.graphSize = 1;
 
     // Update the filter whenever the inputting data changes
     this.apiService.CEAReplay.subscribe(analysis => {
@@ -55,8 +57,17 @@ export class AnalysisGraphComponent implements OnInit {
   regenerateFilter() {
     //console.log("regenerateFilter: Analysis Passed to Component: " + this.selectedTeam);
 
-    console.log("Analysis Type ID: " + this.analysisTypeID);
-    console.log("Selected Team: " + this.selectedTeam);
+    //console.log("Analysis Type ID: " + this.analysisTypeID);
+    //console.log("Selected Team: " + this.selectedTeam);
+
+    // Set Graph Length and Width
+    let gWidth = 640;
+    let gHeight = 480;
+    if (this.graphSize == 1)
+    {
+      gWidth = 240;
+      gHeight = 120;
+    }
 
 
     if (this.apiAnalysis) {
@@ -105,7 +116,7 @@ export class AnalysisGraphComponent implements OnInit {
     this.graph = {
       data: this.graphData,
 /*       layout: {width: 640, height: 480, title: this.analysisType} */
-      layout: {width: 240, height: 120, title: " ", margin: {b:20, l:20, r:20, t:20}},
+      layout: {width: gWidth, height: gHeight, title: " ", margin: {b:20, l:20, r:20, t:20}},
     };
   }
 

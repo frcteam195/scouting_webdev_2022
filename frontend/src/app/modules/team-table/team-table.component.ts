@@ -38,7 +38,7 @@ export class TeamTableComponent implements OnInit, OnChanges {
     this.teamList = [];
     this.sort = 1;
     this.team = "";
-    this.focus = "999";
+    this.focus = "";
     this.filter = 0;
     this.fFlag = "N";
 

@@ -1,3 +1,4 @@
+import { VideoComponent } from './../../modules/video/video.component';
 import { SummaryGraphComponent } from './../../modules/summary-graph/summary-graph.component';
 import { ScheduleComponent } from './../../modules/schedule/schedule.component';
 import { WordCloudComponent } from './../../modules/word-cloud/word-cloud.component';
@@ -45,7 +46,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     SummaryGraphComponent,
     MobileComponent,
     RobotInfoComponent,
-    SummaryTableComponent
+    SummaryTableComponent,
+    VideoComponent
   ],
   imports: [
     CommonModule,

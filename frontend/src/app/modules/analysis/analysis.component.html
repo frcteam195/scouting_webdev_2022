@@ -104,7 +104,7 @@
                     <table>
                         <tr>
                             <td>
-                                <app-summary-table></app-summary-table>
+                                <app-summary-table [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-summary-table>
                             </td>
                         </tr>
                     </table>
@@ -115,7 +115,7 @@
                     <table>
                         <tr>
                             <td>
-                                <app-team-graph [analysisTypeID]=analysis1 [teamList]=filterList [filter]=filter></app-team-graph>
+                                <app-team-graph [analysisTypeID]=analysis1 [teamList]=filterList [filter]=filter [filter]=filter></app-team-graph>
                             </td>
                         </tr>
                         <tr>

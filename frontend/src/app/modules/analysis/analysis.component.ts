@@ -268,6 +268,7 @@ export class AnalysisComponent implements OnInit {
       alert("Access Approved");
       this.apiService.saveFinal24(this.apiFinal24List);
       this.apiService.saveDnp(this.apiDnpList);
+      this.apiService.savePick(this.apiPickList);
 
     } else {
       alert("ERROR: Invalid Password");

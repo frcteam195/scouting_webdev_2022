@@ -4,7 +4,7 @@
             <table border="0">
                 <tr>
                     <td>
-                        <select id="teamSelect" (ngModelChange)="setTeam(team)" (click)="setTeam(team)" type="text" name="teamSelect" title="Select the team you want to see" [(ngModel)]="team">
+                        <select id="teamSelect" [(ngModel)]="team" type="text" name="teamSelect" title="Select the team you want to see" (ngModelChange)="setTeam(team)">
                             <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
                         </select>
                     </td>

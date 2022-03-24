@@ -1,6 +1,7 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { CEA } from 'src/app/CEA';
-import { ApiService } from 'src/app/services/api.service';
+import { ApiService, Final24 } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-analysis-graph',
@@ -9,9 +10,13 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class AnalysisGraphComponent implements OnInit {
 
+  @Input() teamList: Final24[];
   @Input() selectedTeam: string;
   @Input() analysisTypeID: number;
   @Input() graphSize: number;
+  @Input() focus: string;
+  @Input() filter: number;
+
   
 
   apiAnalysis: CEA[] = [];
@@ -22,7 +27,7 @@ export class AnalysisGraphComponent implements OnInit {
   graphData: any[];
   public graph = {
     data: [    { x: [], y: [],  }    ],
-    layout: {width: 640, height: 480, title: "", margin: {b:0, l:0, r:0, t:0}}
+    layout: {width: 640, height: 480, title: "", xaxis: { type: 'category' }, margin: {b:0, l:0, r:0, t:0}}
   };
 
   constructor(private apiService: ApiService) {
@@ -31,10 +36,13 @@ export class AnalysisGraphComponent implements OnInit {
     this.title = "Title";
     this.selectedTeam = "";
     this.analysisTypeID = 0;
-    this.team = "195";
+    this.team = "";
     this.analysisType = "";
     this.graphData = [];
-    this.graphSize = 1;
+    this.graphSize = 0;
+    this.teamList = [];
+    this.focus = "";
+    this.filter = 1;
 
     // Update the filter whenever the inputting data changes
     this.apiService.CEAReplay.subscribe(analysis => {
@@ -55,20 +63,12 @@ export class AnalysisGraphComponent implements OnInit {
 
 
   regenerateFilter() {
-    //console.log("regenerateFilter: Analysis Passed to Component: " + this.selectedTeam);
 
-    //console.log("Analysis Type ID: " + this.analysisTypeID);
-    //console.log("Selected Team: " + this.selectedTeam);
-
-    // Set Graph Length and Width
-    let gWidth = 640;
-    let gHeight = 480;
-    if (this.graphSize == 1)
-    {
-      gWidth = 240;
-      gHeight = 120;
+    for (const t of this.teamList) {
+      
     }
 
+    console.log("Filter: " + this.filter);
 
     if (this.apiAnalysis) {
 
@@ -83,17 +83,34 @@ export class AnalysisGraphComponent implements OnInit {
           let xValueList = [];
           let color = '#CCCCCC';
 
+          if (this.filter == 0) {
+            color = '#0000FF';
+          }
+         
+
           this.team = cea.Team;
           this.analysisType = cea.AnalysisType;
           
-          if (this.team == this.selectedTeam) {
-            color = '#0000FF';
+
+          if ((this.teamList.find(item => item.Team === cea.Team)) || (this.selectedTeam == cea.Team)) {
+            if (this.filter == 1) {
+              color = '#0000FF';
+            } else {
+              color = '#CCCCCC';
+            }
           }
 
-          xValueList.push(this.analysisType);
+          if (this.team == this.focus) {
+            color = '#9932cc';
+          }
+
+          if (this.graphSize == 1) {
+            xValueList.push(this.analysisType);
+          } else {
+            xValueList.push(cea.Team);
+          }
+          
           yValueList.push(cea.Summary2Value);
-          
-          
 
           this.graphData.push({
             x: xValueList,
@@ -111,13 +128,27 @@ export class AnalysisGraphComponent implements OnInit {
       this.apiAnalysis_filter = [];
     }
 
+    // Sort Graph Data by Value (y-axis)
     this.graphData.sort((a, b) => b.y - a.y);
 
-    this.graph = {
-      data: this.graphData,
-/*       layout: {width: 640, height: 480, title: this.analysisType} */
-      layout: {width: gWidth, height: gHeight, title: " ", margin: {b:20, l:20, r:20, t:20}},
-    };
+    if (this.graphSize == 1) {
+      // Layout for Small Graphs on Robot Snapshot
+      this.graph = {
+        data: this.graphData,
+        layout: {width: 240, height: 120, title: " ", xaxis: { type: 'category' }, margin: {b:20, l:20, r:20, t:20}},
+      };
+      
+    } else if (this.graphSize == 2){
+      // Layout for Large Graphs on Team Picker Snapshot
+      this.graph = {
+        data: this.graphData,
+        layout: {width: 1000, height: 325, title: this.analysisType, xaxis: { type: 'category' }, margin: {b:40, l:20, r:20, t:30}},
+      };
+      
+    }
+    
+
+
   }
 
 }

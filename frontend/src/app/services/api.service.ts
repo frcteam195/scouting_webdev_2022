@@ -90,7 +90,7 @@ export interface Teams {
   AutoPickUp: Number;
   AutoScoredHigh: Number;
   AutoScoredLow: Number;
-  AutoStartPosID: Number;
+  AutoStartPosID: number;
   AutoSummary: String;
   CanClimb: Number;
   ClimbHeightID: Number;
@@ -109,7 +109,7 @@ export interface Teams {
   MotorTypeID: Number;
   MoveBonus: Number;
   NumDriveMotors: Number;
-  NumGearSpeed: Number;
+  NumGearSpeed: number;
   NumWheels: Number;
   Pneumatics: Number;
   Preload: Number;
@@ -141,26 +141,35 @@ export interface CurrTeams {
 }
 
 export interface Summary {
-  AnalysisType: string;
-  Summary2Value: number;
+  AutonomousFormat: number;
   AutonomousMean: number;
   AutonomousMedian: number;
+  AutonomousScoreFormat: number;
   AutonomousScoreMean: number;
   AutonomousScoreMedian: number;
+  ClimbFormat: number;
   ClimbMean: number;
   ClimbMedian: number;
   EventID: number;
+  Summary: number;
+  SummaryFormat: number;
   Team: string;
+  TeleBallScoreFormat: number;
   TeleBallScoreMean: number;
   TeleBallScoreMedian: number;
+  TeleHighBallsFormat: number;
   TeleHighBallsMean: number;
   TeleHighBallsMedian: number;
+  TeleLowBallsFormat: number;
   TeleLowBallsMean: number;
   TeleLowBallsMedian: number;
+  TeleTotalBallsFormat: number;
   TeleTotalBallsMean: number;
   TeleTotalBallsMedian: number;
+  TotalBallsFormat: number;
   TotalBallsMean: number;
   TotalBallsMedian: number;
+  TotalScoreFormat: number;
   TotalScoreMean: number;
   TotalScoreMedian: number;
 }

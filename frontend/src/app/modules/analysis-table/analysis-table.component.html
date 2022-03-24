@@ -1,12 +1,8 @@
-<div [hidden]="titleShow" >
-    <table border="1" class="cea_table" width="641">
-        <tr>
-            <th [ngClass]="{'titleR': color == 1, 'titleB' : color == 2 }" (dblclick)="teamPage( selectedTeam )">{{selectedTeam}}</th>
-        </tr>
-    </table>
-</div>
 
 <table border="1" class="cea_table">
+    <tr *ngIf="!titleShow">
+        <th [ngClass]="{'titleR': color == 1, 'titleB' : color == 2 }" (dblclick)="teamPage( selectedTeam )" colspan="16">{{selectedTeam}}</th>
+    </tr>
     <tr>
         <th style="width: 70px;">Type</th>
         <th>Q1</th>
@@ -30,6 +26,7 @@
         <ng-container *ngFor="let x of apiTypes">
             <td align="center" *ngIf=" x.AnalysisType == a.AnalysisType" title="{{ x.Description }}">{{ a.AnalysisType }}</td>
         </ng-container>
+         <!-- <a href="file:///C:/ck/video/Q7.mov" target="_blank"></a> -->
         <td align="center" class="bg{{ a?.Match1Format }}">{{ a.Match1Display }}</td>
         <td align="center" class="bg{{ a?.Match2Format }}">{{ a.Match2Display }}</td>
         <td align="center" class="bg{{ a?.Match3Format }}">{{ a.Match3Display }}</td>

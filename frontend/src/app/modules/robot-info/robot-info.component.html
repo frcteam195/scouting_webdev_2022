@@ -1,33 +1,48 @@
 
 <table border=1 width="100%">
+    <ng-container *ngFor="let x of apiAnalysis">
+        <ng-container *ngIf="x.AnalysisTypeID == 72 && x.Team == selectedTeam">
+            <tr>
+                <td>Tele Accuracy: </td>
+                <td>{{ x.Summary1Value * 100 }}%</td>
+            </tr>
+            <tr>
+                <td>Auto Accuracy: </td>
+                <td>{{ x.Summary4Value * 100 }}%</td>
+            </tr>
+        </ng-container>
+    </ng-container>
     <tr>
-        <td>Auto Accuracy: </td>
-        <td>
-            <!-- <div *ngFor="let x of apiAnalysis">
-                <div *ngIf="x.Team + '' == selectedTeam + ''">
-                    <div *ngIf=""></div>
-                </div>
-            </div> -->
-        </td>
+        <table border="1" align="center">
+            <tr>
+                <td style="width: 30px;">B1</td>
+                <td rowspan="6"><img title="Picture of starting positions" style="width: 200px;height: 200px;" src="https://cdn.discordapp.com/attachments/830144707794305064/954157172596568096/Screenshot_2022-03-17_191944.png"></td>
+                <td style="width: 30px;">R6</td>
+            </tr>
+            <tr>
+                <td>B2</td>
+                <td>R5</td>
+            </tr>
+            <tr>
+                <td>B3</td>
+                <td>R4</td>
+            </tr>
+            <tr>
+                <td>B4</td>
+                <td>R3</td>
+            </tr>
+            <tr>
+                <td>B5</td>
+                <td>R2</td>
+            </tr>
+            <tr>
+                <td>B6</td>
+                <td>R1</td>
+            </tr>
+        </table>
     </tr>
     <tr>
-        <td colspan="2">Picture of starting positions</td>
+        <td colspan="2" align="center"><img title="Picture of starting positions" style="width: 350px;" src="https://cdn.discordapp.com/attachments/830144707794305064/954158477268373504/1233231.png"></td>
     </tr>
-    <tr>
-        <td>Tele Accuracy: </td>
-        <td>
-            <!-- <div *ngFor="let x of apiAnalysis">
-                <div *ngIf="x.Team + '' == selectedTeam + ''">
-                    <div *ngIf=""></div>
-                </div>
-            </div> -->
-        </td>
-    </tr>
-    <tr>
-        <td>Starting Positions: </td>
-        <td>Numbers</td>
-    </tr>
-    <tr>
-        <td colspan="2">Picture of starting positions</td>
-    </tr>
+    
 </table>

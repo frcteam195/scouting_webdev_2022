@@ -1,1 +1,33 @@
-<p>summary-table works!</p>
+<div>
+    <table border="1" class="cea_table">
+        <tr><th colspan="10">{{ title }}</th></tr>
+        <tr>
+            <th><div [ngClass]="{'sorted': this.sort==2}"><a (click)="localSort(2)">Team</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==3}"><a (click)="localSort(3)">Auto</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==4}"><a (click)="localSort(4)">AS</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==5}"><a (click)="localSort(5)">TLow</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==6}"><a (click)="localSort(6)">THigh</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==7}"><a (click)="localSort(7)">TT</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==8}"><a (click)="localSort(8)">BS</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==9}"><a (click)="localSort(9)">TB</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==10}"><a (click)="localSort(10)">Climb</a></div></th>
+            <th><div [ngClass]="{'sorted': this.sort==1}"><a (click)="localSort(1)">TS</a></div></th>
+        </tr>
+        <tr *ngFor="let a of apiSummary_filter">
+            <td align="center"><a (click)="teamSelect( a.Team )" (dblclick)="teamPage( a.Team )"><div [ngClass]="{'sorted': a.Team==this.team}">{{ a.Team }}</div></a></td>
+            <td align="center" class="bg{{ a?.AutonomousFormat }}">{{ a.AutonomousMedian }}</td>
+            <td align="center" class="bg{{ a?.AutonomousScoreFormat }}">{{ a.AutonomousScoreMedian }}</td>
+            <td align="center" class="bg{{ a?.TeleLowBallsFormat }}">{{ a.TeleLowBallsMedian }}</td>
+            <td align="center" class="bg{{ a?.TeleHighBallsFormat }}">{{ a.TeleHighBallsMedian }}</td>
+            <td align="center" class="bg{{ a?.TeleTotalBallsFormat }}">{{ a.TeleTotalBallsMedian }}</td>
+            <td align="center" class="bg{{ a?.TeleBallScoreFormat }}">{{ a.TeleBallScoreMedian }}</td>
+            <td align="center" class="bg{{ a?.TotalBallsFormat }}">{{ a.TotalBallsMedian }}</td>
+            <td align="center" class="bg{{ a?.ClimbFormat }}">{{ a.ClimbMedian }}</td>
+            <td align="center" class="bg{{ a?.TotalScoreFormat }}">{{ a.TotalScoreMedian }}</td>
+            <td align="center" class="bg{{ a?.SummaryFormat }}">{{ a.Summary }}</td>
+        </tr>
+    </table>
+    <table border="0">
+        <tr><td width="850"></td></tr>
+    </table>
+</div>

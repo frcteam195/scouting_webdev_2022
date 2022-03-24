@@ -24,7 +24,7 @@
                     <td><b>Gear Ratio: </b></td>
                     <td>{{ x.GearRatio }}</td>
                     <td><b>Gear Speed: </b></td>
-                    <td>{{ x.NumGearSpeed }}</td>
+                    <td>{{ x.NumGearSpeed + 1}}</td>
                 </tr>
                 <tr>
                     <td><b>Speed: </b></td>
@@ -33,7 +33,7 @@
                     <td>{{ x.RobotWeight }} lb.</td>
                 </tr>
                 <tr>
-                    <td><b>Legth: </b></td>
+                    <td><b>Length: </b></td>
                     <td>{{ x.RobotLength }} in.</td>
                     <td><b>Width: </b></td>
                     <td>{{ x.RobotWidth }} in.</td>
@@ -58,7 +58,7 @@
                 </tr>
                 <tr>
                     <td><b>Favored Auto Start Position: </b></td>
-                    <td>{{ x.AutoStartPosID }}</td>
+                    <td>{{ x.AutoStartPosID + 1 }}</td>
                     <td><b>Human Player Scored: </b></td>
                     <td>{{ getYesNo(x.AutoHuman) }}</td>
                 </tr>
@@ -108,7 +108,7 @@
                     <td><b>Can Climb: </b></td>
                     <td>{{ getYesNo(x.CanClimb) }}</td>
                     <td><b>Avg. Climb Position: </b></td>
-                    <td>{{ x.ClimbPosition }}</td>
+                    <td>{{ getClimbPosition(x.ClimbPosition) }}</td>
                 </tr>
                 <tr>
                     <td><b>Avg. Climb Time: </b></td>

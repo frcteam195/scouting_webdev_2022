@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService, CEA, Final24 } from '../../services/api.service';
 import CeaJson from '../../cea.json';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { defaultThrottleConfig } from 'rxjs/internal/operators/throttle';
 
 @Component({
   selector: 'app-analysis',
@@ -11,9 +12,6 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 })
 export class AnalysisComponent implements OnInit {
 
-  //public myForm: FormGroup; // our form model
-
-  //Analysis: CEA[] = CeaJson;
   analysisTypeID: number;
   analysis1: number = 10;
   analysis2: number = 11;
@@ -28,6 +26,8 @@ export class AnalysisComponent implements OnInit {
   detailShow = false; //show analysis types, not summary
   summaryShow = true;
   focusTeam: string;
+  display: number;
+  typeGroup: number;
 
   //apiAnalysis: CEA[] = [];
   apiFinal24List: Final24[] = [];
@@ -56,6 +56,8 @@ export class AnalysisComponent implements OnInit {
     this.apiFinal24List = [new Final24()];
     this.analysisTypeID = 1;
     this.focusTeam = "";
+    this.display = 1;
+    this.typeGroup = 1;
     
   }
 
@@ -89,9 +91,12 @@ export class AnalysisComponent implements OnInit {
 
     console.log("Change IDentified");
     // Logic to turn filter back off
-    //this.filterList = this.apiFinal24List;
-    this.filterList = this.apiFinal24List.concat(this.apiDnpList);
-    this.filter = 0;
+    if (this.filter == 0) {
+      this.filterList = this.apiFinal24List.concat(this.apiDnpList);
+    } else {
+      this.filterList = this.compareList;
+    }
+    
   }
 
   addEnd(list: number) {
@@ -133,7 +138,6 @@ export class AnalysisComponent implements OnInit {
     }
   }
 
-
   processDoubleClickPick(index: number){
     if (this.apiPickList.length == 1){
       this.apiPickList.splice(index, 0, new Final24());
@@ -172,12 +176,17 @@ export class AnalysisComponent implements OnInit {
   
       this.filterList = this.compareList;
       this.filter = 1;
+      this.focusTeam = "";
+      this.gridView();    // Turn on 8 Table Grid Display
+      this.viewType = 2;  // Turn on Graph View for other Buttons
 
     } else {
       // Logic to turn filter back off
       //this.filterList = this.apiFinal24List;
       this.filterList = this.apiFinal24List.concat(this.apiDnpList);
       this.filter = 0;
+
+      this.normalView();
     }
 
     this.compareShow = !this.compareShow;
@@ -187,36 +196,23 @@ export class AnalysisComponent implements OnInit {
   // Deteremine the Analysis Types to send to the team-table component
   changeDisplay(type: number) {
     //console.log("Display Type: " + type)
+    this.typeGroup = type;
+
     if (type == 1) {
       this.analysis1 = 10;
       this.analysis2 = 11;
     } else if (type == 2) {
       this.analysis1 = 20;
-      this.analysis2 = 21;
+      this.analysis2 = 22;
     } else if (type == 3) {
+      this.analysis1 = 21;
+      this.analysis2 = 22;
+    } else if (type == 4) {
       this.analysis1 = 60;
       this.analysis2 = 61;
-    } else if (type == 4) {
-      this.analysis1 = 22;
-      this.analysis2 = 30;
     } else if (type == 5) {
-      this.analysis1 = 40;
-      this.analysis2 = 41;
-    } else if (type == 6) {
-      this.analysis1 = 42;
-      this.analysis2 = 43;
-    } else if (type == 7) {
-      this.analysis1 = 44;
-      this.analysis2 = 45;
-    } else if (type == 8) {
-      this.analysis1 = 46;
-      this.analysis2 = 47;
-    } else if (type == 9) {
-      this.analysis1 = 48;
-      this.analysis2 = 49;
-    } else if (type == 10) {
-      this.analysis1 = 62;
-      this.analysis2 = 70;
+      this.analysis1 = 61;
+      this.analysis2 = 30;
     } else {
        this.analysis1 = 10;
        this.analysis2 = 11;
@@ -224,6 +220,8 @@ export class AnalysisComponent implements OnInit {
     //Turn off Summary Show when Other top buttons are selected
     this.summaryShow = true;
     this.detailShow = false;
+
+    this.normalView();
   }
 
   changeSort(type: number) {
@@ -239,6 +237,23 @@ export class AnalysisComponent implements OnInit {
   summaryView() {
     this.summaryShow = false;
     this.detailShow = true;
+    if (this.viewType == 1) {this.display = 3 } else {this.display = 4}
+  }
+
+  normalView() {
+    if (this.viewType == 1) {
+      this.display = 1 
+    } else {
+      if (this.filter == 1) {
+        this.display = 6
+      } else {
+        this.display = 2
+      }
+    }
+  }
+
+  gridView() {
+    this.display = 5;
   }
 
   changeView(view: number) {
@@ -251,6 +266,13 @@ export class AnalysisComponent implements OnInit {
     }
     this.graphShow = !this.graphShow;
     this.tableShow = !this.tableShow;
+
+    if ((this.display == 3) || (this.display == 4)) {
+      this.summaryView();
+    } else {
+      this.normalView();
+    }
+
 
     //console.log("Graph: " + this.graphShow + " Table: " + this.tableShow);
   }
@@ -268,6 +290,7 @@ export class AnalysisComponent implements OnInit {
       alert("Access Approved");
       this.apiService.saveFinal24(this.apiFinal24List);
       this.apiService.saveDnp(this.apiDnpList);
+      this.apiService.savePick(this.apiPickList);
 
     } else {
       alert("ERROR: Invalid Password");
@@ -276,20 +299,21 @@ export class AnalysisComponent implements OnInit {
   }
 
   copyToPick() {
-    //this.apiPickList  = Object.assign([], this.apiFinal24List)
     this.apiPickList = [];
-    //this.apiPickList = Array.from(this.apiFinal24List);
-    //for (const team of this.apiFinal24List)  {
-    //  this.apiPickList.push(team);
-    //}
     this.apiPickList = JSON.parse(JSON.stringify(this.apiFinal24List))
+  }
 
+  copyToFinal() {
+    this.apiFinal24List = [];
+    this.apiFinal24List = JSON.parse(JSON.stringify(this.apiPickList))
+    this.teamSelectionChange(1);
   }
 
   clearFinal24() {
     for (const t of this.apiFinal24List)  {
       t.Team = "";
     }
+    this.teamSelectionChange(1);
   }
 
   onChanges(): void {

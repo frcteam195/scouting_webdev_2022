@@ -12,6 +12,7 @@ export class RobotComponent implements OnInit {
   team: string;
   analysisGroup: number = 2;
   display: number;
+  roboPic: String;
 
 
   //apiAnalysis: CEA[] = [];
@@ -23,12 +24,33 @@ export class RobotComponent implements OnInit {
 
     this.team="195";
     this.display=1;
+    this.roboPic = "https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png";
+    //this.roboPic = "https://i.imgur.com/mDO77M8h.jpg";
   }
 
   setTeam(team: string) {
     console.log(team);
     this.team = team;
+    if (this.team == "2168") {
+      this.roboPic = "https://i.imgur.com/mDO77M8h.jpg";
+    } else if(this.team == "2262") {
+      this.roboPic = "https://i.imgur.com/SlnGsrTh.jpg";
+    } else if(this.team == "195") {
+      this.roboPic = "https://cdn.discordapp.com/attachments/830144707794305064/954762992946380850/IMG_3965.jpg";
+    }
+    else {
+      this.roboPic = "https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png";
+    }
   }
+  //code for getting picture when eventually implemented to teams table
+  /* getRoboPic(ID: Number) {
+    for (let x of this.apiTeamsList){
+      if (x.Team == ID) {
+        return x.roboPicture;
+      }
+    }
+    return "https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png";
+  } */
 
   setDisplay(display: number) {
     this.display = display;

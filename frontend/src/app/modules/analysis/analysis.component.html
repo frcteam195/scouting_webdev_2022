@@ -5,10 +5,12 @@
             <td colspan="3">
                 <div style="float:left;width:50%;">
                 <button (click)="changeDisplay(1)">Auto</button>
-                <button (click)="changeDisplay(2)">Low|High</button>
-                <button (click)="changeDisplay(3)">Cargo|Score</button>
-                <button (click)="changeDisplay(4)">Tele|Climb</button>
+                <button (click)="changeDisplay(2)">Low|Total</button>
+                <button (click)="changeDisplay(3)">High|Total</button>
+                <button (click)="changeDisplay(4)">Cargo|Score</button>
+                <button (click)="changeDisplay(5)">Score|Climb</button>
                 <button (click)="summaryView()">Summary</button>
+                <button (click)="gridView()">8 Grid</button>
                 </div>
                 <div style="float:right;width:50%;">
                 <b>&nbsp;Left Table: </b>
@@ -76,6 +78,8 @@
                           <button (click)="copyToPick()">Copy2Pick</button>
                           <br>
                           <button (click)="clearFinal24()">Clear Final</button>
+                          <br>
+                          <button (click)="copyToFinal()">Copy2Final</button>
                         </td>
                     </tr>
                 </table>
@@ -83,10 +87,8 @@
             <td> 
                 <!-- Start of the Regular View -->
 
-                <div [hidden]="fullShow">
-                <div [hidden]="tableShow">
-                <div [hidden]="detailShow">
-                <table>
+                <!-- 2 Table View (Side by Side) -->
+                <table *ngIf="display==1">
                     <tr>
                         <td>
                             <app-team-table [analysisTypeID]=analysis1 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table>
@@ -99,107 +101,80 @@
                         </td>
                     </tr>
                 </table>
-                </div>
-                <div [hidden]="summaryShow">
-                    <table>
-                        <tr>
-                            <td>
-                                <app-summary-table></app-summary-table>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                </div>
-                <div [hidden]="graphShow">
-                <div [hidden]="detailShow">
-                    <table>
-                        <tr>
-                            <td>
-                                <app-team-graph [analysisTypeID]=analysis1 [teamList]=filterList [filter]=filter></app-team-graph>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <app-team-graph [analysisTypeID]=analysis2 [teamList]=filterList [filter]=filter></app-team-graph>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div [hidden]="summaryShow">
-                    <table>
-                        <tr>
-                            <td>
-                                <app-summary-graph [teamList]=filterList [filter]=filter></app-summary-graph>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                </div>
-                </div>
-                <!-- Start of the Compare View -->
-                <div [hidden]="compareShow">
-                    <div [hidden]="tableShow">
-                    <div [hidden]="detailShow">
-                    <table>
-                        <tr>
-                            <td>
-                                <app-team-table [analysisTypeID]=10 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
-                                <app-team-table [analysisTypeID]=20 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
-                                <app-team-table [analysisTypeID]=21 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
-                                <app-team-table [analysisTypeID]=60 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table>
-                            </td>
-                            <td width="20">
-                                &nbsp;
-                            </td>
-                            <td>
-                                <app-team-table [analysisTypeID]=11 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
-                                <app-team-table [analysisTypeID]=22 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
-                                <app-team-table [analysisTypeID]=30 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
-                                <app-team-table [analysisTypeID]=61 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div [hidden]="summaryShow">
-                    <table>
-                        <tr>
-                            <td>
-                                <app-summary-table></app-summary-table>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                </div>
-                <div [hidden]="graphShow">
-                <div [hidden]="detailShow">
-                <table>
+
+                <!-- 2 Bar Graph View (Top and Bottom) -->
+                <table *ngIf="display==2">
+                    <tr>
+                        <td>
+                            <!-- <app-team-graph [analysisTypeID]=analysis1 [teamList]=filterList [filter]=filter [filter]=filter></app-team-graph> -->
+                            <app-analysis-graph [analysisTypeID]=analysis1 [teamList]=filterList [filter]=filter [focus]=focusTeam [graphSize]=2> </app-analysis-graph>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <!-- <app-team-graph [analysisTypeID]=analysis2 [teamList]=filterList [filter]=filter></app-team-graph> -->
+                            <app-analysis-graph [analysisTypeID]=analysis2 [teamList]=filterList [filter]=filter [focus]=focusTeam [graphSize]=2> </app-analysis-graph>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Summary Table (Full Page) -->
+                <table *ngIf="display==3">
+                    <tr>
+                        <td>
+                            <app-summary-table [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-summary-table>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Summary Graph (Full Page) -->
+                <table *ngIf="display==4">
+                    <tr>
+                        <td>
+                            <app-summary-graph [teamList]=filterList [filter]=filter></app-summary-graph>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- 8 Table View -->
+                <table *ngIf="display==5">
+                    <tr>
+                        <td>
+                            <app-team-table [analysisTypeID]=10 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                            <app-team-table [analysisTypeID]=20 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                            <app-team-table [analysisTypeID]=21 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                            <app-team-table [analysisTypeID]=60 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table>
+                        </td>
+                        <td width="20">
+                            &nbsp;
+                        </td>
+                        <td>
+                            <app-team-table [analysisTypeID]=11 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                            <app-team-table [analysisTypeID]=22 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                            <app-team-table [analysisTypeID]=30 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
+                            <app-team-table [analysisTypeID]=61 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Bar Graph (Top) Line Graph (Bottom) -->
+                <table *ngIf="display==6">
+                    <tr>
+                        <td>
+                            <!-- <app-team-graph [analysisTypeID]=analysis1 [teamList]=filterList [filter]=filter [filter]=filter></app-team-graph> -->
+                            <app-analysis-graph [analysisTypeID]=analysis1 [teamList]=filterList [filter]=filter [focus]=focusTeam [graphSize]=2> </app-analysis-graph>
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             <app-team-graph [analysisTypeID]=analysis1 [teamList]=filterList [filter]=filter></app-team-graph>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <app-team-graph [analysisTypeID]=analysis2 [teamList]=filterList [filter]=filter></app-team-graph>
-                        </td>
-                    </tr>
                 </table>
-                </div>
-                <div [hidden]="summaryShow">
-                    <table>
-                        <tr>
-                            <td>
-                                <app-summary-graph [teamList]=filterList [filter]=filter></app-summary-graph>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                </div>
-                </div>
             </td>
             <td style="padding: 4px;">
-                <!-- Start of Blue Alliance Ranking -->
 
+                <!-- Blue Alliance Ranking (Far Right) -->
                 <app-team-table [analysisTypeID]=80 [teamList]=filterList [sort]=sortType  [focus]=focusTeam [filter]=filter (sendTeamEvent)="print_team($event)"></app-team-table><br>
             </td>
         </tr>

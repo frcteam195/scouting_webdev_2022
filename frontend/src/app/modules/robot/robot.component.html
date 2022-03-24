@@ -4,7 +4,7 @@
             <table border="0">
                 <tr>
                     <td>
-                        <select id="teamSelect" (ngModelChange)="setTeam(team)" type="text" name="teamSelect" title="Select the team you want to see" [(ngModel)]="team">
+                        <select id="teamSelect" [(ngModel)]="team" type="text" name="teamSelect" title="Select the team you want to see" (ngModelChange)="setTeam(team)">
                             <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
                         </select>
                     </td>
@@ -47,7 +47,7 @@
             </div>
             <table border="0" *ngIf="display==2" align="center">
                 <tr>
-                    <td align="center"><img title="The credit for this glorious photo is due to Logan Andrew Micelery" src="https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png" alt="robotnotfound" style="width:95%; align-items: center;"></td>
+                    <td align="center"><img [src]="roboPic" alt="robotnotfound" style="width:95%; align-items: center;"></td>
                 </tr>
                 <tr>
                     <div *ngFor="let x of apiTeamsList">
@@ -60,16 +60,16 @@
             <table border="1" *ngIf="display==3" align="center">
                 <tr>
                     <td>
-                        <app-analysis-graph [analysisTypeID]=10 [selectedTeam]=team> </app-analysis-graph>
-                        <app-analysis-graph [analysisTypeID]=20 [selectedTeam]=team> </app-analysis-graph>
-                        <app-analysis-graph [analysisTypeID]=21 [selectedTeam]=team> </app-analysis-graph>
-                        <app-analysis-graph [analysisTypeID]=60 [selectedTeam]=team> </app-analysis-graph>
+                        <app-analysis-graph [analysisTypeID]=10 [selectedTeam]=team [graphSize]=1> </app-analysis-graph>
+                        <app-analysis-graph [analysisTypeID]=20 [selectedTeam]=team [graphSize]=1> </app-analysis-graph>
+                        <app-analysis-graph [analysisTypeID]=21 [selectedTeam]=team [graphSize]=1> </app-analysis-graph>
+                        <app-analysis-graph [analysisTypeID]=60 [selectedTeam]=team [graphSize]=1> </app-analysis-graph>
                     </td>
                     <td>
-                        <app-analysis-graph [analysisTypeID]=11 [selectedTeam]=team> </app-analysis-graph>
-                        <app-analysis-graph [analysisTypeID]=22 [selectedTeam]=team> </app-analysis-graph>
-                        <app-analysis-graph [analysisTypeID]=30 [selectedTeam]=team> </app-analysis-graph>
-                        <app-analysis-graph [analysisTypeID]=61 [selectedTeam]=team> </app-analysis-graph>
+                        <app-analysis-graph [analysisTypeID]=11 [selectedTeam]=team [graphSize]=1> </app-analysis-graph>
+                        <app-analysis-graph [analysisTypeID]=22 [selectedTeam]=team [graphSize]=1> </app-analysis-graph>
+                        <app-analysis-graph [analysisTypeID]=30 [selectedTeam]=team [graphSize]=1> </app-analysis-graph>
+                        <app-analysis-graph [analysisTypeID]=61 [selectedTeam]=team [graphSize]=1> </app-analysis-graph>
                     </td>
                 </tr>
             </table>

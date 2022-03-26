@@ -1,17 +1,19 @@
 
 <table border=1 width="100%">
-    <ng-container *ngFor="let x of apiAnalysis">
-        <ng-container *ngIf="x.AnalysisTypeID == 72 && x.Team == selectedTeam">
-            <tr>
-                <td>Tele Accuracy: </td>
-                <td>{{ x.Summary1Value * 100 }}%</td>
-            </tr>
-            <tr>
-                <td>Auto Accuracy: </td>
-                <td>{{ x.Summary4Value * 100 }}%</td>
-            </tr>
+    <tr>
+        <ng-container *ngFor="let x of apiAnalysis">
+            <ng-container *ngIf="x.AnalysisTypeID == 72 && x.Team == selectedTeam">
+                <tr>
+                    <td width="100%">Tele Accuracy: </td>
+                    <td>{{ x.Summary1Value * 100 }}%</td>
+                </tr>
+                <tr>
+                    <td>Auto Accuracy: </td>
+                    <td>{{ x.Summary4Value * 100 }}%</td>
+                </tr>
+            </ng-container>
         </ng-container>
-    </ng-container>
+    </tr>
     <tr>
         <table border="1" align="center">
             <tr>
@@ -44,5 +46,8 @@
     <tr>
         <td colspan="2" align="center"><img title="Picture of starting positions" style="width: 350px;" src="https://cdn.discordapp.com/attachments/830144707794305064/954158477268373504/1233231.png"></td>
     </tr>
+    <!-- <tr>
+        <td>{{ generateWriteUp() }}</td>
+    </tr> -->
     
 </table>

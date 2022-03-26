@@ -5,7 +5,7 @@
                 <tr>
                     <td>
                         <select id="teamSelect" [(ngModel)]="team" type="text" name="teamSelect" title="Select the team you want to see" (ngModelChange)="setTeam(team)">
-                            <option *ngFor="let a of apiTeamsList" value="{{ a.Team }}">{{ a.Team }}</option>
+                            <option *ngFor="let a of apiCurrTeamList" value="{{ a.team }}">{{ a.team }}</option>
                         </select>
                     </td>
                     <td style="vertical-align: middle;">

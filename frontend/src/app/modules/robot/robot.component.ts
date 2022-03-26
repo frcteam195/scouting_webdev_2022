@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ApiService, Teams } from 'src/app/services/api.service';
+import { ApiService, Teams, CurrTeams } from 'src/app/services/api.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -13,6 +13,7 @@ export class RobotComponent implements OnInit {
   analysisGroup: number = 2;
   display: number;
   roboPic: String;
+  apiCurrTeamList: CurrTeams[];
 
 
   //apiAnalysis: CEA[] = [];
@@ -21,7 +22,10 @@ export class RobotComponent implements OnInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute) {
     //this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
     this.apiService.TeamsReplay.subscribe((Teams) => (this.apiTeamsList = Teams));
-
+    this.apiCurrTeamList = [];
+    this.apiService.CurrTeamReplay.subscribe(currteam => {
+      this.apiCurrTeamList = currteam;
+    });
     this.team="195";
     this.display=1;
     this.roboPic = "https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png";

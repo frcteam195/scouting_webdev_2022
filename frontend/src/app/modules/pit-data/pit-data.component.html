@@ -45,19 +45,14 @@
                     <td>{{ getYesNo(x.Pneumatics) }}</td>
                 </tr>
                 <tr>
-                    <td><b>Intake Type: </b></td>
-                    <td>{{ x.IntakeType }}</td>
-                    <td><b>Preload: </b></td>
-                    <td>{{ getYesNo(x.Preload) }}</td>
-                </tr>
-                <tr>
+                    
                     <td><b>Has Auto: </b></td>
                     <td>{{ getYesNo(x.HasAuto) }}</td>
-                    <td><b>Typical Move Bonus: </b></td>
+                    <td><b>Move Bonus: </b></td>
                     <td>{{ getYesNo(x.MoveBonus) }}</td>
                 </tr>
                 <tr>
-                    <td><b>Favored Auto Start Position: </b></td>
+                    <td><b>Favored Start Position: </b></td>
                     <td>{{ x.AutoStartPosID + 1 }}</td>
                     <td><b>Human Player Scored: </b></td>
                     <td>{{ getYesNo(x.AutoHuman) }}</td>
@@ -79,14 +74,8 @@
                     <td colspan="3">{{ x.AutoSummary }}</td>
                 </tr>
                 <tr>
-                    <td><b>Avg. Tele Balls Scored High: </b></td>
-                    <td>{{ x.TeleBallsScoredHigh }}</td>
-                    <td><b>Avg. Tele Balls Scored Low: </b></td>
-                    <td>{{ x.TeleBallsScoredLow }}</td>
-                </tr>
-                <tr>
-                    <td><b>Sort Cargo?: </b></td>
-                    <td>{{ getYesNo(x.TeleSortCargo) }}</td>
+                    <td><b>Preload: </b></td>
+                    <td>{{ getYesNo(x.Preload) }}</td>
                     <td><b>Max Ball Capacity: </b></td>
                     <td>{{ x.MaxBallCapacity }}</td>
                 </tr>
@@ -105,10 +94,10 @@
                     <td colspan="3">{{ x.TeleDefenseStrat }}</td>
                 </tr>
                 <tr>
+                    <td><b>Sort Cargo?: </b></td>
+                    <td>{{ getYesNo(x.TeleSortCargo) }}</td>
                     <td><b>Can Climb: </b></td>
                     <td>{{ getYesNo(x.CanClimb) }}</td>
-                    <td><b>Avg. Climb Position: </b></td>
-                    <td>{{ getClimbPosition(x.ClimbPosition) }}</td>
                 </tr>
                 <tr>
                     <td><b>Avg. Climb Time: </b></td>

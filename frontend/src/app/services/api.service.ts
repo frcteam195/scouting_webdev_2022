@@ -32,7 +32,7 @@ export interface CEA {
   Match3Format: number;
   Match3Value: number;
   Match4Display: string;
-  Match4Format: Number;
+  Match4Format: number;
   Match4Value: number;
   Match5Display: string;
   Match5Format: number;

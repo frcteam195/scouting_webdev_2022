@@ -29,6 +29,11 @@ export class RobotInfoComponent implements OnInit {
 
   }
 
+  roundTo(num: number, places: number) {
+    const factor = 10 ** places;
+    return Math.round(num * factor) / factor;
+  };
+
   /* generateWriteUp(){
     var f: String = "";
     for (let x of this.apiAnalysis){

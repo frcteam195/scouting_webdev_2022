@@ -1,5 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
+import { NumberValueAccessor } from '@angular/forms';
 import { CEA } from 'src/app/CEA';
 import { ApiService, Final24 } from 'src/app/services/api.service';
 
@@ -7,6 +8,7 @@ import { ApiService, Final24 } from 'src/app/services/api.service';
   selector: 'app-analysis-graph',
   templateUrl: './analysis-graph.component.html',
   styleUrls: ['./analysis-graph.component.scss']
+  
 })
 export class AnalysisGraphComponent implements OnInit {
 
@@ -25,6 +27,8 @@ export class AnalysisGraphComponent implements OnInit {
   team: string;
   analysisType: string;
   graphData: any[];
+  maj: number = 1;
+  MeanMedian: string;
   public graph = {
     data: [    { x: [], y: [],  }    ],
     layout: {width: 640, height: 480, title: "", xaxis: { type: 'category' }, margin: {b:0, l:0, r:0, t:0}}
@@ -43,6 +47,7 @@ export class AnalysisGraphComponent implements OnInit {
     this.teamList = [];
     this.focus = "";
     this.filter = 1;
+    this.MeanMedian = " Median";
 
     // Update the filter whenever the inputting data changes
     this.apiService.CEAReplay.subscribe(analysis => {
@@ -51,6 +56,19 @@ export class AnalysisGraphComponent implements OnInit {
     });
 
   }
+
+  majSort(type: number) {
+
+    console.log("Sort Type: " + type)
+    if (type == 1) {
+      this.maj = 2;
+    } else {
+      this.maj = 1;
+    }
+    this.regenerateFilter();
+  }
+  
+
 
   ngOnInit(): void {
     //console.log("ngOnInit: Team Passed to Component: " + this.selectedTeam);
@@ -109,8 +127,15 @@ export class AnalysisGraphComponent implements OnInit {
           } else {
             xValueList.push(cea.Team);
           }
-          
-          yValueList.push(cea.Summary2Value);
+
+          if (this.maj == 1) {
+            yValueList.push(cea.Summary2Value);
+            this.MeanMedian = " Median";
+          }
+          if (this.maj == 2){
+            yValueList.push(cea.Summary1Value);
+            this.MeanMedian = " Mean";
+          }
 
           this.graphData.push({
             x: xValueList,
@@ -142,7 +167,8 @@ export class AnalysisGraphComponent implements OnInit {
       // Layout for Large Graphs on Team Picker Snapshot
       this.graph = {
         data: this.graphData,
-        layout: {width: 1000, height: 325, title: this.analysisType, xaxis: { type: 'category' }, margin: {b:40, l:20, r:20, t:30}},
+        layout: {width: 1000, height: 325, title: this.analysisType + this.MeanMedian, xaxis: { type: 'category' }, margin: {b:40, l:20, r:20, t:30}},
+        
       };
       
     }

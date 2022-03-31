@@ -10,7 +10,7 @@ import { WordCloud } from '../wordcloud';
 
 
 export class Final24 {
-  Team: String;
+  Team: string;
 
   constructor() {
     this.Team = '';
@@ -349,10 +349,10 @@ export class ApiService {
 
   async getFinal24(): Promise<Final24[]> {
     // First try to load a fresh copy of the data from the API
-
+    const options = {params: new HttpParams().append('table', 'Final24')};
     // First try to load a fresh copy of the data from the API
     try {
-      const response = await this.http.get<Final24[]>(this.apiUrl + '/final24').toPromise();
+      const response = await this.http.get<Final24[]>(this.apiUrl + '/final24',options).toPromise();
       localStorage.setItem('Final24', JSON.stringify(response));
       return response as Final24[];
     } catch (e) {
@@ -383,8 +383,10 @@ export class ApiService {
 
   async getDnp(): Promise<Final24[]> {
     // First try to load a fresh copy of the data from the API
+    const options = {params: new HttpParams().append('table', 'DnpList')};
+
     try {
-      const response = await this.http.get<Final24[]>(this.apiUrl + '/dnp').toPromise();
+      const response = await this.http.get<Final24[]>(this.apiUrl + '/final24',options).toPromise();
       localStorage.setItem('DNP', JSON.stringify(response));
       return response as Final24[];
     } catch (e) {
@@ -415,8 +417,10 @@ export class ApiService {
 
   async getPick(): Promise<Final24[]> {
     // First try to load a fresh copy of the data from the API
+    const options = {params: new HttpParams().append('table', 'PickList1')};
+
     try {
-      const response = await this.http.get<Final24[]>(this.apiUrl + '/pick').toPromise();
+      const response = await this.http.get<Final24[]>(this.apiUrl + '/final24',options).toPromise();
       localStorage.setItem('Pick', JSON.stringify(response));
       return response as Final24[];
     } catch (e) {
@@ -442,6 +446,74 @@ export class ApiService {
     this.http.post<Final24[]>(this.apiUrl + '/final24-update', JSON.stringify(picklist), options).subscribe();
 
     console.log("Saving Pick List Data");
+
+  }
+
+  async getWatch1(): Promise<Final24[]> {
+    // First try to load a fresh copy of the data from the API
+    
+    const options = {params: new HttpParams().append('table', 'Watch1')};
+
+    try {
+      const response = await this.http.get<Final24[]>(this.apiUrl + '/final24',options).toPromise();
+      localStorage.setItem('Watch1', JSON.stringify(response));
+      return response as Final24[];
+    } catch (e) {
+      try {
+        // Send the cached data
+        return JSON.parse(localStorage.getItem('Watch1')!) as Final24[];
+      } catch (err) {
+        console.error('Could not load Watch1 data from server or cache!');
+        return [];
+      }
+    }
+  }  
+
+  saveWatch1(watch1list: Final24[]){
+    localStorage.setItem('Wattch1', JSON.stringify(watch1list));
+
+    //const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    const options = {headers: new HttpHeaders({'Content-Type': 'application/json'}),
+                     params: new HttpParams().append('table', 'Watch1')};
+    //this.http.delete(this.apiUrl + '/final24').subscribe(() => this.status = 'Delete successful');
+    
+    this.http.post<Final24[]>(this.apiUrl + '/final24-update', JSON.stringify(watch1list), options).subscribe();
+
+    console.log("Saving Watch1 Data");
+
+  }
+
+  async getWatch2(): Promise<Final24[]> {
+    // First try to load a fresh copy of the data from the API
+    
+    const options = {params: new HttpParams().append('table', 'Watch2')};
+
+    try {
+      const response = await this.http.get<Final24[]>(this.apiUrl + '/final24',options).toPromise();
+      localStorage.setItem('Watch2', JSON.stringify(response));
+      return response as Final24[];
+    } catch (e) {
+      try {
+        // Send the cached data
+        return JSON.parse(localStorage.getItem('Watch2')!) as Final24[];
+      } catch (err) {
+        console.error('Could not load Watch2 data from server or cache!');
+        return [];
+      }
+    }
+  }  
+
+  saveWatch2(watch2list: Final24[]){
+    localStorage.setItem('Wattch2', JSON.stringify(watch2list));
+
+    //const options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    const options = {headers: new HttpHeaders({'Content-Type': 'application/json'}),
+                     params: new HttpParams().append('table', 'Watch2')};
+    //this.http.delete(this.apiUrl + '/final24').subscribe(() => this.status = 'Delete successful');
+    
+    this.http.post<Final24[]>(this.apiUrl + '/final24-update', JSON.stringify(watch2list), options).subscribe();
+
+    console.log("Saving Watch2 Data");
 
   }
 

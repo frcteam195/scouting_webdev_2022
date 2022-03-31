@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService, CurrTeams } from 'src/app/services/api.service';
+import { ApiService, CurrTeams, Final24 } from 'src/app/services/api.service';
 import { Matches } from '../../matches';
 
 
@@ -24,7 +24,10 @@ export class ScheduleComponent implements OnInit {
   matchNo: number = 1;
   hiTeam: string = "";
   team: string = "All";
+  watch: number = 0;
 
+  apiWatch1List: Final24[]=[];
+  apiWatch2List: Final24[]=[];
 
   apiMatchList: Matches[];
   apiMatchList_filter: Matches[]; 
@@ -44,6 +47,9 @@ export class ScheduleComponent implements OnInit {
     this.apiService.CurrTeamReplay.subscribe(currteam => {
       this.apiCurrTeamList = currteam;
     });
+
+    this.apiService.getWatch1().then(response => this.apiWatch1List = response);
+    this.apiService.getWatch2().then(response => this.apiWatch2List = response);
 
   }
 
@@ -98,6 +104,44 @@ export class ScheduleComponent implements OnInit {
   }
 
 
+  setWatch(watch: number) {
+    this.watch = watch;
+    //this.regenerateFilter();
+    console.log("Run setWatch: " + watch);
+  }
+
+
+  getClass(team: string, color: string) {
+
+    if (team == this.hiTeam) {
+      if (color == 'R')
+        return 'sortedR';
+      else
+        return 'sortedB';
+    }
+    if ((this.watch == 1) || (this.watch == 3)) {
+      for (const t of this.apiWatch1List) {
+        if (team == t.Team) {
+          return 'watch1';
+        }
+      }
+    } 
+    if ((this.watch == 2) || (this.watch == 3)) {
+      for (const t of this.apiWatch2List) {
+        if (team == t.Team) {
+          return 'watch2';
+        }
+      }
+    }
+
+    if (color == 'R')
+      return 'titleR';
+    else
+      return 'titleB';
+
+  }
+
+
 
   regenerateFilter() {
 
@@ -116,7 +160,11 @@ export class ScheduleComponent implements OnInit {
       }
       if (this.team != "All") {
         this.teamSelect(this.team);
-      }
+      }  /* if (this.watch == 1)
+        for (const x of this.apiWatch1List) {
+          console.log("Team: " + x.Team);
+          this.teamSelect(x.Team);
+        } */
         
     } else {
       console.log("No Match List Found");

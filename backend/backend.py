@@ -158,8 +158,8 @@ def get_types():
 
 
 # Get Final 24 Data
-@app.route("/final24", methods =['GET'])
-def get_final24():
+@app.route("/final24Old", methods =['GET'])
+def get_final24Old():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * from Final24;")
     data = cursor.fetchall()	
@@ -271,6 +271,25 @@ def get_pick():
         mimetype='application/json'
     )
     return response
+
+# Get List Data
+@app.route("/final24", methods =['GET'])
+def get_final24():
+
+    table = request.args.get('table', default = '*', type = str)
+
+    print("Retrieve data from " + table + " table")
+
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * from "+table+";")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
 
 
 if __name__=="__main__":

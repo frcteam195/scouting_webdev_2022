@@ -1,7 +1,13 @@
 <div>
     <table border="1">
         <tr>
-            <td width="225">&nbsp;</td>
+            <td width="225">                
+                <select class="form-control" type="text" name="AnalysisMode" [(ngModel)] = "mode" >
+                    <option [value]=1 selected>Team Selection</option>
+                    <option [value]=2>Watch List</option>
+                    <option [value]=3>Alliance Selection</option>
+                </select>
+            </td>
             <td colspan="3">
                 <div style="float:left;width:50%;">
                 <button (click)="changeDisplay(1)">Auto</button>
@@ -30,8 +36,32 @@
         <tr>
             <td>
                 <table border="0">
+                    <tr *ngIf="mode==3">
+                        <td>
+                            <div align="center"><b>Captain</b></div>
+                            <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
+                            <ng-container *ngFor="let c of apiFinal24List | slice:0:8; let i = index">
+                                {{ i+1 }} <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (ngModelChange)="teamSelectionChange(1)"><br>
+                            </ng-container>
+                        </td>
+                        <td>
+                            <div align="center"><b>Pick1</b></div>
+                            <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
+                            <ng-container *ngFor="let c of apiFinal24List | slice:8:16">
+                                <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (ngModelChange)="teamSelectionChange(1)"><br>
+                            </ng-container>
+                        </td>
+                        <td>
+                            <div align="left"><b>Pick2</b></div>
+                            <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
+                            <ng-container *ngFor="let c of apiFinal24List | slice:16:24">
+                                <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (ngModelChange)="teamSelectionChange(1)"><br>
+                            </ng-container>
+                        </td>
+                    </tr>
+                    <tr *ngIf="mode==3"><td colspan=3><hr></td></tr>
                     <tr>
-                        <td align="right">
+                        <td *ngIf="mode == 1" align="right">
                             <div align="center"><b>Final</b></div>
                             <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
                             <ng-container *ngFor="let c of apiFinal24List; let i = index">
@@ -40,10 +70,29 @@
                           <button (click)="addEnd(1)">Add</button>
 
                         </td>
+                        <td *ngIf="mode > 1" align="right">
+                            <div align="center"><b>Watch 1</b></div>
+                            <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
+                            <ng-container *ngFor="let c of apiWatch1List; let i = index">
+                                {{ i+1 }} <input type="text" [ngClass]="getClass(c.Team)" maxlength="4" [(ngModel)]="c.Team"><br>
+                            </ng-container>
+                            <div *ngIf="mode > 1">
+                                <button (click)="copyToComp(1)">Comp</button>
+                            </div>
+                            <br>
+                            <div align="center"><b>Watch 2</b></div>
+                            <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
+                            <ng-container *ngFor="let c of apiWatch2List; let i = index">
+                                {{ i+1 }} <input type="text" [ngClass]="getClass(c.Team)" maxlength="4" [(ngModel)]="c.Team"><br>
+                            </ng-container>
+                            <div *ngIf="mode > 1">
+                                <button (click)="copyToComp(2)">Comp</button>
+                            </div>
+                        </td>
                         <td valign="top" align="center">
                             <b>Pick</b><br>
                             <ng-container *ngFor="let c of apiPickList; let i = index">
-                                <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (dblclick)="processDoubleClickPick(i)" (ngModelChange)="teamSelectionChange(3)"><br>
+                                <input type="text" [ngClass]="getClass(c.Team)" maxlength="4" [(ngModel)]="c.Team" (dblclick)="processDoubleClickPick(i)" (ngModelChange)="teamSelectionChange(3)"><br>
                             </ng-container>
                           <button (click)="addEnd(3)">Add</button>
                         </td>
@@ -56,32 +105,34 @@
                             <button (click)="save()">Save to server</button>
                             <br>
                             <br>
-                            <b>Compare</b>
-                            <form [formGroup]="compareForm" (ngSubmit)="compareTeams(compareForm.value)">
-                                <input id="team1" type="text" class="tbox" maxlength="4"formControlName="team1"><br>
-                                <input id="team2" type="text" class="tbox" maxlength="4" formControlName="team2"><br>
-                                <input id="team3" type="text" class="tbox" maxlength="4" formControlName="team3"><br>
-                                <input id="team4" type="text" class="tbox" maxlength="4" formControlName="team4"><br>
-                                <input id="team5" type="text" class="tbox" maxlength="4" formControlName="team5"><br>
-                                <input id="team3" type="text" class="tbox" maxlength="4" formControlName="team6"><br>
-                                <input id="team4" type="text" class="tbox" maxlength="4" formControlName="team7"><br>
-                                <input id="team5" type="text" class="tbox" maxlength="4" formControlName="team8"><br>
-                                <button class="button" type="submit">{{ filter == 1 ? 'Compare Off' : 'Compare' }}</button>
-                            </form>
+                            <b>Compare</b><br>
+                            <ng-container *ngFor="let c of compareList">
+                                <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" ><br>
+                            </ng-container>
+                            <button (click)="compareTeams()">{{ filter == 1 ? 'Compare Off' : 'Compare' }}</button>
+                            <br>
+                            <div *ngIf="mode > 1">
+                                <button (click)="copyToWatch(1)">Watch1</button>
+                                <br>
+                                <button (click)="copyToWatch(2)">Watch2</button>
+                            </div>
                             <br>
                             <b>DNP</b><br>
                             <ng-container *ngFor="let c of apiDnpList; let i = index">
-                                <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (dblclick)="processDoubleClickDnp(i)" (ngModelChange)="teamSelectionChange(2)"><br>
+                                <input type="text" [ngClass]="getClass(c.Team)" class="tbox" maxlength="4" [(ngModel)]="c.Team" (dblclick)="processDoubleClickDnp(i)" (ngModelChange)="teamSelectionChange(2)"><br>
                             </ng-container>
-                          <button (click)="addEnd(2)">Add</button>
-                          <br><br>
-                          <button (click)="copyToPick()">Copy2Pick</button>
-                          <br>
-                          <button (click)="clearFinal24()">Clear Final</button>
-                          <br>
-                          <button (click)="copyToFinal()">Copy2Final</button>
+                                <button (click)="addEnd(2)">Add</button>
+                            <div *ngIf="mode == 1">
+                                <br>
+                                <button (click)="copyToPick()">Copy2Pick</button>
+                                <br>
+                                <button (click)="clearFinal24()">Clear Final</button>
+                                <br>
+                                <button (click)="copyToFinal()">Copy2Final</button>
+                            </div>
+
                         </td>
-                    </tr>
+                    </tr> 
                 </table>
             </td>
             <td> 

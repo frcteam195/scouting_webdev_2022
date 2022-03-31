@@ -28,25 +28,18 @@ export class AnalysisComponent implements OnInit {
   focusTeam: string;
   display: number;
   typeGroup: number;
+  mode: number;
+  holdView: number;
 
   //apiAnalysis: CEA[] = [];
   apiFinal24List: Final24[] = [];
   apiTypes: Types[] = [];
   apiDnpList: Final24[] = [];
   apiPickList: Final24[] = [];
+  apiWatch1List: Final24[] = [];
+  apiWatch2List: Final24[] = [];
+  compareList: Final24[]=[{ Team: "" },{ Team: "" },{ Team: "" },{ Team: "" },{ Team: "" },{ Team: "" },{ Team: "" },{ Team: "" }];
 
-  compareForm = this.formBuilder.group({
-    team1: '',
-    team2: '',
-    team3: '',
-    team4: '',
-    team5: '',
-    team6: '',
-    team7: '',
-    team8: ''
-  });
-
-  compareList: Final24[]=[];
   filterList: Final24[]=[];
   filter: number = 0;
 
@@ -58,6 +51,8 @@ export class AnalysisComponent implements OnInit {
     this.focusTeam = "";
     this.display = 1;
     this.typeGroup = 1;
+    this.mode = 1;
+    this.holdView = 1;
     
   }
 
@@ -70,6 +65,9 @@ export class AnalysisComponent implements OnInit {
     this.apiService.getFinal24().then(response => this.apiFinal24List = response);
 
     this.apiService.getPick().then(response => this.apiPickList = response);
+
+    this.apiService.getWatch1().then(response => this.apiWatch1List = response);
+    this.apiService.getWatch2().then(response => this.apiWatch2List = response);
 
     this.filterList = this.apiFinal24List.concat(this.apiDnpList);
     this.filter = 0;
@@ -160,24 +158,15 @@ export class AnalysisComponent implements OnInit {
 
   }
 
-  compareTeams(data: { team1: string; team2: string; team3: string; team4: string; team5: string; team6: string; team7: string; team8: string;}): void {
+  compareTeams(): void {
     
-    this.compareList = [];
-
     if (this.filter == 0 ) {
-      this.compareList.push({Team: data.team1});
-      this.compareList.push({Team: data.team2});
-      this.compareList.push({Team: data.team3});
-      this.compareList.push({Team: data.team4});
-      this.compareList.push({Team: data.team5});
-      this.compareList.push({Team: data.team6});
-      this.compareList.push({Team: data.team7});
-      this.compareList.push({Team: data.team8});
   
       this.filterList = this.compareList;
       this.filter = 1;
       this.focusTeam = "";
       this.gridView();    // Turn on 8 Table Grid Display
+      this.holdView = this.viewType;
       this.viewType = 2;  // Turn on Graph View for other Buttons
 
     } else {
@@ -185,7 +174,7 @@ export class AnalysisComponent implements OnInit {
       //this.filterList = this.apiFinal24List;
       this.filterList = this.apiFinal24List.concat(this.apiDnpList);
       this.filter = 0;
-
+      this.viewType = this.holdView;  // Set viewtype back to original setting
       this.normalView();
     }
 
@@ -291,6 +280,8 @@ export class AnalysisComponent implements OnInit {
       this.apiService.saveFinal24(this.apiFinal24List);
       this.apiService.saveDnp(this.apiDnpList);
       this.apiService.savePick(this.apiPickList);
+      this.apiService.saveWatch1(this.apiWatch1List);
+      this.apiService.saveWatch2(this.apiWatch2List);
 
     } else {
       alert("ERROR: Invalid Password");
@@ -307,6 +298,28 @@ export class AnalysisComponent implements OnInit {
     this.apiFinal24List = [];
     this.apiFinal24List = JSON.parse(JSON.stringify(this.apiPickList))
     this.teamSelectionChange(1);
+  }
+
+  copyToComp(list: number) {
+    if (list == 1) {
+      this.compareList = [];
+      this.compareList = JSON.parse(JSON.stringify(this.apiWatch1List));
+    } else if (list == 2) {
+      this.compareList = [];
+      this.compareList = JSON.parse(JSON.stringify(this.apiWatch2List));
+    }
+
+  }
+  
+  copyToWatch(list: number) {
+    if (list == 1) {
+      this.apiWatch1List = [];
+      this.apiWatch1List = JSON.parse(JSON.stringify(this.compareList));
+    } else if (list == 2) {
+      this.apiWatch2List = [];
+      this.apiWatch2List = JSON.parse(JSON.stringify(this.compareList));
+    }
+    
   }
 
   clearFinal24() {
@@ -326,5 +339,17 @@ export class AnalysisComponent implements OnInit {
     this.focusTeam = team;
   }
   
+  getClass(team: string) {
+    //return 'tbox';
+    if (this.mode == 3) {
+      for (const t of this.apiFinal24List) {
+        if (team == t.Team && t.Team != "") {
+          console.log("Matched: " + team);
+          return 'selected';
+        }
+      }
+    }
+    return 'tbox';
+  }
 
 }

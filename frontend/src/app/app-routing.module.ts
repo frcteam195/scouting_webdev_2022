@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MobileComponent } from './modules/mobile/mobile.component';
 import { ScheduleComponent } from './modules/schedule/schedule.component';
+import { VideoComponent } from './modules/video/video.component';
 
 const routes: Routes = [{
   path: '',
@@ -32,6 +33,9 @@ const routes: Routes = [{
   },{
     path: 'schedule',
     component: ScheduleComponent
+  },{
+    path: 'video',
+    component: VideoComponent
   }], 
 }, {
   path: 'mobile',

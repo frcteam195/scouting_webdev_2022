@@ -70,7 +70,7 @@ export class AnalysisTableComponent implements OnInit {
       
 
       if (this.analysisGroup == 1) {
-        analysisTypes = [1,2,3,10,11,20,21,22,30,61]; // Match Report
+        analysisTypes = [10,11,20,21,22,30,46,61]; // Match Report
       } else if (this.analysisGroup == 2) {
         analysisTypes = [40,41,42,43,44,45,46,47,48,49,50];  // Robot Snapshot Middle
       } else if (this.analysisGroup == 3) {

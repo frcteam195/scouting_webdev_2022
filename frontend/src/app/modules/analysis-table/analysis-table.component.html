@@ -22,7 +22,57 @@
         <th>R</th>
         <!-- <th>S</th> -->
     </tr>
-    <tr *ngFor="let a of apiAnalysis_filter">
+    <tr *ngFor="let a of apiAnalysis_filter | slice:0:2">
+        <ng-container *ngFor="let x of apiTypes">
+            <td align="center" *ngIf=" x.AnalysisType == a.AnalysisType" title="{{ x.Description }}">{{ a.AnalysisType }}</td>
+        </ng-container>
+         <!-- <a href="file:///C:/ck/video/Q7.mov" target="_blank"></a> -->
+        <td align="center" class="bg{{ a?.Match1Format }}">{{ a.Match1Display }}</td>
+        <td align="center" class="bg{{ a?.Match2Format }}">{{ a.Match2Display }}</td>
+        <td align="center" class="bg{{ a?.Match3Format }}">{{ a.Match3Display }}</td>
+        <td align="center" class="bg{{ a?.Match4Format }}">{{ a.Match4Display }}</td>
+        <td align="center" class="bg{{ a?.Match5Format }}">{{ a.Match5Display }}</td>
+        <td align="center" class="bg{{ a?.Match6Format }}">{{ a.Match6Display }}</td>
+        <td align="center" class="bg{{ a?.Match7Format }}">{{ a.Match7Display }}</td>
+        <td align="center" class="bg{{ a?.Match8Format }}">{{ a.Match8Display }}</td>
+        <td align="center" class="bg{{ a?.Match9Format }}">{{ a.Match9Display }}</td>
+        <td align="center" class="bg{{ a?.Match10Format }}">{{ a.Match10Display }}</td>
+        <td align="center" class="bg{{ a?.Match11Format }}">{{ a.Match11Display }}</td>
+        <td align="center" class="bg{{ a?.Match12Format }}">{{ a.Match12Display }}</td>
+        <td align="center" class="bg{{ a?.Summary1Format }}">{{ a.Summary1Display | number : '1.1-1' }}</td>
+        <td align="center" class="bg{{ a?.Summary2Format }}">{{ a.Summary2Display | number : '1.1-1' }}</td>
+        <td align="center" class="bg{{ a?.Summary3Format }}">{{ a.Summary3Display }}</td>
+        <!-- <td align="center" class="bg{{ a?.Summary4Format }}">{{ a.Summary4Display }}</td> -->
+    </tr>
+    <tr *ngIf="!titleShow">
+        <th colspan="16">&nbsp;</th>
+    </tr>
+    <tr *ngFor="let a of apiAnalysis_filter | slice:2:6">
+        <ng-container *ngFor="let x of apiTypes">
+            <td align="center" *ngIf=" x.AnalysisType == a.AnalysisType" title="{{ x.Description }}">{{ a.AnalysisType }}</td>
+        </ng-container>
+         <!-- <a href="file:///C:/ck/video/Q7.mov" target="_blank"></a> -->
+        <td align="center" class="bg{{ a?.Match1Format }}">{{ a.Match1Display }}</td>
+        <td align="center" class="bg{{ a?.Match2Format }}">{{ a.Match2Display }}</td>
+        <td align="center" class="bg{{ a?.Match3Format }}">{{ a.Match3Display }}</td>
+        <td align="center" class="bg{{ a?.Match4Format }}">{{ a.Match4Display }}</td>
+        <td align="center" class="bg{{ a?.Match5Format }}">{{ a.Match5Display }}</td>
+        <td align="center" class="bg{{ a?.Match6Format }}">{{ a.Match6Display }}</td>
+        <td align="center" class="bg{{ a?.Match7Format }}">{{ a.Match7Display }}</td>
+        <td align="center" class="bg{{ a?.Match8Format }}">{{ a.Match8Display }}</td>
+        <td align="center" class="bg{{ a?.Match9Format }}">{{ a.Match9Display }}</td>
+        <td align="center" class="bg{{ a?.Match10Format }}">{{ a.Match10Display }}</td>
+        <td align="center" class="bg{{ a?.Match11Format }}">{{ a.Match11Display }}</td>
+        <td align="center" class="bg{{ a?.Match12Format }}">{{ a.Match12Display }}</td>
+        <td align="center" class="bg{{ a?.Summary1Format }}">{{ a.Summary1Display | number : '1.1-1' }}</td>
+        <td align="center" class="bg{{ a?.Summary2Format }}">{{ a.Summary2Display | number : '1.1-1' }}</td>
+        <td align="center" class="bg{{ a?.Summary3Format }}">{{ a.Summary3Display }}</td>
+        <!-- <td align="center" class="bg{{ a?.Summary4Format }}">{{ a.Summary4Display }}</td> -->
+    </tr>
+    <tr *ngIf="!titleShow">
+        <th colspan="16">&nbsp;</th>
+    </tr>
+    <tr *ngFor="let a of apiAnalysis_filter | slice:6:14">
         <ng-container *ngFor="let x of apiTypes">
             <td align="center" *ngIf=" x.AnalysisType == a.AnalysisType" title="{{ x.Description }}">{{ a.AnalysisType }}</td>
         </ng-container>

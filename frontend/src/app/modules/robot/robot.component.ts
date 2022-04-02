@@ -12,6 +12,7 @@ export class RobotComponent implements OnInit {
   team: string;
   analysisGroup: number = 2;
   display: number;
+  nestedDisplay: number;
   roboPic: String;
   apiCurrTeamList: CurrTeams[];
 
@@ -28,6 +29,7 @@ export class RobotComponent implements OnInit {
     });
     this.team="195";
     this.display=1;
+    this.nestedDisplay=1;
     this.roboPic = "https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png";
     //this.roboPic = "https://i.imgur.com/mDO77M8h.jpg";
   }
@@ -58,6 +60,9 @@ export class RobotComponent implements OnInit {
 
   setDisplay(display: number) {
     this.display = display;
+  }
+  setNestedDisplay(nestedDisplay: number) {
+    this.nestedDisplay = nestedDisplay;
   }
 
   ngOnInit(): void {

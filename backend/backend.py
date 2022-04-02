@@ -156,6 +156,18 @@ def get_types():
     )
     return response
 
+# Get Analysis Type Data
+@app.route("/level2", methods =['GET', 'POST'])
+def get_level2():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * from SheetsL2Scouting")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 # Get Final 24 Data
 @app.route("/final24Old", methods =['GET'])

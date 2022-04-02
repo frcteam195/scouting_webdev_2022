@@ -80,7 +80,7 @@
                         <button (click)="setNestedDisplay(2)"  [ngClass]="{'selected': nestedDisplay == 2}" title="Word Cloud">Word Cloud</button></td>
                     </tr>
                     <tr>
-                        <app-level-two *ngIf="nestedDisplay == 1"></app-level-two>
+                        <app-level-two *ngIf="nestedDisplay == 1" [team]="team"></app-level-two>
                         <app-word-cloud *ngIf="nestedDisplay == 2"></app-word-cloud>
                     </tr>
                 </table>

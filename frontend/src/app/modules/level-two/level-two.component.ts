@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-level-two',
@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./level-two.component.scss']
 })
 export class LevelTwoComponent implements OnInit {
+  @Input() team: string;
 
-  constructor() { }
+  constructor() {
+    this.team="195";
+   }
 
   ngOnInit(): void {
   }

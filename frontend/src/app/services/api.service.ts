@@ -7,7 +7,7 @@ import { formatDate } from '@angular/common';
 import { relayout } from 'plotly.js-dist-min';
 import { Types } from '../types';
 import { WordCloud } from '../wordcloud';
-
+ 
 
 export class Final24 {
   Team: string;
@@ -174,6 +174,17 @@ export interface Summary {
   TotalScoreMedian: number;
 }
 
+export interface Level2 {
+  Name: string;
+  MatchNo: number;
+  TeamNo: number;
+  OffensiveQualities: string;
+  DefenseQualities: string;
+  LabelBot: string;
+  GeneralThoughts: string;
+  HarishLove: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -187,6 +198,7 @@ export class ApiService {
   public WordReplay: ReplaySubject<Word[]>;
   public TypesReplay: ReplaySubject<Types[]>;
   public CloudReplay: ReplaySubject<WordCloud[]>;
+  public Level2Replay: ReplaySubject<Level2[]>;
 
   private apiUrl = 'http://localhost:5000';
   //private apiUrl = 'http://10.0.9.92:5000';
@@ -206,6 +218,7 @@ export class ApiService {
     this.WordReplay = new ReplaySubject(1);
     this.TypesReplay = new ReplaySubject(1);
     this.CloudReplay = new ReplaySubject(1);
+    this.Level2Replay = new ReplaySubject(1);
 
     // Automatically load the data once when the application starts
     this.loadData();
@@ -308,6 +321,21 @@ export class ApiService {
       try {
         // Send the cached data
         this.TypesReplay.next(JSON.parse(localStorage.getItem('Types')!) as Types[]);
+      } catch (err) {
+        console.error('Could not load analysis types from server or cache!');
+      }
+    });
+
+    // First try to load a fresh copy of the data from the API
+    this.http.get<Level2[]>(this.apiUrl + '/level2').subscribe(response => {
+      // Store the response in the ReplaySubject, which components can use to access the data
+      this.Level2Replay.next(response as Level2[]);
+      // Might as well store it while we have it
+      localStorage.setItem('Level2', JSON.stringify(response));
+    }, () => {
+      try {
+        // Send the cached data
+        this.Level2Replay.next(JSON.parse(localStorage.getItem('Level2')!) as Level2[]);
       } catch (err) {
         console.error('Could not load analysis types from server or cache!');
       }

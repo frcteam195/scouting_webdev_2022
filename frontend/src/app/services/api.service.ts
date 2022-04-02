@@ -188,9 +188,9 @@ export class ApiService {
   public TypesReplay: ReplaySubject<Types[]>;
   public CloudReplay: ReplaySubject<WordCloud[]>;
 
-  //private apiUrl = 'http://localhost:5000';
+  private apiUrl = 'http://localhost:5000';
   //private apiUrl = 'http://10.0.9.92:5000';
-  private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
+  //private apiUrl = 'http://192.168.1.195:23450';  // Dave's House
   //private apiUrl = 'http://10.0.20.195:23450';     // Mark's House
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com';  // AWS Test
   //private apiUrl = 'https://8zaof0vuah.execute-api.us-east-1.amazonaws.com/prod/';  // AWS Alternate

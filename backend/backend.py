@@ -160,7 +160,7 @@ def get_types():
 @app.route("/level2", methods =['GET', 'POST'])
 def get_level2():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("SELECT * from SheetsL2Scouting")
+    cursor.execute("SELECT * from SheetsL2Scouting order by MatchNo")
     data = cursor.fetchall()	
     response = app.response_class(
         response=json.dumps(data),

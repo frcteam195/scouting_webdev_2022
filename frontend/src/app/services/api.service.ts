@@ -76,13 +76,30 @@ export interface CEA {
 }
 
 export interface Matches {
-  BlueTeam1: string;
-  BlueTeam2: string;
-  BlueTeam3: string;
-  MatchNo: number;
-  RedTeam1: string;
-  RedTeam2: string;
-  RedTeam3: string;
+BlueCargoRanking: Number;
+BlueFouls: Number;
+BlueHangarPoints: Number;
+BlueHangarRanking: Number;
+BlueScore: Number;
+BlueTeam1: string;
+BlueTeam2: string;
+BlueTeam3: string; 
+BlueTechFouls: number;
+BlueTelePoints: number;
+EventID: number;
+MatchID: number;
+MatchNo: number;
+RedCargoRanking: number; 
+RedFouls: number;
+RedHangarPoints: number;
+RedHangarRanking: number;
+RedScore: number;
+RedTeam1: string;
+RedTeam2: string;
+RedTeam3: string;
+RedTechFouls: number;
+RedTelePoints: number;
+
 }
 
 export interface Teams {
@@ -252,7 +269,7 @@ export class ApiService {
     });
 
     // First try to load a fresh copy of the data from the API
-    this.http.get<Matches[]>(this.apiUrl + '/matches').subscribe(response => {
+    this.http.get<Matches[]>(this.apiUrl + '/matchinfo').subscribe(response => {
       // Store the response in the ReplaySubject, which components can use to access the data
       this.MatchReplay.next(response as Matches[]);
       // Might as well store it while we have it

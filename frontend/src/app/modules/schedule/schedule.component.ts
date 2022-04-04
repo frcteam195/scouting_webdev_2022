@@ -30,6 +30,7 @@ export class ScheduleComponent implements OnInit {
   hiTeam: string = "xxx";
   team: string = "All";
   watch: number = 0;
+  selectedMatch: number;
 
   apiWatch1List: Final24[]=[];
   apiWatch2List: Final24[]=[];
@@ -52,6 +53,7 @@ export class ScheduleComponent implements OnInit {
     this.apiMatchList = [];
     this.apiMatchList_filter = [];
     this.apiCurrTeamList = [];
+    this.selectedMatch = 0;
 
     this.apiService.MatchReplay.subscribe(match => {
       this.apiMatchList = match;
@@ -318,6 +320,11 @@ export class ScheduleComponent implements OnInit {
     this.teamMatchChange =[];
     this.teamList();
 
+  }
+
+  setMatch(ID: number){
+    this.selectedMatch = ID;
+    console.log(this.selectedMatch);
   }
 
 

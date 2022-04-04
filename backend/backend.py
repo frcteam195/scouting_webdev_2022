@@ -98,6 +98,21 @@ def get_matches():
     )
     return response
 
+# Get Matches Info
+@app.route("/matchinfo/", methods =['GET', 'POST'])
+def get_matchinfo():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT m.* "
+                "FROM Matches m, Events e "
+                "WHERE e.EventID = m.EventID "
+                "AND e.CurrentEvent = 1;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json' 
+    )
+    return response
 
 # Get Summary Data
 @app.route("/summary/", methods =['GET', 'POST'])

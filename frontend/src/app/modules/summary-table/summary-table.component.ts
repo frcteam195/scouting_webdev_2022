@@ -48,14 +48,15 @@ export class SummaryTableComponent implements OnInit {
       this.regenerateFilter();
     });
   }
+  
 
   changeSort(view: number) {
     if (view == 1) {
       this.sortType = 2;
-      this.title = "Summary Graph Mean"
+      this.title = "Summary Table Mean"
     } else {
       this.sortType = 1;
-      this.title = "Summary Graph Median"
+      this.title = "Summary Table Median"
     }
     this.regenerateFilter();
   }
@@ -123,9 +124,34 @@ export class SummaryTableComponent implements OnInit {
       }
       if ((rcount == 0 && this.filter == 0) || (this.fFlag == "Y" && this.filter == 1)) {
           //console.log("Print Record for: "+summ.Team);
+        /*  if (this.sortType == 1) {
+            console.log("Mean");
+          summ.AutonomousMedian = summ.AutonomousMean
+          summ.AutonomousScoreMedian = summ.AutonomousScoreMean
+          summ.TeleLowBallsMedian = summ.TeleLowBallsMean
+          summ.TeleHighBallsMedian = summ.TeleHighBallsMean
+          summ.TeleTotalBallsMedian = summ.TeleTotalBallsMean
+          summ.TeleBallScoreMedian = summ.TeleBallScoreMean
+          summ.TotalBallsMedian = summ.TotalBallsMedian
+          summ.ClimbMedian = summ.ClimbMean
+          summ.TotalScoreMedian = summ.TotalScoreMean 
+          }
+          else if (this.sortType == 2 ){
+            console.log("Median");
+           /* summ.AutonomousMedian = summ.AutonomousMedian
+            summ.AutonomousScoreMedian = summ.AutonomousScoreMedian
+            summ.TeleLowBallsMedian = summ.TeleLowBallsMedian
+            summ.TeleHighBallsMedian = summ.TeleHighBallsMedian
+            summ.TeleTotalBallsMedian = summ.TeleTotalBallsMedian
+            summ.TeleBallScoreMedian = summ.TeleBallScoreMedian
+            summ.TotalBallsMedian = summ.TotalBallsMedian
+            summ.ClimbMedian = summ.ClimbMedian
+            summ.TotalScoreMedian = summ.TotalScoreMedian 
+          }*/
           this.apiSummary_filter.push(summ);
       }
     }
+
     
       // Sort Logic
       if (this.sort == 1)  {

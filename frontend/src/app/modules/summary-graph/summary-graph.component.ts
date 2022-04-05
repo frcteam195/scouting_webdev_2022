@@ -42,7 +42,7 @@ export class SummaryGraphComponent implements OnInit {
     this.teamList = [];
     this.filter = 0;
     this.sortType = 1;
-    this.title = "Summary Graph Median";
+    this.title = " Median";
 
     // Update the filter whenever the inputting data changes
       this.apiService.SummaryReplay.subscribe(summary => {
@@ -54,10 +54,10 @@ export class SummaryGraphComponent implements OnInit {
   changeSort(view: number) {
     if (view == 1) {
       this.sortType = 2;
-      this.title = "Summary Graph Mean"
+      this.title = " Mean"
     } else {
       this.sortType = 1;
-      this.title = "Summary Graph Median"
+      this.title = " Median"
     }
     this.regenerateFilter();
   }
@@ -186,7 +186,7 @@ export class SummaryGraphComponent implements OnInit {
         });
         this.graph = {
         data: this.graphData,
-        layout: {width: 1000, height: 600, barmode: 'stack', xaxis: { type: 'category' }, title: this.title}
+        layout: {width: 1000, height: 600, barmode: 'stack', xaxis: { type: 'category' }, title: "Summary Graph" +  this.title}
         };
       }
       

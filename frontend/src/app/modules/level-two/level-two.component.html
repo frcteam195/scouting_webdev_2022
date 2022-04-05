@@ -2,12 +2,12 @@
     <tr>
         <th colspan="4">General Comments of the robot</th>
     </tr>
-    <tr *ngFor="let x of apiLevel2">
-        <ng-container *ngIf="x.TeamNo + '' == team">
+    <ng-container *ngFor="let x of apiLevel2">
+        <tr *ngIf="x.TeamNo + '' == team">
             <td>#{{ x.MatchNo }}</td>
             <td colspan="3">{{ x.GeneralThoughts }}</td>
-        </ng-container>
-    </tr>
+        </tr>
+    </ng-container>
     <tr>
         <th colspan="4">Qualities</th>
     </tr>
@@ -15,28 +15,28 @@
         <th colspan="2">Offensive</th>
         <th colspan="2">Defensive</th>
     </tr>
-    <tr *ngFor="let x of apiLevel2">
-        <ng-container *ngIf="x.TeamNo + '' == team">
+    <ng-container *ngFor="let x of apiLevel2">
+        <tr *ngIf="x.TeamNo + '' == team">
             <td>#{{ x.MatchNo }}</td>
             <td>{{ x.OffensiveQualities }}</td>
             <td>{{ x.DefenseQualities }}</td>
-        </ng-container>
-    </tr>
+        </tr>
+    </ng-container>
     <tr>
         <th colspan="4">This team is labed as a</th>
     </tr>
-    <tr *ngFor="let x of apiLevel2">
-        <ng-container *ngIf="x.TeamNo + '' == team">
+    <ng-container *ngFor="let x of apiLevel2">
+        <tr *ngIf="x.TeamNo + '' == team">
             <td>#{{ x.MatchNo }}</td>
             <td colspan="3">{{ x.LabelBot }}</td>
-        </ng-container>
-    </tr>
+        </tr>
+    </ng-container>
     <tr>
         <th colspan="4">Love for Harish</th>
     </tr>
-    <tr *ngFor="let x of apiLevel2">
-        <ng-container *ngIf="x.TeamNo + '' == team">
+    <ng-container *ngFor="let x of apiLevel2">
+        <tr *ngIf="x.TeamNo + '' == team">
             <td colspan="4">{{ x.HarishLove }}</td>
-        </ng-container>
-    </tr>
+        </tr>
+    </ng-container>
 </table>

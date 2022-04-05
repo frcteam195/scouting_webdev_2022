@@ -26,6 +26,7 @@ import { MobileComponent } from 'src/app/modules/mobile/mobile.component';
 import { RobotInfoComponent } from 'src/app/modules/robot-info/robot-info.component';
 import { SummaryTableComponent } from 'src/app/modules/summary-table/summary-table.component';
 import { LevelTwoComponent } from 'src/app/modules/level-two/level-two.component';
+import { MatchInfoComponent } from 'src/app/modules/match-info/match-info.component';
 
 
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -49,7 +50,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     RobotInfoComponent,
     SummaryTableComponent,
     VideoComponent,
-    LevelTwoComponent
+    LevelTwoComponent,
+    MatchInfoComponent
   ],
   imports: [
     CommonModule,

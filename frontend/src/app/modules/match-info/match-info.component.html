@@ -1,0 +1,104 @@
+<table border="1" style="width: 300px;">
+    <tr>
+        <th colspan="4">Match #{{ match }}</th>
+    </tr>
+    <tr>
+        <th colspan="4">Score</th>
+    </tr>
+    <tr>
+        <th colspan="2" style="background-color: red;color: white;">Red Alliance</th>
+        <th colspan="2" style="background-color: blue;color: white;">Blue Alliance</th>
+    </tr>
+    <tr>
+        <ng-container *ngFor="let x of apiMatchList">
+            <ng-container *ngIf="x.MatchNo == match">
+                <td colspan="2">{{ x.RedScore }}</td>
+                <td colspan="2">{{ x.BlueScore }}</td>
+            </ng-container>
+        </ng-container>
+    </tr>
+    <tr>
+        <th colspan="4">Tele Score</th>
+    </tr>
+    <tr>
+        <th colspan="2" style="background-color: red;color: white;">Red Alliance</th>
+        <th colspan="2" style="background-color: blue;color: white;">Blue Alliance</th>
+    </tr>
+    <tr>
+        <ng-container *ngFor="let x of apiMatchList">
+            <ng-container *ngIf="x.MatchNo == match">
+                <td colspan="2">{{ x.RedTelePoints }}</td>
+                <td colspan="2">{{ x.BlueTelePoints }}</td>
+            </ng-container>
+        </ng-container>
+    </tr>
+    <tr>
+        <th colspan="4">Hangar Score</th>
+    </tr>
+    <tr>
+        <th colspan="2" style="background-color: red;color: white;">Red Alliance</th>
+        <th colspan="2" style="background-color: blue;color: white;">Blue Alliance</th>
+    </tr>
+    <tr>
+        <ng-container *ngFor="let x of apiMatchList">
+            <ng-container *ngIf="x.MatchNo == match">
+                <td colspan="2">{{ x.RedHangarPoints }}</td>
+                <td colspan="2">{{ x.BlueHangarPoints }}</td>
+            </ng-container>
+        </ng-container>
+    </tr>
+    <tr>
+        <th colspan="4">Fouls</th>
+    </tr>
+    <tr>
+        <th colspan="2" style="background-color: red;color: white;">Red Alliance</th>
+        <th colspan="2" style="background-color: blue;color: white;">Blue Alliance</th>
+    </tr>
+    <tr>
+        <ng-container *ngFor="let x of apiMatchList">
+            <ng-container *ngIf="x.MatchNo == match">
+                <td colspan="2">{{ x.RedFouls }}</td>
+                <td colspan="2">{{ x.BlueFouls }}</td>
+            </ng-container>
+        </ng-container>
+    </tr>
+    <tr>
+        <th colspan="4">Tech Fouls</th>
+    </tr>
+    <tr>
+        <th colspan="2" style="background-color: red;color: white;">Red Alliance</th>
+        <th colspan="2" style="background-color: blue;color: white;">Blue Alliance</th>
+    </tr>
+    <tr>
+        <ng-container *ngFor="let x of apiMatchList">
+            <ng-container *ngIf="x.MatchNo == match">
+                <td colspan="2">{{ x.RedTechFouls }}</td>
+                <td colspan="2">{{ x.BlueTechFouls }}</td>
+            </ng-container>
+        </ng-container>
+    </tr>
+    <tr>
+        <th colspan="4">Ranking Points</th>
+    </tr>
+    <tr>
+        <th colspan="2" style="background-color: red;color: white;">Red Alliance</th>
+        <th colspan="2" style="background-color: blue;color: white;">Blue Alliance</th>
+    </tr>
+    <ng-container *ngFor="let x of apiMatchList">
+        <ng-container *ngIf="x.MatchNo == match">
+            <tr>
+                <td>Cargo RP</td>
+                <td class="bg{{ x.RedCargoRanking }}" style="width: 16px;"></td>
+                <td class="bg{{ x.BlueCargoRanking }}" style="width: 16px;"></td>
+                <td>Cargo RP</td>
+            </tr>
+            <tr>
+                <td>Hangar RP</td>
+                <td class="bg{{ x.RedHangarRanking }}" style="width: 16px;"></td>
+                <td class="bg{{ x.BlueHangarRanking }}" style="width: 16px;"></td>
+                <td>Hangar RP</td>
+            </tr>
+        </ng-container>
+    </ng-container>
+</table>
+

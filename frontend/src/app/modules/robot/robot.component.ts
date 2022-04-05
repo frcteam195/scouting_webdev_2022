@@ -37,26 +37,18 @@ export class RobotComponent implements OnInit {
   setTeam(team: string) {
     console.log(team);
     this.team = team;
-    if (this.team == "2168") {
-      this.roboPic = "https://i.imgur.com/mDO77M8h.jpg";
-    } else if(this.team == "2262") {
-      this.roboPic = "https://i.imgur.com/SlnGsrTh.jpg";
-    } else if(this.team == "195") {
-      this.roboPic = "https://cdn.discordapp.com/attachments/830144707794305064/954762992946380850/IMG_3965.jpg";
-    }
-    else {
-      this.roboPic = "https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png";
-    }
+    this.roboPic = this.getRoboPic(this.team);
   }
   //code for getting picture when eventually implemented to teams table
-  /* getRoboPic(ID: Number) {
+  getRoboPic(ID: string) {
     for (let x of this.apiTeamsList){
-      if (x.Team == ID) {
-        return x.roboPicture;
+      console.log('x.Team')
+      if (x.Team + '' == ID && x.Image != null) {
+        return x.Image;
       }
     }
     return "https://cdn.discordapp.com/attachments/830144707794305064/949107933260677130/error_robot_not_found.png";
-  } */
+  }
 
   setDisplay(display: number) {
     this.display = display;

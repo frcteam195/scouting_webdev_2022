@@ -76,11 +76,11 @@ export interface CEA {
 }
 
 export interface Matches {
-BlueCargoRanking: Number;
-BlueFouls: Number;
-BlueHangarPoints: Number;
-BlueHangarRanking: Number;
-BlueScore: Number;
+BlueCargoRanking: number;
+BlueFouls: number;
+BlueHangarPoints: number;
+BlueHangarRanking: number;
+BlueScore: number;
 BlueTeam1: string;
 BlueTeam2: string;
 BlueTeam3: string; 
@@ -151,6 +151,7 @@ export interface Teams {
   TeleStrategy: String;
   WheelType: String;
   WheelTypeID: Number;
+  Image: string;
 }
 
 export interface CurrTeams {

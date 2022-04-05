@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Matches } from '../../matches';
-import { ApiService } from 'src/app/services/api.service';
+import { ApiService, Matches } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-match-info',

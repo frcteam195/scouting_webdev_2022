@@ -75,6 +75,8 @@ export class AnalysisTableComponent implements OnInit {
         analysisTypes = [40,41,42,43,44,45,46,47,48,49,50];  // Robot Snapshot Middle
       } else if (this.analysisGroup == 3) {
         analysisTypes = [1,2,3,10,11,12,20,21,22,30,60,61,62,72];  // Robot Snapshot Top
+      } else if (this.analysisGroup == 4) {
+        analysisTypes = [73,74,75];  // Robot Snapshot Blue
       } else {
         analysisTypes = [70,71];   // Robot Snapshot Bottom
       }

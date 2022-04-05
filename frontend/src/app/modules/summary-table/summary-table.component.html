@@ -1,6 +1,10 @@
+hehe hi David
 <div>
     <table border="1" class="cea_table">
-        <tr><th colspan="10">{{ title }}</th></tr>
+        <tr><th colspan="10">{{ title }}</th>
+        <th><button (click)="changeSort(sortType)">{{ sortType == 1 ? 'Mean' : 'Median' }}</button></th>
+    </tr>
+        
         <tr>
             <th><div [ngClass]="{'sorted': this.sort==2}"><a (click)="localSort(2)">Team</a></div></th>
             <th><div [ngClass]="{'sorted': this.sort==3}"><a (click)="localSort(3)">Auto</a></div></th>
@@ -15,17 +19,22 @@
         </tr>
         <tr *ngFor="let a of apiSummary_filter">
             <td align="center"><a (click)="teamSelect( a.Team )" (dblclick)="teamPage( a.Team )"><div [ngClass]="{'sorted': a.Team==this.team}">{{ a.Team }}</div></a></td>
-            <td align="center" class="bg{{ a?.AutonomousFormat }}">{{ a.AutonomousMedian }}</td>
-            <td align="center" class="bg{{ a?.AutonomousScoreFormat }}">{{ a.AutonomousScoreMedian }}</td>
-            <td align="center" class="bg{{ a?.TeleLowBallsFormat }}">{{ a.TeleLowBallsMedian }}</td>
-            <td align="center" class="bg{{ a?.TeleHighBallsFormat }}">{{ a.TeleHighBallsMedian }}</td>
-            <td align="center" class="bg{{ a?.TeleTotalBallsFormat }}">{{ a.TeleTotalBallsMedian }}</td>
-            <td align="center" class="bg{{ a?.TeleBallScoreFormat }}">{{ a.TeleBallScoreMedian }}</td>
-            <td align="center" class="bg{{ a?.TotalBallsFormat }}">{{ a.TotalBallsMedian }}</td>
-            <td align="center" class="bg{{ a?.ClimbFormat }}">{{ a.ClimbMedian }}</td>
-            <td align="center" class="bg{{ a?.TotalScoreFormat }}">{{ a.TotalScoreMedian }}</td>
+            
+            <td align="center" class="bg{{ a?.AutonomousFormat }}">{{ sortType == 1 ? a.AutonomousMean : a.AutonomousMedian }}</td>
+            <td align="center" class="bg{{ a?.AutonomousScoreFormat }}">{{ sortType == 1 ? a.AutonomousScoreMean : a.AutonomousScoreMedian }}</td>
+            <td align="center" class="bg{{ a?.TeleLowBallsFormat }}">{{ sortType == 1 ? a.TeleLowBallsMean : a.TeleLowBallsMedian }}</td>
+            <td align="center" class="bg{{ a?.TeleHighBallsFormat }}">{{ sortType == 1 ? a.TeleHighBallsMean : a.TeleHighBallsMedian }}</td>
+            <td align="center" class="bg{{ a?.TeleTotalBallsFormat }}">{{ sortType == 1 ? a.TeleTotalBallsMean : a.TeleTotalBallsMedian }}</td>
+            <td align="center" class="bg{{ a?.TeleBallScoreFormat }}">{{ sortType == 1 ? a.TeleBallScoreMean : a.TeleBallScoreMedian }}</td>
+            <td align="center" class="bg{{ a?.TotalBallsFormat }}">{{ sortType == 1 ? a.TotalBallsMean : a.TotalBallsMedian }}</td>
+            <td align="center" class="bg{{ a?.ClimbFormat }}">{{ sortType == 1 ? a.ClimbMean : a.ClimbMedian }}</td>
+            <td align="center" class="bg{{ a?.TotalScoreFormat }}">{{ sortType == 1 ? a.TotalScoreMean : a.TotalScoreMedian }}</td>
             <td align="center" class="bg{{ a?.SummaryFormat }}">{{ a.Summary }}</td>
+            
+            
         </tr>
+        
+        
     </table>
     <table border="0">
         <tr><td width="850"></td></tr>

@@ -1,5 +1,14 @@
 <table style="width: 100%;" border="1">
     <tr>
+        <th colspan="4">Climb Time</th>
+    </tr>
+    <ng-container *ngFor="let x of apiLevel2">
+        <tr *ngIf="x.TeamNo + '' == team">
+            <td>#{{ x.MatchNo }}</td>
+            <td colspan="3">{{ x.ClimbStart }}</td>
+        </tr>
+    </ng-container>
+    <tr>
         <th colspan="4">General Comments of the robot</th>
     </tr>
     <ng-container *ngFor="let x of apiLevel2">

@@ -99,6 +99,9 @@ RedTeam2: string;
 RedTeam3: string;
 RedTechFouls: number;
 RedTelePoints: number;
+RedAutoPoints: number;
+BlueAutoPoints: number;
+MatchTime: string;
 
 }
 
@@ -201,6 +204,7 @@ export interface Level2 {
   LabelBot: string;
   GeneralThoughts: string;
   HarishLove: string;
+  ClimbStart: number;
 }
 
 @Injectable({

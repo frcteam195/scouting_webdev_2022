@@ -345,11 +345,21 @@ export class AnalysisComponent implements OnInit {
       for (const t of this.apiFinal24List) {
         if (team == t.Team && t.Team != "") {
           console.log("Matched: " + team);
-          return 'selected';
+          return 'selected';  
         }
       }
     }
     return 'tbox';
+  }
+
+  filterChange() {
+    if (this.filter == 1) {
+      //do nothing
+    } else {
+      this.teamSelectionChange(1);
+    }
+
+    
   }
 
 }

@@ -48,6 +48,9 @@ export class ScheduleComponent implements OnInit {
   moveTeam: string = "";
   moveMatch: number = 0;
 
+  score: number = 0;
+  mFilter: number = 0;
+
   constructor(private apiService: ApiService, private router: Router) {
     this.isMobile=0;
     this.apiMatchList = [];
@@ -167,7 +170,13 @@ export class ScheduleComponent implements OnInit {
       for (const m of this.apiMatchList) {
         teamList=[m.RedTeam1, m.RedTeam2, m.RedTeam3, m.BlueTeam1, m.BlueTeam2, m.BlueTeam3];
         if (this.team == "All") {
-          this.apiMatchList_filter.push(m);
+          if (this.mFilter == 0) {
+            if ((m.RedScore <= 0)||(m.RedScore <= 0))
+              this.apiMatchList_filter.push(m);
+          } else if (this.mFilter == 1) {
+            this.apiMatchList_filter.push(m);
+          }
+          
         } 
         else if (teamList.includes(this.team))  {
           this.apiMatchList_filter.push(m);
@@ -327,7 +336,38 @@ export class ScheduleComponent implements OnInit {
     console.log(this.selectedMatch);
   }
 
+  getScoreClass(red: number, blue: number, color: string) {
+    if ((color == 'R') && (red > blue)) {
+      //return 'sortedR';
+      return 'watch2';
+    } else if ((color == 'B') && (red < blue)) {
+      //return 'sortedB';
+      return 'watch2';
+    }
+    return 'normal';
+  }
 
+
+  matchFilter() {
+
+    if (this.mFilter == 1) {
+      this.mFilter = 0;
+    } else {
+      this.mFilter = 1;
+    }
+    this.regenerateFilter();
+  }
+
+  
+  scoreFilter() {
+
+    if (this.score == 1) {
+      this.score = 0;
+    } else {
+      this.score = 1;
+    }
+    //this.regenerateFilter();
+  }
 
   ngOnInit(): void {
 

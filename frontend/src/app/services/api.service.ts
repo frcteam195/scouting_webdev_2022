@@ -102,6 +102,7 @@ RedTelePoints: number;
 RedAutoPoints: number;
 BlueAutoPoints: number;
 MatchTime: string;
+ActualTime: string;
 
 }
 

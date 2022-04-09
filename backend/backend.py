@@ -105,7 +105,7 @@ def get_matchinfo():
     cursor.execute("SELECT m.* "
                 "FROM Matches m, Events e "
                 "WHERE e.EventID = m.EventID "
-                "AND e.CurrentEvent = 1;")
+                "AND e.CurrentEvent = 1 ORDER BY m.MatchNo;")
     data = cursor.fetchall()	
     response = app.response_class(
         response=json.dumps(data),

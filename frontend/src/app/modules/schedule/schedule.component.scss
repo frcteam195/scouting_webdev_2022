@@ -5,6 +5,10 @@ td {
     text-align: center;
 
 }
+
+button {
+    width: 80px;
+}
 .sche_table { 
     border-spacing: 1;
     border-collapse: collapse;
@@ -38,3 +42,35 @@ td {
 .tbox {
     width: 35px;
 }
+
+.bg0{ background-color: black; min-width: 16px;}
+.bg1{ background-color: green; min-width: 16px;}
+
+.top-left-dot {
+    //float:left;
+    width:1;
+    height:1;
+    margin-left:3px;
+    padding-top:0px;
+    padding-bottom:0px;
+    padding-left:0px;
+    padding-right:0px;
+    white-space: normal;
+    display:inline-block;
+    color:black;
+}
+
+.top-left-dot-2 {
+    float:left;
+    width:1;
+    height:1;
+    margin-left:6px;
+    padding:0px;
+}
+
+.circle {
+    width:2px;
+    height:2px;
+    border-radius:51%;
+    display:inline-block;
+ }

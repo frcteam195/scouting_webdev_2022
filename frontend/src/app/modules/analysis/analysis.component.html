@@ -104,7 +104,7 @@
                             <br>
                             <button (click)="save()">Save to server</button>
                             <br>
-                            <button (click)="filterChange()">Filter</button>
+                            <button (click)="filterChange()">{{ pageFilter == 0 ? 'Filter On' : 'Filter Off' }}</button>
                             <br>
                             <br>
                             <b>Compare</b><br>

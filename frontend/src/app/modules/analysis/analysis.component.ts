@@ -42,6 +42,7 @@ export class AnalysisComponent implements OnInit {
 
   filterList: Final24[]=[];
   filter: number = 0;
+  pageFilter: number = 0;
 
   constructor(public apiService: ApiService, private formBuilder: FormBuilder) {
     //this.apiService.CEAReplay.subscribe((analysis) => (this.apiAnalysis = analysis));
@@ -176,6 +177,7 @@ export class AnalysisComponent implements OnInit {
       this.filter = 0;
       this.viewType = this.holdView;  // Set viewtype back to original setting
       this.normalView();
+      this.pageFilter = 1;
     }
 
     this.compareShow = !this.compareShow;
@@ -354,9 +356,18 @@ export class AnalysisComponent implements OnInit {
 
   filterChange() {
     if (this.filter == 1) {
-      //do nothing
+      alert("Filter Feature not Available when Compare is on");
     } else {
-      this.teamSelectionChange(1);
+      if (this.pageFilter == 0) {
+        //this.teamSelectionChange(1);
+        this.filterList = this.apiFinal24List.concat(this.apiDnpList);
+        this.pageFilter = 1;
+      }
+      else {
+        this.filterList = [{ Team: "" }];
+        this.pageFilter = 0;
+      }
+
     }
 
     

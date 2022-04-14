@@ -9,6 +9,12 @@ export interface TeamMatch {
   MatchNo: number;
 }
 
+export interface PrepMatch {
+  Team: string;
+  MatchNo: number;
+  Format: number;
+}
+
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -51,6 +57,10 @@ export class ScheduleComponent implements OnInit {
   score: number = 0;
   mFilter: number = 0;
 
+  prepTeam: PrepMatch[] = [];
+  prepAll: PrepMatch[] = [];
+  prepFinal: PrepMatch[] = [];
+
   constructor(private apiService: ApiService, private router: Router) {
     this.isMobile=0;
     this.apiMatchList = [];
@@ -79,7 +89,7 @@ export class ScheduleComponent implements OnInit {
 
   }
   teamPage(team: string) {
-    console.log("Calling Robot Page with: " + team)
+    //console.log("Calling Robot Page with: " + team)
     //this.router.navigateByUrl('/robot/'+team);
     if (this.isMobile == 1) {
       this.sendTeamEvent.emit(team);
@@ -90,7 +100,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   matchPage(match: number) {
-    console.log("Calling Match Page with: " + match)
+    //console.log("Calling Match Page with: " + match)
     //this.router.navigateByUrl('/robot/'+team);
 
     if (this.isMobile == 1) {
@@ -107,7 +117,7 @@ export class ScheduleComponent implements OnInit {
     //console.log("Current Team: " + this.team);
     if (team == this.hiTeam) {
         this.hiTeam = "";
-        console.log("Highlight off");
+        //console.log("Highlight off");
     } else {
       this.hiTeam = team;
       //console.log("Highlighting Robot: " + team);
@@ -116,8 +126,9 @@ export class ScheduleComponent implements OnInit {
 
   
   setTeam(team: string) {
-    console.log(team);
+    //console.log(team);
     this.team = team;
+    this.watch = 0;
     this.regenerateFilter()
   }
 
@@ -125,11 +136,20 @@ export class ScheduleComponent implements OnInit {
   setWatch(watch: number) {
     this.watch = watch;
     //this.regenerateFilter();
-    console.log("Run setWatch: " + watch);
+    if (this.watch == 4) {
+      // When Partners Option selected, Show all records.
+      this.matchPrep('195');
+      this.hiTeam = "";
+      this.mFilter = 1;
+      this.team = "All";
+      this.regenerateFilter();
+    }
+
+    //console.log("Run setWatch: " + watch);
   }
 
 
-  getClass(team: string, color: string) {
+  getClass(team: string, match: number, color: string) {
   // Sets the highlight class for the teams on the schedule
     if (team == this.hiTeam) {
       if (color == 'R')
@@ -148,6 +168,13 @@ export class ScheduleComponent implements OnInit {
       for (const t of this.apiWatch2List) {
         if (team == t.Team) {
           return 'watch2';
+        }
+      }
+    }
+    if (this.watch == 4) {
+      for (const p of this.prepFinal) {
+        if ((p.Team==team)&&(p.MatchNo==match)){
+          return 'bg'+p.Format;
         }
       }
     }
@@ -370,6 +397,68 @@ export class ScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+  }
+
+  matchPrep(team: string) {
+
+    //console.log("Geting alliance partner data for [" + team + "]");
+    if (this.apiMatchList) {
+
+      this.teamMatch = [];
+
+      this.prepTeam = [];
+      this.prepFinal = [];
+      var i=0;
+      for (const m of this.apiMatchList) {
+
+        if ((team == m.RedTeam1)||(team == m.RedTeam2)||(team == m.RedTeam3)) {
+          i=i+1;
+          this.prepTeam.push({Team: m.RedTeam1, MatchNo: m.MatchNo, Format: i});
+          this.prepTeam.push({Team: m.RedTeam2, MatchNo: m.MatchNo, Format: i});
+          this.prepTeam.push({Team: m.RedTeam3, MatchNo: m.MatchNo, Format: i});
+        } else if ((team == m.BlueTeam1)||(team == m.BlueTeam2)||(team == m.BlueTeam3)) {
+          i=i+1;
+          this.prepTeam.push({Team: m.BlueTeam1, MatchNo: m.MatchNo, Format: i});
+          this.prepTeam.push({Team: m.BlueTeam2, MatchNo: m.MatchNo, Format: i});
+          this.prepTeam.push({Team: m.BlueTeam3, MatchNo: m.MatchNo, Format: i});
+        }
+
+        this.teamMatch.push({Team: m.RedTeam1, MatchNo: m.MatchNo});
+        this.teamMatch.push({Team: m.RedTeam2, MatchNo: m.MatchNo});
+        this.teamMatch.push({Team: m.RedTeam3, MatchNo: m.MatchNo});
+        this.teamMatch.push({Team: m.BlueTeam1, MatchNo: m.MatchNo});
+        this.teamMatch.push({Team: m.BlueTeam2, MatchNo: m.MatchNo});
+        this.teamMatch.push({Team: m.BlueTeam3, MatchNo: m.MatchNo});        
+      }
+
+    } else {
+      console.log("No Match List Found");
+    }
+
+    var selTeam;
+    var selMatch;
+
+    for (const x of this.prepTeam) {
+      if (x.Team != team) {
+        selTeam="";
+        selMatch=0;
+        for (const m of this.teamMatch) {
+          if ((m.Team == x.Team)&&(m.MatchNo < x.MatchNo)) {
+            selTeam = m.Team;
+            selMatch= m.MatchNo;
+          }
+
+        }
+        this.prepFinal.push({Team: selTeam, MatchNo: selMatch, Format: x.Format});
+        //console.log("Opp: " + selTeam + " Match #: " + selMatch + " Format: " + x.Format);
+      } else {
+        x.Format = 0;
+      }
+
+    }
+
+    this.prepFinal = this.prepFinal.concat(this.prepTeam);
 
   }
 

@@ -8,7 +8,8 @@
         <option [value]="0" selected>None</option>
         <option [value]="1">Watch 1</option>
         <option [value]="2">Watch 2</option>
-        <option [value]="3">  All  </option>
+        <option [value]="3">Watch All</option>
+        <option [value]="4">Partners</option>
     </select>
     <button (click)="matchFilter()">{{ mFilter == 1 ? 'Next' : 'All' }}</button>
     <button (click)="scoreFilter()">{{ score == 1 ? 'Score Off' : 'Score On' }}</button>
@@ -23,13 +24,13 @@
                     <th colspan="6" *ngIf="score==1">Scores</th>
                     <tr *ngFor="let x of apiMatchList_filter">
                         <td (dblclick)="matchPage( x.MatchNo )" (click)="setMatch( x.MatchNo )">{{ x.MatchNo }}</td>
-                        <td >{{ x.ActualTime }}</td>
-                        <td class="titleR" (click)="teamSelect( x.RedTeam1 )" (dblclick)="teamPage( x.RedTeam1 )"><div [ngClass]="getClass(x.RedTeam1,'R')">{{ x.RedTeam1 }}</div></td>
-                        <td class="titleR" (click)="teamSelect( x.RedTeam2 )" (dblclick)="teamPage( x.RedTeam2 )"><div [ngClass]="getClass(x.RedTeam2,'R')">{{ x.RedTeam2 }}</div></td>
-                        <td class="titleR" (click)="teamSelect( x.RedTeam3 )" (dblclick)="teamPage( x.RedTeam3 )"><div [ngClass]="getClass(x.RedTeam3,'R')">{{ x.RedTeam3 }}</div></td>
-                        <td class="titleB" (click)="teamSelect( x.BlueTeam1 )" (dblclick)="teamPage( x.BlueTeam1 )"><div [ngClass]="getClass(x.BlueTeam1,'B')">{{ x.BlueTeam1 }}</div></td>
-                        <td class="titleB" (click)="teamSelect( x.BlueTeam2 )" (dblclick)="teamPage( x.BlueTeam2 )"><div [ngClass]="getClass(x.BlueTeam2,'B')">{{ x.BlueTeam2 }}</div></td>
-                        <td class="titleB" (click)="teamSelect( x.BlueTeam3 )" (dblclick)="teamPage( x.BlueTeam3 )"><div [ngClass]="getClass(x.BlueTeam3,'B')">{{ x.BlueTeam3 }}</div></td>
+                        <td>{{ x.ActualTime != null && x.ActualTime != '' ? x.ActualTime : x.MatchTime }}</td>
+                        <td class="titleR" (click)="teamSelect( x.RedTeam1 )" (dblclick)="teamPage( x.RedTeam1 )"><div [ngClass]="getClass(x.RedTeam1,x.MatchNo,'R')">{{ x.RedTeam1 }}</div></td>
+                        <td class="titleR" (click)="teamSelect( x.RedTeam2 )" (dblclick)="teamPage( x.RedTeam2 )"><div [ngClass]="getClass(x.RedTeam2,x.MatchNo,'R')">{{ x.RedTeam2 }}</div></td>
+                        <td class="titleR" (click)="teamSelect( x.RedTeam3 )" (dblclick)="teamPage( x.RedTeam3 )"><div [ngClass]="getClass(x.RedTeam3,x.MatchNo,'R')">{{ x.RedTeam3 }}</div></td>
+                        <td class="titleB" (click)="teamSelect( x.BlueTeam1 )" (dblclick)="teamPage( x.BlueTeam1 )"><div [ngClass]="getClass(x.BlueTeam1,x.MatchNo,'B')">{{ x.BlueTeam1 }}</div></td>
+                        <td class="titleB" (click)="teamSelect( x.BlueTeam2 )" (dblclick)="teamPage( x.BlueTeam2 )"><div [ngClass]="getClass(x.BlueTeam2,x.MatchNo,'B')">{{ x.BlueTeam2 }}</div></td>
+                        <td class="titleB" (click)="teamSelect( x.BlueTeam3 )" (dblclick)="teamPage( x.BlueTeam3 )"><div [ngClass]="getClass(x.BlueTeam3,x.MatchNo,'B')">{{ x.BlueTeam3 }}</div></td>
                         <td class="titleR" *ngIf="score==1"><div [ngClass]="getScoreClass(x.RedScore,x.BlueScore,'R')">{{ x.RedScore }}</div></td>
 <!--                         <td class="bg{{ x.RedCargoRanking }}" *ngIf="score==1"></td>
                         <td class="bg{{ x.RedHangarRanking }}" *ngIf="score==1"></td> -->

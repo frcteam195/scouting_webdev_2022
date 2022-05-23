@@ -17,6 +17,7 @@
                 <button (click)="changeDisplay(5)">Score|Climb</button>
                 <button (click)="summaryView()">Summary</button>
                 <button (click)="gridView()">8 Grid</button>
+                <!-- <button (click)="allianceView()">Alliance</button> -->
                 </div>
                 <div style="float:right;width:50%;">
                 <b>&nbsp;Left Table: </b>
@@ -37,27 +38,40 @@
             <td>
                 <table border="0">
                     <tr *ngIf="mode==3">
-                        <td>
-                            <div align="center"><b>Captain</b></div>
-                            <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
-                            <ng-container *ngFor="let c of apiFinal24List | slice:0:8; let i = index">
-                                {{ i+1 }} <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (ngModelChange)="teamSelectionChange(1)"><br>
-                            </ng-container>
+                        <td colspan="3">
+                        <table>
+                            <td>
+                                <div align="center"><b>Captain</b></div>
+                                <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
+                                <ng-container *ngFor="let c of apiFinal24List | slice:0:8; let i = index">
+                                    {{ i+1 }} <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (ngModelChange)="teamSelectionChange(1)"><br>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <div align="center"><b>Pick1</b></div>
+                                <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
+                                <ng-container *ngFor="let c of apiFinal24List | slice:8:16">
+                                    <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (ngModelChange)="teamSelectionChange(1)"><br>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <div align="left"><b>Pick2</b></div>
+                                <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
+                                <ng-container *ngFor="let c of apiFinal24List | slice:16:24">
+                                    <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (ngModelChange)="teamSelectionChange(1)"><br>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <div align="left"><b>Pick3</b></div>
+                                <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
+                                <ng-container *ngFor="let c of apiFinal24List | slice:24:32">
+                                    <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (ngModelChange)="teamSelectionChange(1)"><br>
+                                </ng-container>
+                            </td>
+                            
+                        </table>
                         </td>
-                        <td>
-                            <div align="center"><b>Pick1</b></div>
-                            <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
-                            <ng-container *ngFor="let c of apiFinal24List | slice:8:16">
-                                <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (ngModelChange)="teamSelectionChange(1)"><br>
-                            </ng-container>
-                        </td>
-                        <td>
-                            <div align="left"><b>Pick2</b></div>
-                            <!-- <input type="text" class="form-control" placeholder="teamList" [ngModel]="listRecipients()"name="recpList"/> -->
-                            <ng-container *ngFor="let c of apiFinal24List | slice:16:24">
-                                <input type="text" class="tbox" maxlength="4" [(ngModel)]="c.Team" (ngModelChange)="teamSelectionChange(1)"><br>
-                            </ng-container>
-                        </td>
+
                     </tr>
                     <tr *ngIf="mode==3"><td colspan=3><hr></td></tr>
                     <tr>
@@ -224,6 +238,32 @@
                         </td>
                     </tr>
                 </table>
+
+
+                <!-- Alliance Tables -->
+                <table *ngIf="display==7">
+                    <tr>
+                        <td>
+                            <app-summary-table [teamList]=apiFinal24List   [focus]=focusTeam [filter]=1 (sendTeamEvent)="print_team($event)"></app-summary-table>
+                            <br>
+                            <app-summary-table [teamList]=apiFinal24List [sort]=sortType  [focus]=focusTeam [filter]=1 (sendTeamEvent)="print_team($event)"></app-summary-table>
+                            <br>
+                            <app-summary-table [teamList]=apiFinal24List [sort]=sortType  [focus]=focusTeam [filter]=1 (sendTeamEvent)="print_team($event)"></app-summary-table>
+                            <br>
+                            <app-summary-table [teamList]=apiFinal24List [sort]=sortType  [focus]=focusTeam [filter]=1 (sendTeamEvent)="print_team($event)"></app-summary-table>
+                        </td>
+                        <td>
+                            <app-summary-table [teamList]=apiFinal24List   [focus]=focusTeam [filter]=1 (sendTeamEvent)="print_team($event)"></app-summary-table>
+                            <br>
+                            <app-summary-table [teamList]=apiFinal24List [sort]=sortType  [focus]=focusTeam [filter]=1 (sendTeamEvent)="print_team($event)"></app-summary-table>
+                            <br>
+                            <app-summary-table [teamList]=apiFinal24List [sort]=sortType  [focus]=focusTeam [filter]=1 (sendTeamEvent)="print_team($event)"></app-summary-table>
+                            <br>
+                            <app-summary-table [teamList]=apiFinal24List [sort]=sortType  [focus]=focusTeam [filter]=1 (sendTeamEvent)="print_team($event)"></app-summary-table>
+                        </td>
+                    </tr>
+                </table>
+                
             </td>
             <td style="padding: 4px;">
 

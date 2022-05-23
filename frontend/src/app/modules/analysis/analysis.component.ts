@@ -247,6 +247,10 @@ export class AnalysisComponent implements OnInit {
     this.display = 5;
   }
 
+  allianceView() {
+    this.display = 7;
+  }
+
   changeView(view: number) {
 
     //console.log("View Type: " + view)

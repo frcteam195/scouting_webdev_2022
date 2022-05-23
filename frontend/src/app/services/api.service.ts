@@ -251,6 +251,8 @@ export class ApiService {
   //  available as a ReplaySubject.
   loadData(): void {
 
+    console.log("Check Login");
+
     // First try to load a fresh copy of the data from the API
     this.http.get<CEA[]>(this.apiUrl + '/analysis').subscribe(response => {
       // Store the response in the ReplaySubject, which components can use to access the data

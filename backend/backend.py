@@ -4,7 +4,6 @@ from flask import Flask, jsonify, request, json, Response
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import MySQLdb.cursors
-import re
 from json import dumps
 
 app=Flask(__name__)
@@ -16,7 +15,7 @@ app.secret_key = 'secret key'
 app.config['MYSQL_HOST'] = 'frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com'
 app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_USER'] = 'admin'
-app.config['MYSQL_PASSWORD'] = 'Einstein195'  # Password for AWS
+app.config['MYSQL_PASSWORD'] = 'Harish'  # Password for AWS
 #app.config['MYSQL_PASSWORD'] = 'team195'  # Password for Pi
 app.config['MYSQL_DB'] = 'team195_scouting'
 
@@ -95,6 +94,32 @@ def get_matches():
         response=json.dumps(data),
         status=200,
         mimetype='application/json' 
+    )
+    return response
+    
+# Get 195Data
+@app.route("/195Data/", defaults={'team': None})
+@app.route("/195Data/<team>")
+def get_195Data(team):
+    #args = request.args
+    #team = args.get('team')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if team is not None:
+        cursor.execute("SELECT m.* "
+                "FROM MatchScouting m, Events e "
+                "WHERE e.EventID = m.EventID "
+                "AND Team="+team+" "
+                "AND e.CurrentEvent = 1;")
+    else: 
+        cursor.execute("SELECT m.* "
+                "FROM MatchScouting m, Events e "
+                "WHERE e.EventID = m.EventID "
+                "AND e.CurrentEvent = 1;")    
+    data = cursor.fetchall()
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
     )
     return response
 

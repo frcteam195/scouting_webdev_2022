@@ -27,3 +27,46 @@
         </td>
     </tr>
 </table>
+<table border="1" align="center" width="600px">
+    <tr>
+        <th colspan="2" title="There is very much a possibilty that this will be completely incorrect">
+            Match Predictor
+        </th>
+    </tr>
+    <tr align="center">
+        <td colspan="2" [ngClass]="{'blue': matchOutcome == 'Blue Alliance Victory', 'red': matchOutcome == 'Red Alliance Victory'}">Outcome: {{ matchOutcome }}</td>
+    </tr>
+    <tr align="center"> 
+        <td style="background-color: red;color: white;"><b>Red Alliance</b></td>
+        <td style="background-color: blue;color: white;"><b>Blue Alliance</b></td>
+    </tr>
+    <tr align="center">
+        <th colspan="2">Total Points</th>
+    </tr>
+    <tr align="center">
+        <td [ngClass]="{'good': redTotalScore > blueTotalScore, 'bad': blueTotalScore > redTotalScore}">{{ redTotalScore }}</td>
+        <td [ngClass]="{'bad': redTotalScore > blueTotalScore, 'good': blueTotalScore > redTotalScore}">{{ blueTotalScore }}</td>
+    </tr>
+    <tr align="center">
+        <th colspan="2">Auto Score</th>
+    </tr>
+    <tr align="center">
+        <td [ngClass]="{'good': redAutoScore > blueAutoScore, 'bad': blueAutoScore > redAutoScore}">{{ redAutoScore }}</td>
+        <td [ngClass]="{'bad': redAutoScore > blueAutoScore, 'good': blueAutoScore > redAutoScore}">{{ blueAutoScore }}</td>
+    </tr>
+    <tr align="center">
+        <th colspan="2">Tele Points</th>
+    </tr>
+    <tr align="center">
+        <td [ngClass]="{'good': redTeleScore > blueTeleScore, 'bad': blueTeleScore > redTeleScore}">{{ redTeleScore }}</td>
+        <td [ngClass]="{'bad': redTeleScore > blueTeleScore, 'good': blueTeleScore > redTeleScore}">{{ blueTeleScore }}</td>
+    </tr>
+    <tr align="center">
+        <th colspan="2">Climb Points</th>
+    </tr>
+    <tr align="center">
+        <td [ngClass]="{'good': redClimbScore > blueClimbScore, 'bad': blueClimbScore > redClimbScore}">{{ redClimbScore }}</td>
+        <td [ngClass]="{'bad': redClimbScore > blueClimbScore, 'good': blueClimbScore > redClimbScore}">{{ blueClimbScore }}</td>
+    </tr>
+    
+</table>

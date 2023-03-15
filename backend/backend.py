@@ -12,10 +12,10 @@ CORS(app)
 app.secret_key = 'secret key'
  
 #app.config['MYSQL_HOST'] = '10.0.20.195'
-app.config['MYSQL_HOST'] = 'frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_HOST'] = 'scouting.team195.com:5000'
 app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_USER'] = 'admin'
-app.config['MYSQL_PASSWORD'] = 'Harish'  # Password for AWS
+app.config['MYSQL_PASSWORD'] = 'RapidReact2022'  # Password for AWS
 #app.config['MYSQL_PASSWORD'] = 'team195'  # Password for Pi
 app.config['MYSQL_DB'] = 'team195_scouting'
 
@@ -30,12 +30,30 @@ def hello2():
     return "Hello Harish!!!"
 
 # Get Analyss Data
-@app.route("/analysis/", methods =['GET', 'POST'])
-def get_analysis():
+@app.route("/analysis/", defaults={'start': None})
+@app.route("/analysis/<start>")
+def get_analysis(start):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("SELECT cea.*, at.AnalysisType "
-                "FROM CurrentEventAnalysis cea, AnalysisTypes at "
-                "WHERE cea.AnalysisTypeID = at.AnalysisTypeID order by SortOrder;")
+    if start is not None:
+        cursor.execute("SELECT cea.*, at.AnalysisType "
+                    "FROM CurrentEventAnalysis cea, AnalysisTypes at "
+                    "WHERE cea.AnalysisTypeID = at.AnalysisTypeID order by SortOrder "
+                    "LIMIT "+start+",1000;")
+    else:
+        #cursor.execute("SELECT cea.*, at.AnalysisType "
+         #           "FROM CurrentEventAnalysis cea, AnalysisTypes at "
+          #          "WHERE cea.AnalysisTypeID = at.AnalysisTypeID order by SortOrder;")
+        cursor.execute("SELECT a.Team,a.AnalysisTypeID,b.AnalysisType,a.EventID,a.Match1Display,a.Match1Format,a.Match1Value, "
+                    "a.Match2Display,a.Match2Format,a.Match2Value,a.Match3Display,a.Match3Format,a.Match3Value, "
+                    "a.Match4Display,a.Match4Format,a.Match4Value,a.Match5Display,a.Match5Format,a.Match5Value, "
+                    "a.Match6Display,a.Match6Format,a.Match6Value,a.Match7Display,a.Match7Format,a.Match7Value, "
+                    "a.Match8Display,a.Match8Format,a.Match8Value,a.Match9Display,a.Match9Format,a.Match9Value, "
+                    "a.Match10Display,a.Match10Format,a.Match10Value,a.Match11Display,a.Match11Format,a.Match11Value, "
+                    "a.Match12Display,a.Match12Format,a.Match12Value,a.Summary1Display,a.Summary1Value, "
+                    "a.Summary2Display,a.Summary2Value,a.Summary3Display,a.Summary3Format,a.Summary3Value "
+                    "FROM CurrentEventAnalysis a, AnalysisTypes b "
+                    "WHERE a.AnalysisTypeID = b.AnalysisTypeID "
+                    "order by b.SortOrder;")
     data = cursor.fetchall()	
     response = app.response_class(
         response=json.dumps(data),
@@ -44,6 +62,18 @@ def get_analysis():
     )
     return response
 
+# Get Analyss Data
+@app.route("/acount/", methods =['GET', 'POST'])
+def get_analysis_count():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT count(*) as Count FROM CurrentEventAnalysis;")
+    data = cursor.fetchall()	
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 # Get Event Team List
 @app.route("/currteam/", methods =['GET', 'POST'])
